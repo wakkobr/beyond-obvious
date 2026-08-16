@@ -1,8 +1,29 @@
 ---
-import { getCollection } from 'astro:content';
+// src/pages/index.astro
+import { getCollection, render } from 'astro:content';
+// Importe o tipo CollectionEntry
+import type { CollectionEntry } from 'astro:content';
 
-// Busca os posts cadastrados no blog (se houver)
+// 1. Busca os posts cadastrados na coleção 'terminal'
 const posts = await getCollection('terminal');
+
+// 2. Ordena os posts por data (mais recente primeiro) e tipa os parâmetros
+const sortedPosts = posts.sort((a: CollectionEntry<'terminal'>, b: CollectionEntry<'terminal'>) => 
+  b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+// 3. NOVO: Resolvemos a renderização de TODOS os posts AQUI no frontmatter.
+// Criamos um novo array onde cada item contém os dados do post E o componente de conteúdo renderizado.
+const postsWithContent = await Promise.all(
+  sortedPosts.map(async (post: CollectionEntry<'terminal'>) => {
+    // Renderiza o conteúdo do post assincronamente aqui no topo
+    const { Content } = await render(post);
+    return {
+      post,     // Os dados originais do post (post.data, post.id, etc.)
+      Content,  // O componente <Content /> já renderizado
+    };
+  })
+);
 ---
 
 <!DOCTYPE html>
@@ -78,26 +99,42 @@ const posts = await getCollection('terminal');
     <section id="terminal" class="section">
       <h2 class="section-title">03 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
       <div class="posts-grid">
-        <div class="hud-card">
-          <div class="card-meta">
-            <span class="category-tag">📖 LIVRO</span>
-            <span class="star-rating">★★★★★</span>
+        <!-- 4. MODIFICADO: Usamos o array 'postsWithContent' que já está resolvido e tipado. -->
+        {postsWithContent.length > 0 ? postsWithContent.map(({ post, Content }) => {
+          // O map agora é síncrono e recebe 'post' e 'Content' desestruturados.
+          
+          return (
+            <div class="hud-card">
+              <div class="card-meta">
+                <span class="category-tag">
+                  {post.data.category.toUpperCase()}
+                </span>
+                <span class="star-rating">
+                  {'★'.repeat(parseInt(post.data.rating))}
+                </span>
+              </div>
+              <h3 class="card-title">{post.data.title}</h3>
+              <p class="card-desc">
+                <!-- Exibimos o resumo (post.data.summary) -->
+                {post.data.summary}
+              </p>
+              
+              <!-- NOVO: Área para o conteúdo completo (Markdown renderizado) -->
+              <div class="card-content-markdown mt-3">
+                <!-- Usamos o componente <Content /> que veio pré-renderizado do frontmatter -->
+                <Content />
+              </div>
+
+              {post.data.externalLink && (
+                <a href={post.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn-link mt-3">Ver mais &rarr;</a>
+              )}
+            </div>
+          );
+        }) : (
+          <div class="hud-card">
+            <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
           </div>
-          <h3 class="card-title">Neuromancer / Duna</h3>
-          <p class="card-desc" data-pt="Uma aula de ecossistemas complexos e spec-fiction que influencia diretamente minha escrita." data-en="A masterclass in complex ecosystems and speculative fiction that directly shapes my writing.">
-            Uma aula de ecossistemas complexos e spec-fiction que influencia diretamente minha escrita.
-          </p>
-        </div>
-        <div class="hud-card">
-          <div class="card-meta">
-            <span class="category-tag">🎬 SÉRIE</span>
-            <span class="star-rating">★★★★★</span>
-          </div>
-          <h3 class="card-title">Severance / Dark</h3>
-          <p class="card-desc" data-pt="Roteiros cirúrgicos que mostram a força do suspense psicológico e da narrativa não linear." data-en="Precision storytelling proving the power of psychological thriller and non-linear narrative.">
-            Roteiros cirúrgicos que mostram a força do suspense psicológico e da narrativa não linear.
-          </p>
-        </div>
+        )}
       </div>
     </section>
   </main>
@@ -127,6 +164,7 @@ const posts = await getCollection('terminal');
 </html>
 
 <style>
+  /* Mantém os estilos existentes */
   :root {
     --bg-canvas: #0B0C10;
     --bg-surface: #16181D;
@@ -168,7 +206,7 @@ const posts = await getCollection('terminal');
 
   .section { padding: 3rem 0 1rem; }
   .section-title { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--accent-crimson); border-bottom: 1px solid rgba(224,225,221,0.1); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
-  .hud-card { background: var(--bg-surface); border: 1px solid rgba(224,225,221,0.1); border-radius: 6px; padding: 1.5rem; }
+  .hud-card { background: var(--bg-surface); border: 1px solid rgba(224,225,221,0.1); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; }
   .hud-card:hover { border-color: rgba(230,57,70,0.5); }
   .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; margin: 0 0 0.5rem; color: var(--text-primary); }
   .card-desc { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
@@ -183,4 +221,23 @@ const posts = await getCollection('terminal');
   .footer { text-align: center; padding: 3rem 0; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid rgba(224,225,221,0.05); margin-top: 4rem; }
   .mt-3 { margin-top: 1rem; }
   .mb-4 { margin-bottom: 1.5rem; }
+
+  /* NOVOS ESTILOS PARA O CONTEÚDO MARKDOWN RENDERIZADO */
+  .card-content-markdown {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(224, 225, 221, 0.1);
+    padding-top: 1rem;
+  }
+  .card-content-markdown h2, .card-content-markdown h3 {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--accent-crimson);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .card-content-markdown p { margin-bottom: 1rem; }
+  .card-content-markdown ul { margin-left: 1.5rem; margin-bottom: 1rem; list-style-type: disc; }
+
+  .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; display: inline-block; font-weight: 600; }
+  .btn-link:hover { color: var(--accent-crimson); }
 </style>

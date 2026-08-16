@@ -1,11 +1,13 @@
+// src/content.config.ts
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders'; // <-- Importe o loader glob
 
-// Define o esquema para os posts do Terminal de Mídia
 const terminalCollection = defineCollection({
-  type: 'content',
+  // Mude de 'content' para o Content Layer com loader
+  loader: glob({ pattern: '**\/[^_]*.md', base: './src/content/terminal' }),
   schema: z.object({
     title: z.string(),
-    publishDate: z.date(),
+    publishDate: z.coerce.date(), // Use z.coerce.date() para garantir que a data seja lida corretamente do markdown/Decap
     lang: z.enum(['pt-br', 'en']).default('pt-br'),
     category: z.enum(['book', 'cinema', 'anime', 'ttrpg', 'gaming']),
     rating: z.string().default('5'),
@@ -15,7 +17,6 @@ const terminalCollection = defineCollection({
   }),
 });
 
-// Exporta as coleções para o Astro reconhecer
 export const collections = {
   'terminal': terminalCollection,
 };
