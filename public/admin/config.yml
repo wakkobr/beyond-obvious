@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: seu-usuario/beyond-obvious # Substitua 'seu-usuario' pelo seu username do GitHub quando criar
+  repo: wakkobr/beyond-obvious # Substitua 'seu-usuario' pelo seu username do GitHub quando criar
   branch: main
   base_url: https://decap-oauth.vercel.app
   auth_endpoint: auth
