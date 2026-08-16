@@ -1,0 +1,186 @@
+---
+import { getCollection } from 'astro:content';
+
+// Busca os posts cadastrados no blog (se houver)
+const posts = await getCollection('terminal');
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>BEYOND OBVIOUS // @W4KKO_</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVEGAÇÃO -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <span class="nav-logo">BEYOND OBVIOUS</span>
+      <div class="nav-links">
+        <a href="#stream" data-pt="Transmissões" data-en="Streams">Transmissões</a>
+        <a href="#vault" data-pt="Cofre Arcano" data-en="Arcane Vault">Cofre Arcano</a>
+        <a href="#terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
+        <button id="lang-toggle" class="lang-btn">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- HERO / NEXUS -->
+    <section class="hero">
+      <div class="status-badge">◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA</div>
+      <h1 class="hero-title">BEYOND OBVIOUS</h1>
+      <p class="hero-sub">@W4KKO_ • <span data-pt="Tecnomago & Narrador" data-en="Technomancer & Storyteller">Tecnomago & Narrador</span></p>
+      <p class="hero-bio" data-pt="Onde o arcano encontra a lógica e as narrativas vão além do óbvio. Explorando lore de RPG de mesa, mecânicas de jogos, ficção científica e construção de mundos." data-en="Where arcana meets logic, and stories cut deeper than the obvious. Exploring tabletop lore, game mechanics, sci-fi, and worldbuilding.">
+        Onde o arcano encontra a lógica e as narrativas vão além do óbvio. Explorando lore de RPG de mesa, mecânicas de jogos, ficção científica e construção de mundos.
+      </p>
+      <div class="hero-actions">
+        <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
+        <a href="#vault" class="btn btn-outline" data-pt="🗺️ EXPLORAR WORLD ANVIL" data-en="🗺️ EXPLORE WORLD ANVIL">🗺️ EXPLORAR WORLD ANVIL</a>
+      </div>
+    </section>
+
+    <!-- TRANSMISSÕES -->
+    <section id="stream" class="section">
+      <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
+      <div class="hud-card">
+        <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, and live tabletop RPG sessions.">
+          Aventuras narrativas, escolhas de peso e sessões de RPG de mesa ao vivo.
+        </p>
+        <div class="tags-grid">
+          <span class="tag">🎮 Storytelling (Life is Strange, Tell Me Why)</span>
+          <span class="tag">🎲 Mesas de RPG & One-shots</span>
+          <span class="tag">⛏️ Sandbox & Minecraft</span>
+          <span class="tag">💬 Just Chatting & Lore</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- COFRE ARCANO / WORLD ANVIL -->
+    <section id="vault" class="section">
+      <h2 class="section-title">02 // <span data-pt="O COFRE ARCANO" data-en="THE ARCANE VAULT">O COFRE ARCANO</span></h2>
+      <div class="hud-card">
+        <h3 class="card-title" data-pt="Cenário Autoral & Relatos de Sessão" data-en="Original RPG Setting & Session Logs">Cenário Autoral & Relatos de Sessão</h3>
+        <p class="card-desc" data-pt="Todo o lore do meu mundo, cosmologia, mapas e registros completos das sessões que mestro centralizados no World Anvil." data-en="Complete setting lore, cosmology, maps, and detailed campaign session logs hosted on World Anvil.">
+          Todo o lore do meu mundo, cosmologia, mapas e registros completos das sessões que mestro centralizados no World Anvil.
+        </p>
+        <a href="https://www.worldanvil.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline mt-3" data-pt="🌐 Acessar World Anvil &rarr;" data-en="🌐 Open World Anvil &rarr;">🌐 Acessar World Anvil &rarr;</a>
+      </div>
+    </section>
+
+    <!-- TERMINAL DE MÍDIA / BLOG -->
+    <section id="terminal" class="section">
+      <h2 class="section-title">03 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
+      <div class="posts-grid">
+        <div class="hud-card">
+          <div class="card-meta">
+            <span class="category-tag">📖 LIVRO</span>
+            <span class="star-rating">★★★★★</span>
+          </div>
+          <h3 class="card-title">Neuromancer / Duna</h3>
+          <p class="card-desc" data-pt="Uma aula de ecossistemas complexos e spec-fiction que influencia diretamente minha escrita." data-en="A masterclass in complex ecosystems and speculative fiction that directly shapes my writing.">
+            Uma aula de ecossistemas complexos e spec-fiction que influencia diretamente minha escrita.
+          </p>
+        </div>
+        <div class="hud-card">
+          <div class="card-meta">
+            <span class="category-tag">🎬 SÉRIE</span>
+            <span class="star-rating">★★★★★</span>
+          </div>
+          <h3 class="card-title">Severance / Dark</h3>
+          <p class="card-desc" data-pt="Roteiros cirúrgicos que mostram a força do suspense psicológico e da narrativa não linear." data-en="Precision storytelling proving the power of psychological thriller and non-linear narrative.">
+            Roteiros cirúrgicos que mostram a força do suspense psicológico e da narrativa não linear.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="footer">
+    <p>© 2026 BEYOND OBVIOUS • @W4KKO_</p>
+  </footer>
+
+  <!-- SCRIPT PARA ALTERNADOR DE IDIOMA (PT / EN) -->
+  <script>
+    const toggleBtn = document.getElementById('lang-toggle');
+    let currentLang = 'pt';
+
+    toggleBtn?.addEventListener('click', () => {
+      currentLang = currentLang === 'pt' ? 'en' : 'pt';
+      toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        const target = el as HTMLElement;
+        target.textContent = currentLang === 'pt' ? target.dataset.pt! : target.dataset.en!;
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+<style>
+  :root {
+    --bg-canvas: #0B0C10;
+    --bg-surface: #16181D;
+    --accent-crimson: #E63946;
+    --accent-blue: #4CC9F0;
+    --text-primary: #E0E1DD;
+    --text-secondary: #8D99AE;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .nav-bar { background: rgba(22, 24, 29, 0.9); border-bottom: 1px solid rgba(224,225,221,0.1); position: sticky; top: 0; backdrop-filter: blur(8px); z-index: 100; }
+  .nav-container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; }
+  .nav-logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--accent-crimson); letter-spacing: 2px; }
+  .nav-links { display: flex; gap: 1.2rem; align-items: center; }
+  .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+  .nav-links a:hover { color: var(--accent-crimson); }
+  .lang-btn { background: transparent; border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
+
+  .hero { padding: 4rem 0 3rem; text-align: center; }
+  .status-badge { display: inline-block; font-size: 0.75rem; color: var(--accent-blue); border: 1px solid rgba(76,201,240,0.3); padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1rem; }
+  .hero-title { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; margin: 0; color: var(--text-primary); letter-spacing: 3px; }
+  .hero-sub { color: var(--accent-crimson); font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; margin: 0.5rem 0 1.5rem; }
+  .hero-bio { color: var(--text-secondary); max-width: 650px; margin: 0 auto 2rem; }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn { display: inline-block; padding: 0.75rem 1.5rem; font-family: 'Rajdhani', sans-serif; font-weight: 700; text-decoration: none; border-radius: 4px; text-transform: uppercase; cursor: pointer; }
+  .btn-primary { background: var(--accent-crimson); color: white; border: none; }
+  .btn-primary:hover { background: #ff4d5a; box-shadow: 0 0 12px rgba(230,57,70,0.4); }
+  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(224,225,221,0.2); }
+  .btn-outline:hover { border-color: var(--accent-crimson); }
+
+  .section { padding: 3rem 0 1rem; }
+  .section-title { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--accent-crimson); border-bottom: 1px solid rgba(224,225,221,0.1); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+  .hud-card { background: var(--bg-surface); border: 1px solid rgba(224,225,221,0.1); border-radius: 6px; padding: 1.5rem; }
+  .hud-card:hover { border-color: rgba(230,57,70,0.5); }
+  .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; margin: 0 0 0.5rem; color: var(--text-primary); }
+  .card-desc { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
+  .card-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem; }
+  .category-tag { color: var(--accent-blue); font-weight: 700; }
+  .star-rating { color: #F4A261; }
+
+  .tags-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  .footer { text-align: center; padding: 3rem 0; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid rgba(224,225,221,0.05); margin-top: 4rem; }
+  .mt-3 { margin-top: 1rem; }
+  .mb-4 { margin-bottom: 1.5rem; }
+</style>

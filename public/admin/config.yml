@@ -1,0 +1,47 @@
+backend:
+  name: github
+  repo: seu-usuario/beyond-obvious # Substitua 'seu-usuario' pelo seu username do GitHub quando criar
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "terminal"
+    label: "Terminal de Mídia (Reviews/Logs)"
+    folder: "src/content/terminal"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título da Obra / Post", name: "title", widget: "string" }
+      - { label: "Data de Registro", name: "publishDate", widget: "datetime" }
+      - { 
+          label: "Idioma", 
+          name: "lang", 
+          widget: "select", 
+          options: ["pt-br", "en"], 
+          default: "pt-br" 
+        }
+      - { 
+          label: "Categoria", 
+          name: "category", 
+          widget: "select", 
+          options: [
+            { label: "📖 Livro / Graphic Novel", value: "book" },
+            { label: "🎬 Filme / Série", value: "cinema" },
+            { label: "⛩️ Anime / Animação", value: "anime" },
+            { label: "🎲 RPG de Mesa", value: "ttrpg" },
+            { label: "🎮 Jogo / Narrativa", value: "gaming" }
+          ] 
+        }
+      - { 
+          label: "Avaliação (1 a 5)", 
+          name: "rating", 
+          widget: "select", 
+          options: ["5", "4", "3", "2", "1"], 
+          default: "5" 
+        }
+      - { label: "Resumo Curto", name: "summary", widget: "string" }
+      - { label: "Link Externo (Opcional - World Anvil, MAL, etc.)", name: "externalLink", widget: "string", required: false }
+      - { label: "Imagem de Capa (Opcional)", name: "coverImage", widget: "image", required: false }
+      - { label: "Texto da Análise / Relato", name: "body", widget: "markdown" }
