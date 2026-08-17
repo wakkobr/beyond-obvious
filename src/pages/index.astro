@@ -1,26 +1,20 @@
 ---
 // src/pages/index.astro
 import { getCollection, render } from 'astro:content';
-// Importe o tipo CollectionEntry
 import type { CollectionEntry } from 'astro:content';
 
-// 1. Busca os posts cadastrados na coleção 'terminal'
 const posts = await getCollection('terminal');
 
-// 2. Ordena os posts por data (mais recente primeiro) e tipa os parâmetros
 const sortedPosts = posts.sort((a: CollectionEntry<'terminal'>, b: CollectionEntry<'terminal'>) => 
   b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 
-// 3. NOVO: Resolvemos a renderização de TODOS os posts AQUI no frontmatter.
-// Criamos um novo array onde cada item contém os dados do post E o componente de conteúdo renderizado.
 const postsWithContent = await Promise.all(
   sortedPosts.map(async (post: CollectionEntry<'terminal'>) => {
-    // Renderiza o conteúdo do post assincronamente aqui no topo
     const { Content } = await render(post);
     return {
-      post,     // Os dados originais do post (post.data, post.id, etc.)
-      Content,  // O componente <Content /> já renderizado
+      post,
+      Content,
     };
   })
 );
@@ -42,19 +36,26 @@ const postsWithContent = await Promise.all(
   <!-- NAVEGAÇÃO -->
   <nav class="nav-bar">
     <div class="nav-container">
-      <span class="nav-logo">BEYOND OBVIOUS</span>
+      <a href="#" class="nav-brand">
+        <img src="/logo.svg" alt="Beyond Obvious Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <span class="nav-logo">BEYOND OBVIOUS</span>
+      </a>
       <div class="nav-links">
         <a href="#stream" data-pt="Transmissões" data-en="Streams">Transmissões</a>
         <a href="#vault" data-pt="Cofre Arcano" data-en="Arcane Vault">Cofre Arcano</a>
         <a href="#terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
+        <a href="#signal" data-pt="Sinal" data-en="Signal">Sinal</a>
         <button id="lang-toggle" class="lang-btn">EN</button>
       </div>
     </div>
   </nav>
 
   <main class="container">
-    <!-- HERO / NEXUS -->
+    <!-- 00 // HERO / NEXUS -->
     <section class="hero">
+      <div class="hero-logo-container">
+        <img src="/logo.svg" alt="Corvo Arcano" class="hero-main-logo" onerror="this.style.display='none'" />
+      </div>
       <div class="status-badge">◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA</div>
       <h1 class="hero-title">BEYOND OBVIOUS</h1>
       <p class="hero-sub">@W4KKO_ • <span data-pt="Tecnomago & Narrador" data-en="Technomancer & Storyteller">Tecnomago & Narrador</span></p>
@@ -67,7 +68,7 @@ const postsWithContent = await Promise.all(
       </div>
     </section>
 
-    <!-- TRANSMISSÕES -->
+    <!-- 01 // TRANSMISSÕES -->
     <section id="stream" class="section">
       <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
       <div class="hud-card">
@@ -83,7 +84,7 @@ const postsWithContent = await Promise.all(
       </div>
     </section>
 
-    <!-- COFRE ARCANO / WORLD ANVIL -->
+    <!-- 02 // COFRE ARCANO -->
     <section id="vault" class="section">
       <h2 class="section-title">02 // <span data-pt="O COFRE ARCANO" data-en="THE ARCANE VAULT">O COFRE ARCANO</span></h2>
       <div class="hud-card">
@@ -95,14 +96,11 @@ const postsWithContent = await Promise.all(
       </div>
     </section>
 
-    <!-- TERMINAL DE MÍDIA / BLOG -->
+    <!-- 03 // TERMINAL DE MÍDIA -->
     <section id="terminal" class="section">
       <h2 class="section-title">03 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
       <div class="posts-grid">
-        <!-- 4. MODIFICADO: Usamos o array 'postsWithContent' que já está resolvido e tipado. -->
         {postsWithContent.length > 0 ? postsWithContent.map(({ post, Content }) => {
-          // O map agora é síncrono e recebe 'post' e 'Content' desestruturados.
-          
           return (
             <div class="hud-card">
               <div class="card-meta">
@@ -115,13 +113,10 @@ const postsWithContent = await Promise.all(
               </div>
               <h3 class="card-title">{post.data.title}</h3>
               <p class="card-desc">
-                <!-- Exibimos o resumo (post.data.summary) -->
                 {post.data.summary}
               </p>
               
-              <!-- NOVO: Área para o conteúdo completo (Markdown renderizado) -->
               <div class="card-content-markdown mt-3">
-                <!-- Usamos o componente <Content /> que veio pré-renderizado do frontmatter -->
                 <Content />
               </div>
 
@@ -137,6 +132,46 @@ const postsWithContent = await Promise.all(
         )}
       </div>
     </section>
+
+    <!-- 04 // SIGNAL (CANAIS & CONTATO) -->
+    <section id="signal" class="section">
+      <h2 class="section-title">04 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT & CHANNELS">SIGNAL // PONTOS DE CONTATO</span></h2>
+      <div class="hud-card">
+        <p class="card-desc mb-4" data-pt="Conecte-se às frequências ativas da transmissão, servidores e documentações." data-en="Connect to active stream frequencies, community servers, and lore documentations.">
+          Conecte-se às frequências ativas da transmissão, servidores e documentações.
+        </p>
+        <div class="signal-grid">
+          <a href="https://twitch.tv" target="_blank" rel="noopener noreferrer" class="signal-card">
+            <span class="signal-icon">🟣</span>
+            <div class="signal-info">
+              <span class="signal-name">Twitch</span>
+              <span class="signal-handle">@w4kko_</span>
+            </div>
+          </a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="signal-card">
+            <span class="signal-icon">🔴</span>
+            <div class="signal-info">
+              <span class="signal-name">YouTube</span>
+              <span class="signal-handle">VODs & Sessões</span>
+            </div>
+          </a>
+          <a href="https://www.worldanvil.com" target="_blank" rel="noopener noreferrer" class="signal-card">
+            <span class="signal-icon">🗺️</span>
+            <div class="signal-info">
+              <span class="signal-name">World Anvil</span>
+              <span class="signal-handle">Cofre Arcano</span>
+            </div>
+          </a>
+          <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="signal-card">
+            <span class="signal-icon">💬</span>
+            <div class="signal-info">
+              <span class="signal-name">Discord</span>
+              <span class="signal-handle">Comunidade</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- RODAPÉ -->
@@ -144,7 +179,7 @@ const postsWithContent = await Promise.all(
     <p>© 2026 BEYOND OBVIOUS • @W4KKO_</p>
   </footer>
 
-  <!-- SCRIPT PARA ALTERNADOR DE IDIOMA (PT / EN) -->
+  <!-- SCRIPT ALTERNADOR IDIOMA -->
   <script>
     const toggleBtn = document.getElementById('lang-toggle');
     let currentLang = 'pt';
@@ -164,7 +199,6 @@ const postsWithContent = await Promise.all(
 </html>
 
 <style>
-  /* Mantém os estilos existentes */
   :root {
     --bg-canvas: #0B0C10;
     --bg-surface: #16181D;
@@ -184,14 +218,20 @@ const postsWithContent = await Promise.all(
 
   .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
   .nav-bar { background: rgba(22, 24, 29, 0.9); border-bottom: 1px solid rgba(224,225,221,0.1); position: sticky; top: 0; backdrop-filter: blur(8px); z-index: 100; }
-  .nav-container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; }
+  .nav-container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1.5rem; }
+  
+  .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .brand-logo { width: 28px; height: 28px; object-fit: contain; }
   .nav-logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--accent-crimson); letter-spacing: 2px; }
+  
   .nav-links { display: flex; gap: 1.2rem; align-items: center; }
   .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
   .nav-links a:hover { color: var(--accent-crimson); }
   .lang-btn { background: transparent; border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
 
-  .hero { padding: 4rem 0 3rem; text-align: center; }
+  .hero { padding: 3rem 0; text-align: center; }
+  .hero-logo-container { margin-bottom: 1.5rem; }
+  .hero-main-logo { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(230,57,70,0.3)); }
   .status-badge { display: inline-block; font-size: 0.75rem; color: var(--accent-blue); border: 1px solid rgba(76,201,240,0.3); padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1rem; }
   .hero-title { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; margin: 0; color: var(--text-primary); letter-spacing: 3px; }
   .hero-sub { color: var(--accent-crimson); font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; margin: 0.5rem 0 1.5rem; }
@@ -218,26 +258,24 @@ const postsWithContent = await Promise.all(
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
-  .footer { text-align: center; padding: 3rem 0; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid rgba(224,225,221,0.05); margin-top: 4rem; }
-  .mt-3 { margin-top: 1rem; }
-  .mb-4 { margin-bottom: 1.5rem; }
+  /* ESTILOS DA SEÇÃO SIGNAL */
+  .signal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .signal-card { display: flex; align-items: center; gap: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(224,225,221,0.1); padding: 0.8rem 1rem; border-radius: 4px; text-decoration: none; color: var(--text-primary); transition: all 0.2s ease; }
+  .signal-card:hover { border-color: var(--accent-crimson); transform: translateY(-2px); }
+  .signal-icon { font-size: 1.2rem; }
+  .signal-info { display: flex; flex-direction: column; }
+  .signal-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; }
+  .signal-handle { font-size: 0.75rem; color: var(--text-secondary); }
 
-  /* NOVOS ESTILOS PARA O CONTEÚDO MARKDOWN RENDERIZADO */
-  .card-content-markdown {
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    border-top: 1px solid rgba(224, 225, 221, 0.1);
-    padding-top: 1rem;
-  }
-  .card-content-markdown h2, .card-content-markdown h3 {
-    font-family: 'Rajdhani', sans-serif;
-    color: var(--accent-crimson);
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
+  .card-content-markdown { color: var(--text-primary); font-size: 0.9rem; border-top: 1px solid rgba(224, 225, 221, 0.1); padding-top: 1rem; }
+  .card-content-markdown h2, .card-content-markdown h3 { font-family: 'Rajdhani', sans-serif; color: var(--accent-crimson); margin-top: 1.5rem; margin-bottom: 0.5rem; }
   .card-content-markdown p { margin-bottom: 1rem; }
   .card-content-markdown ul { margin-left: 1.5rem; margin-bottom: 1rem; list-style-type: disc; }
 
   .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; display: inline-block; font-weight: 600; }
   .btn-link:hover { color: var(--accent-crimson); }
+
+  .footer { text-align: center; padding: 3rem 0; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid rgba(224,225,221,0.05); margin-top: 4rem; }
+  .mt-3 { margin-top: 1rem; }
+  .mb-4 { margin-bottom: 1.5rem; }
 </style>
