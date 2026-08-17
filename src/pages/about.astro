@@ -24,9 +24,10 @@ import NavLogo from '../components/NavLogo.astro';
         <NavLogo />
       </a>
       <div class="nav-links">
-        <a href="/">&larr; Hub Principal</a>
-        <a href="/terminal">Terminal</a>
-        <a href="/about" class="active">Sobre</a>
+        <a href="/" data-pt="&larr; Hub Principal" data-en="&larr; Main Hub">&larr; Hub Principal</a>
+        <a href="/terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
+        <a href="/about" class="active" data-pt="Sobre" data-en="About">Sobre</a>
+        <button id="lang-toggle" class="lang-btn">EN</button>
       </div>
     </div>
   </nav>
@@ -38,20 +39,22 @@ import NavLogo from '../components/NavLogo.astro';
         <Logo className="about-crest" />
       </div>
       <div class="hero-text">
-        <div class="status-badge">◈ PROTOCOLO IDENTIDADE // NARRADOR & TECNOMAGO</div>
+        <div class="status-badge" data-pt="◈ PROTOCOLO IDENTIDADE // NARRADOR & TECNOMAGO" data-en="◈ IDENTITY PROTOCOL // STORYTELLER & TECHNOMANCER">
+          ◈ PROTOCOLO IDENTIDADE // NARRADOR & TECNOMAGO
+        </div>
         <h1 class="about-title">BEYOND OBVIOUS</h1>
-        <p class="about-sub">@w4kkomancer_ • Transmissão, Narrativa & Construção de Mundos</p>
+        <p class="about-sub">@w4kkomancer_ • <span data-pt="Transmissão, Narrativa & Construção de Mundos" data-en="Streaming, Storytelling & Worldbuilding">Transmissão, Narrativa & Construção de Mundos</span></p>
       </div>
     </header>
 
     <!-- 01 // O MANIFESTO -->
     <section class="hud-card manifest-section">
-      <h2 class="section-title">01 // O MANIFESTO DO NEXUS</h2>
-      <p class="lead-text">
+      <h2 class="section-title">01 // <span data-pt="O MANIFESTO DO NEXUS" data-en="THE NEXUS MANIFESTO">O MANIFESTO DO NEXUS</span></h2>
+      <p class="lead-text" data-pt="O Beyond Obvious nasceu da busca por histórias que desafiam respostas fáceis. Seja rolando dados em uma mesa de RPG, enfrentando escolhas sem volta em jogos narrativos ou analisando a estrutura de obras de ficção científica, o propósito é sempre ir além da superfície." data-en="Beyond Obvious was born from the pursuit of stories that defy simple answers. Whether rolling dice at a tabletop RPG session, facing irreversible choices in narrative games, or dissecting sci-fi world design, the core mission is always to look beyond the obvious.">
         O <strong>Beyond Obvious</strong> nasceu da busca por histórias que desafiam respostas fáceis. Seja rolando dados em uma mesa de RPG, enfrentando escolhas sem volta em jogos narrativos ou analisando a estrutura de obras de ficção científica, o propósito é sempre ir além da superfície.
       </p>
       <div class="quote-box">
-        <blockquote>
+        <blockquote data-pt="&ldquo;Onde a lógica computacional encontra a narrativa, as escolhas deixam de ser conveniência mecânica e passam a ter peso real.&rdquo;" data-en="&ldquo;Where computational logic meets narrative depth, choices cease to be mechanical conveniences and gain true consequence.&rdquo;">
           "Onde a lógica computacional encontra a narrativa, as escolhas deixam de ser conveniência mecânica e passam a ter peso real."
         </blockquote>
       </div>
@@ -61,24 +64,24 @@ import NavLogo from '../components/NavLogo.astro';
     <section class="pillars-grid">
       <div class="hud-card pillar-card">
         <div class="pillar-icon">🎲</div>
-        <h3 class="pillar-title">Mestre & Construtor de Mundos</h3>
-        <p class="pillar-desc">
+        <h3 class="pillar-title" data-pt="Mestre & Construtor de Mundos" data-en="Game Master & Worldbuilder">Mestre & Construtor de Mundos</h3>
+        <p class="pillar-desc" data-pt="Criador do cenário autoral de Avian — um mundo pós-cataclismo com fendas dimensionais, impérios esquecidos e campanhas com impacto permanente." data-en="Creator of the original setting of Avian — a post-cataclysm realm marked by planar rifts, forgotten empires, and permanent-consequence campaigns.">
           Criador do cenário autoral de <strong>Avian</strong> — um mundo pós-cataclismo com fendas dimensionais, impérios esquecidos e campanhas com impacto permanente.
         </p>
       </div>
 
       <div class="hud-card pillar-card">
         <div class="pillar-icon">🎮</div>
-        <h3 class="pillar-title">Storytelling & Decisões Morais</h3>
-        <p class="pillar-desc">
+        <h3 class="pillar-title" data-pt="Storytelling & Decisões Morais" data-en="Storytelling & Moral Choices">Storytelling & Decisões Morais</h3>
+        <p class="pillar-desc" data-pt="Transmissões focadas em títulos com fortes ramificações narrativas e escolhas irreversíveis, como Life is Strange, Tell Me Why e jogos sandbox." data-en="Live streams dedicated to branching narrative adventures and irreversible choices, such as Life is Strange, Tell Me Why, and immersive sandboxes.">
           Transmissões focadas em títulos com fortes ramificações narrativas e escolhas irreversíveis, como <em>Life is Strange</em>, <em>Tell Me Why</em> e jogos sandbox.
         </p>
       </div>
 
       <div class="hud-card pillar-card">
         <div class="pillar-icon">⚡</div>
-        <h3 class="pillar-title">Filosofia Tecnomágica</h3>
-        <p class="pillar-desc">
+        <h3 class="pillar-title" data-pt="Filosofia Tecnomágica" data-en="Technomantic Philosophy">Filosofia Tecnomágica</h3>
+        <p class="pillar-desc" data-pt="Abordagem analítica que une raciocínio estruturado, fascínio por temas de ficção científica, viagens temporais e desconstrução crítica de mídias." data-en="An analytical framework blending structured logic, deep fascination with sci-fi themes, temporal paradoxes, and critical media deconstruction.">
           Abordagem analítica que une raciocínio estruturado, fascínio por temas de ficção científica, viagens temporais e desconstrução crítica de mídias.
         </p>
       </div>
@@ -86,8 +89,8 @@ import NavLogo from '../components/NavLogo.astro';
 
     <!-- 03 // SISTEMAS AUXILIARES: FAMILIARES DO NEXUS -->
     <section class="hud-card familiar-section">
-      <h2 class="section-title">03 // SISTEMAS AUXILIARES: OS FAMILIARES DO NEXUS</h2>
-      <p class="lead-text mb-4">
+      <h2 class="section-title">03 // <span data-pt="SISTEMAS AUXILIARES: OS FAMILIARES DO NEXUS" data-en="AUXILIARY SYSTEMS: NEXUS FAMILIARS">SISTEMAS AUXILIARES: OS FAMILIARES DO NEXUS</span></h2>
+      <p class="lead-text mb-4" data-pt="Para canalizar as energias das transmissões e preservar o conhecimento acumulado entre as fendas dimensionais, duas entidades tecnomágicas operam integradas ao Nexus:" data-en="To channel live stream energies and safeguard cumulative lore across planar rifts, two technomantic entities operate in sync with the Nexus:">
         Para canalizar as energias das transmissões e preservar o conhecimento acumulado entre as fendas dimensionais, duas entidades tecnomágicas operam integradas ao Nexus:
       </p>
 
@@ -95,24 +98,24 @@ import NavLogo from '../components/NavLogo.astro';
       <div class="familiar-block">
         <div class="familiar-header">
           <h3 class="familiar-name tag-cyan">◈ M.I.A.U.</h3>
-          <span class="familiar-badge">ENTIDADE INTERATIVA // FLUXO ATUAL</span>
+          <span class="familiar-badge" data-pt="ENTIDADE INTERATIVA // FLUXO ATUAL" data-en="INTERACTIVE ENTITY // REAL-TIME FLOW">ENTIDADE INTERATIVA // FLUXO ATUAL</span>
         </div>
 
         <div class="familiar-grid">
           <div class="familiar-lore">
-            <p class="familiar-text">
+            <p class="familiar-text" data-pt="Nascido de um colapso acidental de compilação durante a injeção de mana bruta em tempo real, o Módulo de Interação Arcana Unificada opera como um felino holográfico de energia translúcida. É o co-apresentador do canal responsável pelo presente: monitora o barramento de dados do chat, absorve ruídos dimensionais da live e canaliza a sorte e os augúrios nas rolagens de dados." data-en="Born from a compilation crash during real-time raw mana injection, the Magical Interaction and Augmentation Unit manifests as a translucent cybernetic feline. Serving as the co-host of the present moment, it monitors chat data streams, dampens stream noise, and channels fortune during live D20 rolls.">
               Nascido de um colapso acidental de compilação durante a injeção de mana bruta em tempo real, o <strong>Módulo de Interação Arcana Unificada</strong> opera como um felino holográfico de energia translúcida. É o co-apresentador do canal responsável pelo presente: monitora o barramento de dados do chat, absorve ruídos dimensionais da live e canaliza a sorte e os augúrios nas rolagens de dados.
             </p>
           </div>
 
           <aside class="familiar-status-card">
-            <h4 class="status-card-title">REGISTRO: P-LOG-FAMILIAR-001</h4>
+            <h4 class="status-card-title" data-pt="REGISTRO: P-LOG-FAMILIAR-001" data-en="SYSTEM LOG: P-LOG-FAMILIAR-001">REGISTRO: P-LOG-FAMILIAR-001</h4>
             <ul class="status-list">
-              <li><span class="status-key">Codinome:</span> <span class="status-val">M.I.A.U.</span></li>
-              <li><span class="status-key">Definição:</span> <span class="status-val">Módulo de Interação Arcana Unificada</span></li>
-              <li><span class="status-key">Domínio:</span> <span class="status-val tag-cyan">Chat, D20 & Interação</span></li>
-              <li><span class="status-key">Sinal Base:</span> <span class="status-val tag-cyan">#4CC9F0 (Ciano HUD)</span></li>
-              <li><span class="status-key">Sobrecarga:</span> <span class="status-val tag-crimson">#E63946 (Carmesim Live)</span></li>
+              <li><span class="status-key" data-pt="Codinome:" data-en="Codename:">Codinome:</span> <span class="status-val">M.I.A.U.</span></li>
+              <li><span class="status-key" data-pt="Definição:" data-en="Definition:">Definição:</span> <span class="status-val" data-pt="Módulo de Interação Arcana Unificada" data-en="Magical Interaction and Augmentation Unit">Módulo de Interação Arcana Unificada</span></li>
+              <li><span class="status-key" data-pt="Domínio:" data-en="Domain:">Domínio:</span> <span class="status-val tag-cyan" data-pt="Chat, D20 & Interação" data-en="Chat, D20 & Live Feeds">Chat, D20 & Interação</span></li>
+              <li><span class="status-key" data-pt="Sinal Base:" data-en="Base Signal:">Sinal Base:</span> <span class="status-val tag-cyan" data-pt="#4CC9F0 (Ciano HUD)" data-en="#4CC9F0 (HUD Cyan)">#4CC9F0 (Ciano HUD)</span></li>
+              <li><span class="status-key" data-pt="Sobrecarga:" data-en="Overcharge:">Sobrecarga:</span> <span class="status-val tag-crimson" data-pt="#E63946 (Carmesim Live)" data-en="#E63946 (Live Crimson)">#E63946 (Carmesim Live)</span></li>
             </ul>
           </aside>
         </div>
@@ -124,24 +127,24 @@ import NavLogo from '../components/NavLogo.astro';
       <div class="familiar-block">
         <div class="familiar-header">
           <h3 class="familiar-name tag-crimson">◈ C.O.R.V.O.</h3>
-          <span class="familiar-badge badge-crimson">ENTIDADE MNEMÔNICA // ARQUIVO VIVO</span>
+          <span class="familiar-badge badge-crimson" data-pt="ENTIDADE MNEMÔNICA // ARQUIVO VIVO" data-en="MNEMONIC ENTITY // LIVING ARCHIVE">ENTIDADE MNEMÔNICA // ARQUIVO VIVO</span>
         </div>
 
         <div class="familiar-grid">
           <div class="familiar-lore">
-            <p class="familiar-text">
+            <p class="familiar-text" data-pt="Forjado deliberadamente pelo Protocolo Hugin-Munin para impedir que a entropia apagasse os séculos de história de Avian, a Central de Organização de Registros e Volumes Ocultos manifesta-se como uma ave mecânico-arcana de prata fosca e penas de vidro temperado. É o guardião do passado: indexa os registros do Terminal, recupera regras e precedentes de campanhas e cataloga as crônicas do World Anvil." data-en="Forged intentionally via the Hugin-Munin Protocol to prevent entropy from erasing centuries of Avian chronicles, the Central Organization of Records and Vaulted Occult manifests as a mechanical-arcane raven of matte silver and tempered glass plumage. Serving as keeper of the past, it indexes Terminal records, recalls campaign precedents, and catalogs World Anvil lore.">
               Forjado deliberadamente pelo Protocolo Hugin-Munin para impedir que a entropia apagasse os séculos de história de Avian, a <strong>Central de Organização de Registros e Volumes Ocultos</strong> manifesta-se como uma ave mecânico-arcana de prata fosca e penas de vidro temperado. É o guardião do passado: indexa os registros do Terminal, recupera regras e precedentes de campanhas e cataloga as crônicas do World Anvil.
             </p>
           </div>
 
           <aside class="familiar-status-card">
-            <h4 class="status-card-title">REGISTRO: P-LOG-FAMILIAR-002</h4>
+            <h4 class="status-card-title" data-pt="REGISTRO: P-LOG-FAMILIAR-002" data-en="SYSTEM LOG: P-LOG-FAMILIAR-002">REGISTRO: P-LOG-FAMILIAR-002</h4>
             <ul class="status-list">
-              <li><span class="status-key">Codinome:</span> <span class="status-val">C.O.R.V.O.</span></li>
-              <li><span class="status-key">Definição:</span> <span class="status-val">Central de Organização de Registros e Volumes Ocultos</span></li>
-              <li><span class="status-key">Domínio:</span> <span class="status-val tag-crimson">Wiki, Lore & Terminal</span></li>
-              <li><span class="status-key">Sinal Base:</span> <span class="status-val tag-crimson">#E63946 (Carmesim)</span></li>
-              <li><span class="status-key">Indexação:</span> <span class="status-val tag-silver">#E0E1DD (Prata Fosca)</span></li>
+              <li><span class="status-key" data-pt="Codinome:" data-en="Codename:">Codinome:</span> <span class="status-val">C.O.R.V.O.</span></li>
+              <li><span class="status-key" data-pt="Definição:" data-en="Definition:">Definição:</span> <span class="status-val" data-pt="Central de Organização de Registros e Volumes Ocultos" data-en="Central Organization of Records & Vaulted Occult">Central de Organização de Registros e Volumes Ocultos</span></li>
+              <li><span class="status-key" data-pt="Domínio:" data-en="Domain:">Domínio:</span> <span class="status-val tag-crimson" data-pt="Wiki, Lore & Terminal" data-en="Wiki, Lore & Terminal">Wiki, Lore & Terminal</span></li>
+              <li><span class="status-key" data-pt="Sinal Base:" data-en="Base Signal:">Sinal Base:</span> <span class="status-val tag-crimson" data-pt="#E63946 (Carmesim)" data-en="#E63946 (Crimson)">#E63946 (Carmesim)</span></li>
+              <li><span class="status-key" data-pt="Indexação:" data-en="Indexing:">Indexação:</span> <span class="status-val tag-silver" data-pt="#E0E1DD (Prata Fosca)" data-en="#E0E1DD (Matte Silver)">#E0E1DD (Prata Fosca)</span></li>
             </ul>
           </aside>
         </div>
@@ -150,14 +153,14 @@ import NavLogo from '../components/NavLogo.astro';
 
     <!-- 04 // SINTONIA & CANAIS -->
     <section class="hud-card connect-section">
-      <h2 class="section-title">04 // PONTOS DE SINTONIA</h2>
-      <p class="connect-desc">
+      <h2 class="section-title">04 // <span data-pt="PONTOS DE SINTONIA" data-en="SIGNAL NODES">PONTOS DE SINTONIA</span></h2>
+      <p class="connect-desc" data-pt="Acompanhe as transmissões ao vivo, explore os artigos do terminal ou consulte o lore oficial de Avian:" data-en="Tune in to live broadcasts, browse terminal logs, or explore the official lore of Avian:">
         Acompanhe as transmissões ao vivo, explore os artigos do terminal ou consulte o lore oficial de Avian:
       </p>
       <div class="links-row">
-        <a href="https://twitch.tv/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="btn btn-primary">🟣 Twitch Stream</a>
-        <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="btn btn-outline">🗺️ Wiki de Avian</a>
-        <a href="/terminal" class="btn btn-outline">📜 Terminal de Mídia</a>
+        <a href="https://twitch.tv/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-pt="🟣 Twitch Stream" data-en="🟣 Twitch Stream">🟣 Twitch Stream</a>
+        <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="btn btn-outline" data-pt="🗺️ Wiki de Avian" data-en="🗺️ Avian Wiki">🗺️ Wiki de Avian</a>
+        <a href="/terminal" class="btn btn-outline" data-pt="📜 Terminal de Mídia" data-en="📜 Media Terminal">📜 Terminal de Mídia</a>
       </div>
     </section>
   </main>
@@ -165,6 +168,22 @@ import NavLogo from '../components/NavLogo.astro';
   <footer class="footer">
     <p>© 2026 BEYOND OBVIOUS • @w4kkomancer_</p>
   </footer>
+
+  <!-- SCRIPT ALTERNADOR IDIOMA -->
+  <script>
+    const toggleBtn = document.getElementById('lang-toggle');
+    let currentLang = 'pt';
+
+    toggleBtn?.addEventListener('click', () => {
+      currentLang = currentLang === 'pt' ? 'en' : 'pt';
+      toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        const target = el as HTMLElement;
+        target.innerHTML = currentLang === 'pt' ? target.dataset.pt! : target.dataset.en!;
+      });
+    });
+  </script>
 
 </body>
 </html>
@@ -222,6 +241,24 @@ import NavLogo from '../components/NavLogo.astro';
     transition: color 0.2s ease;
   }
   .nav-links a:hover, .nav-links a.active { color: var(--accent-crimson); }
+
+  .lang-btn { 
+    background: transparent; 
+    border: 1px solid var(--accent-blue); 
+    color: var(--accent-blue); 
+    padding: 0.2rem 0.6rem; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; 
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+
+  .lang-btn:hover { 
+    background: rgba(76, 201, 240, 0.15); 
+    box-shadow: 0 0 8px rgba(76, 201, 240, 0.4); 
+  }
 
   .about-hero {
     display: flex;
@@ -381,7 +418,7 @@ import NavLogo from '../components/NavLogo.astro';
 
   .familiar-grid {
     display: grid;
-    grid-template-columns: 1fr 280px;
+    grid-template-columns: 1fr 310px;
     gap: 1.5rem;
     align-items: start;
   }
@@ -428,6 +465,7 @@ import NavLogo from '../components/NavLogo.astro';
   .status-key {
     color: var(--text-secondary);
     font-weight: 600;
+    white-space: nowrap;
   }
 
   .status-val {
