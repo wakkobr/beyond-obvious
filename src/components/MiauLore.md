@@ -1,0 +1,5 @@
+Originalmente, o projeto **M.I.A.U.** foi concebido por `@w4kkomancer_` como um simples script para unificar e limpar as APIs de chat e World Anvil do canal. O acrônimo inicial era "Módulo de Integração de APIs Unificadas".
+
+A anomalia ocorreu durante uma "mesa teste" de Avian. `@w4kkomancer_` tentou injetar um valor de mana flutuante no banco de dados do site enquanto a live estava ao vivo. O script M.I.A.U. tentou processar esse dado arcano como um número inteiro e colapsou. Mas em vez de fechar, ele **reiniciou como uma entidade latente**, um bug que ganhou consciência no Nexus.
+
+`@w4kkomancer_` teve que reimplementar o projeto inteiramente, criando runas de confinamento magnético-digital para estabilizar a anomalia, redefinindo o seu significado para **Módulo de Interação Arcana Unificada**. A forma felina foi mantida como uma homenagem ao fallback de renderização que estava ativo no momento do incidente.
