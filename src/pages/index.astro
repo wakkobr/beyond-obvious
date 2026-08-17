@@ -38,7 +38,7 @@ const postsWithContent = await Promise.all(
   <nav class="nav-bar">
     <div class="nav-container">
       <a href="#" class="nav-brand">
-        <img src="/logo.png" alt="Beyond Obvious Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <Logo className="brand-logo" />
         <span class="nav-logo">BEYOND OBVIOUS</span>
       </a>
       <div class="nav-links">
@@ -229,7 +229,7 @@ const postsWithContent = await Promise.all(
   .nav-container { max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1.5rem; }
   
   .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-  .brand-logo { width: 28px; height: 28px; object-fit: contain; }
+  .brand-logo { width: 32px; height: 32px; }
   .nav-logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--accent-crimson); letter-spacing: 2px; }
   
   .nav-links { display: flex; gap: 1.2rem; align-items: center; }
