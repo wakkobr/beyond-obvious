@@ -1,0 +1,328 @@
+---
+// src/pages/terminal/[slug].astro
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import NavLogo from '../../components/NavLogo.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('terminal');
+  return posts.map((post: CollectionEntry<'terminal'>) => {
+    const slug = post.id.replace(/\.[^/.]+$/, '');
+    return {
+      params: { slug },
+      props: { post },
+    };
+  });
+}
+
+interface Props {
+  post: CollectionEntry<'terminal'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const ratingNum = parseInt(post.data.rating || '5', 10);
+const ratingStars = '★'.repeat(isNaN(ratingNum) ? 5 : ratingNum);
+const postSlugId = post.id.replace(/\.[^/.]+$/, '').toUpperCase();
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>{post.data.title} // TERMINAL // BEYOND OBVIOUS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVEGAÇÃO -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/" class="nav-brand">
+        <NavLogo />
+      </a>
+      <div class="nav-links">
+        <a href="/">&larr; Hub Principal</a>
+        <a href="/vault">Cofre Arcano</a>
+        <a href="/#terminal">Terminal</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <article class="post-article">
+      <!-- CABEÇALHO DO POST -->
+      <header class="article-header">
+        <div class="header-meta">
+          <span class="category-badge">{post.data.category.toUpperCase()}</span>
+          <span class="rating-stars">{ratingStars}</span>
+        </div>
+
+        <h1 class="article-title">{post.data.title}</h1>
+        
+        <div class="article-date-row">
+          <span class="meta-item">◈ DATA: {formattedDate}</span>
+          <span class="meta-item">◈ REGISTRO: ID-{postSlugId}</span>
+        </div>
+
+        {post.data.summary ? (
+          <div class="article-summary-box">
+            <p>{post.data.summary}</p>
+          </div>
+        ) : null}
+      </header>
+
+      <!-- CORPO DO TEXTO MARKDOWN -->
+      <div class="article-content">
+        <Content />
+      </div>
+
+      <!-- RODAPÉ DO POST -->
+      <footer class="article-footer">
+        {post.data.externalLink ? (
+          <div class="external-box">
+            <span class="ext-label">Frequência Externa Vinculada:</span>
+            <a href={post.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              🌐 Acessar Fonte Externa &rarr;
+            </a>
+          </div>
+        ) : null}
+
+        <div class="footer-nav">
+          <a href="/#terminal" class="btn btn-primary">&larr; Voltar ao Terminal</a>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 BEYOND OBVIOUS • @W4KKO_</p>
+  </footer>
+
+</body>
+</html>
+
+<style>
+  :root {
+    --bg-canvas: #0B0C10;
+    --bg-surface: #16181D;
+    --accent-crimson: #E63946;
+    --accent-blue: #4CC9F0;
+    --text-primary: #E0E1DD;
+    --text-secondary: #8D99AE;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+  
+  .nav-bar { 
+    background: rgba(11, 12, 16, 0.95); 
+    border-bottom: 1px solid rgba(230, 57, 70, 0.2); 
+    position: sticky; 
+    top: 0; 
+    backdrop-filter: blur(10px); 
+    z-index: 100; 
+    height: 70px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-container { 
+    width: 100%;
+    max-width: 960px; 
+    margin: 0 auto; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 1.5rem; 
+  }
+  
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.4rem; align-items: center; }
+  .nav-links a { 
+    color: var(--text-secondary); 
+    text-decoration: none; 
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem; 
+    font-weight: 600; 
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--accent-crimson); }
+
+  /* ARTIGO */
+  .post-article {
+    background: var(--bg-surface);
+    border: 1px solid rgba(224, 225, 221, 0.1);
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .article-header {
+    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .category-badge {
+    background: rgba(76, 201, 240, 0.1);
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .rating-stars {
+    color: #F4A261;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  .article-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin: 0.5rem 0 1rem;
+    color: var(--text-primary);
+  }
+
+  .article-date-row {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+
+  .article-summary-box {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--accent-crimson);
+    padding: 1rem 1.2rem;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .article-summary-box p {
+    margin: 0;
+    color: #cad2c5;
+    font-style: italic;
+  }
+
+  /* ESTILOS DE CORPO MARKDOWN */
+  .article-content {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+  }
+
+  .article-content :global(h2), .article-content :global(h3) {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--accent-crimson);
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .article-content :global(h2) { font-size: 1.6rem; }
+  .article-content :global(h3) { font-size: 1.3rem; }
+
+  .article-content :global(p) {
+    margin-bottom: 1.4rem;
+  }
+
+  .article-content :global(ul), .article-content :global(ol) {
+    margin-left: 1.8rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .article-content :global(blockquote) {
+    border-left: 3px solid var(--accent-blue);
+    margin: 1.5rem 0;
+    padding: 0.5rem 1rem;
+    background: rgba(76, 201, 240, 0.05);
+    color: var(--text-secondary);
+  }
+
+  .article-footer {
+    border-top: 1px solid rgba(224, 225, 221, 0.1);
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .external-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  .ext-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .btn { 
+    display: inline-block; 
+    padding: 0.6rem 1.2rem; 
+    font-family: 'Rajdhani', sans-serif; 
+    font-weight: 700; 
+    text-decoration: none; 
+    border-radius: 4px; 
+    text-transform: uppercase; 
+    cursor: pointer; 
+  }
+  .btn-primary { background: var(--accent-crimson); color: white; border: none; }
+  .btn-primary:hover { background: #ff4d5a; }
+  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(224,225,221,0.2); }
+  .btn-outline:hover { border-color: var(--accent-crimson); }
+
+  .footer { 
+    text-align: center; 
+    padding: 3rem 0; 
+    color: var(--text-secondary); 
+    font-size: 0.85rem; 
+    border-top: 1px solid rgba(224,225,221,0.05); 
+    margin-top: 4rem; 
+  }
+
+  @media (max-width: 768px) {
+    .post-article { padding: 1.5rem; }
+    .article-title { font-size: 1.7rem; }
+    .external-box { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+    .nav-container { flex-direction: column; gap: 0.8rem; padding: 0.8rem 1rem; }
+    .nav-bar { height: auto; padding: 0.5rem 0; }
+  }
+</style>

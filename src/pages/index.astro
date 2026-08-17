@@ -1,25 +1,26 @@
 ---
 // src/pages/index.astro
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Logo from '../components/Logo.astro';
 import NavLogo from '../components/NavLogo.astro';
 
+type TerminalPost = CollectionEntry<'terminal'>;
+
+interface ProcessedPost extends TerminalPost {
+  slug: string;
+  stars: string;
+}
+
 const posts = await getCollection('terminal');
 
-const sortedPosts = posts.sort((a: CollectionEntry<'terminal'>, b: CollectionEntry<'terminal'>) => 
-  b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
-);
-
-const postsWithContent = await Promise.all(
-  sortedPosts.map(async (post: CollectionEntry<'terminal'>) => {
-    const { Content } = await render(post);
-    return {
-      post,
-      Content,
-    };
-  })
-);
+const sortedPosts: ProcessedPost[] = posts
+  .sort((a: TerminalPost, b: TerminalPost) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .map((post: TerminalPost): ProcessedPost => ({
+    ...post,
+    slug: post.id.replace(/\.[^/.]+$/, ''),
+    stars: '★'.repeat(parseInt(post.data.rating || '5', 10)),
+  }));
 ---
 
 <!DOCTYPE html>
@@ -111,32 +112,28 @@ const postsWithContent = await Promise.all(
     <section id="terminal" class="section">
       <h2 class="section-title">03 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
       <div class="posts-grid">
-        {postsWithContent.length > 0 ? postsWithContent.map(({ post, Content }) => {
-          return (
-            <div class="hud-card">
-              <div class="card-meta">
-                <span class="category-tag">
-                  {post.data.category.toUpperCase()}
-                </span>
-                <span class="star-rating">
-                  {'★'.repeat(parseInt(post.data.rating))}
-                </span>
-              </div>
-              <h3 class="card-title">{post.data.title}</h3>
-              <p class="card-desc">
-                {post.data.summary}
-              </p>
-              
-              <div class="card-content-markdown mt-3">
-                <Content />
-              </div>
-
-              {post.data.externalLink && (
-                <a href={post.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn-link mt-3">Ver mais &rarr;</a>
-              )}
+        {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => (
+          <div class="hud-card">
+            <div class="card-meta">
+              <span class="category-tag">
+                {post.data.category.toUpperCase()}
+              </span>
+              <span class="star-rating">
+                {post.stars}
+              </span>
             </div>
-          );
-        }) : (
+            <h3 class="card-title">{post.data.title}</h3>
+            <p class="card-desc">
+              {post.data.summary}
+            </p>
+            
+            <div class="card-actions-terminal mt-3">
+              <a href={`/terminal/${post.slug}`} class="btn-link">
+                Ler Registro Completo &rarr;
+              </a>
+            </div>
+          </div>
+        )) : (
           <div class="hud-card">
             <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
           </div>
@@ -360,6 +357,7 @@ const postsWithContent = await Promise.all(
   .star-rating { color: #F4A261; }
 
   .card-actions-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .card-actions-terminal { display: flex; justify-content: flex-end; }
   .tags-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
@@ -371,11 +369,6 @@ const postsWithContent = await Promise.all(
   .signal-info { display: flex; flex-direction: column; }
   .signal-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; }
   .signal-handle { font-size: 0.75rem; color: var(--text-secondary); }
-
-  .card-content-markdown { color: var(--text-primary); font-size: 0.9rem; border-top: 1px solid rgba(224, 225, 221, 0.1); padding-top: 1rem; }
-  .card-content-markdown h2, .card-content-markdown h3 { font-family: 'Rajdhani', sans-serif; color: var(--accent-crimson); margin-top: 1.5rem; margin-bottom: 0.5rem; }
-  .card-content-markdown p { margin-bottom: 1rem; }
-  .card-content-markdown ul { margin-left: 1.5rem; margin-bottom: 1rem; list-style-type: disc; }
 
   .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; display: inline-block; font-weight: 600; }
   .btn-link:hover { color: var(--accent-crimson); }
