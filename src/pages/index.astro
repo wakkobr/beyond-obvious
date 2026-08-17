@@ -2,7 +2,7 @@
 // src/pages/index.astro
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Logo from '../components/Logo.astro';
+import Logo from '../components/logo.astro';
 import NavLogo from '../components/NavLogo.astro';
 
 const posts = await getCollection('terminal');
@@ -38,12 +38,12 @@ const postsWithContent = await Promise.all(
   <!-- NAVEGAÇÃO -->
   <nav class="nav-bar">
     <div class="nav-container">
-      <a href="#" class="nav-brand">
+      <a href="/" class="nav-brand">
         <NavLogo />
       </a>
       <div class="nav-links">
         <a href="#stream" data-pt="Transmissões" data-en="Streams">Transmissões</a>
-        <a href="#vault" data-pt="Cofre Arcano" data-en="Arcane Vault">Cofre Arcano</a>
+        <a href="/vault" data-pt="Cofre Arcano" data-en="Arcane Vault">Cofre Arcano</a>
         <a href="#terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
         <a href="#signal" data-pt="Sinal" data-en="Signal">Sinal</a>
         <button id="lang-toggle" class="lang-btn">EN</button>
@@ -71,7 +71,7 @@ const postsWithContent = await Promise.all(
         </p>
         <div class="hero-actions">
           <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
-          <a href="#vault" class="btn btn-outline" data-pt="🗺️ EXPLORAR WORLD ANVIL" data-en="🗺️ EXPLORE WORLD ANVIL">🗺️ EXPLORAR WORLD ANVIL</a>
+          <a href="/vault" class="btn btn-outline" data-pt="🗺️ EXPLORAR COFRE ARCANO" data-en="🗺️ EXPLORE ARCANE VAULT">🗺️ EXPLORAR COFRE ARCANO</a>
         </div>
       </div>
     </section>
@@ -100,7 +100,10 @@ const postsWithContent = await Promise.all(
         <p class="card-desc" data-pt="Todo o lore do meu mundo, cosmologia, mapas e registros completos das sessões que mestro centralizados no World Anvil." data-en="Complete setting lore, cosmology, maps, and detailed campaign session logs hosted on World Anvil.">
           Todo o lore do meu mundo, cosmologia, mapas e registros completos das sessões que mestro centralizados no World Anvil.
         </p>
-        <a href="https://www.worldanvil.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline mt-3" data-pt="🌐 Acessar World Anvil &rarr;" data-en="🌐 Open World Anvil &rarr;">🌐 Acessar World Anvil &rarr;</a>
+        <div class="card-actions-row mt-3">
+          <a href="/vault" class="btn btn-primary" data-pt="📖 Ver Repositório do Cofre" data-en="📖 Open Vault Repository">📖 Ver Repositório do Cofre</a>
+          <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="btn btn-outline" data-pt="🌐 World Anvil Direto &rarr;" data-en="🌐 Direct World Anvil &rarr;">🌐 World Anvil Direto &rarr;</a>
+        </div>
       </div>
     </section>
 
@@ -163,11 +166,11 @@ const postsWithContent = await Promise.all(
               <span class="signal-handle">VODs & Sessões</span>
             </div>
           </a>
-          <a href="https://www.worldanvil.com" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="signal-card">
             <span class="signal-icon">🗺️</span>
             <div class="signal-info">
               <span class="signal-name">World Anvil</span>
-              <span class="signal-handle">Cofre Arcano</span>
+              <span class="signal-handle">Avian Wiki</span>
             </div>
           </a>
           <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="signal-card">
@@ -226,7 +229,6 @@ const postsWithContent = await Promise.all(
 
   .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
   
-  /* NAVEGAÇÃO AJUSTADA PARA O LOGO HUD */
   .nav-bar { 
     background: rgba(11, 12, 16, 0.95); 
     border-bottom: 1px solid rgba(230, 57, 70, 0.2); 
@@ -292,7 +294,6 @@ const postsWithContent = await Promise.all(
     box-shadow: 0 0 8px rgba(76, 201, 240, 0.4);
   }
 
-  /* HERO EM DUAS COLUNAS */
   .hero-split {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -319,7 +320,6 @@ const postsWithContent = await Promise.all(
     max-height: 100%;
   }
 
-  /* DETALHES DE CANTO TECNOMÁGICO */
   .crest-corner {
     position: absolute;
     width: 8px;
@@ -359,11 +359,11 @@ const postsWithContent = await Promise.all(
   .category-tag { color: var(--accent-blue); font-weight: 700; }
   .star-rating { color: #F4A261; }
 
+  .card-actions-row { display: flex; gap: 1rem; flex-wrap: wrap; }
   .tags-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
-  /* ESTILOS DA SEÇÃO SIGNAL */
   .signal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
   .signal-card { display: flex; align-items: center; gap: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(224,225,221,0.1); padding: 0.8rem 1rem; border-radius: 4px; text-decoration: none; color: var(--text-primary); transition: all 0.2s ease; }
   .signal-card:hover { border-color: var(--accent-crimson); transform: translateY(-2px); }
@@ -384,34 +384,13 @@ const postsWithContent = await Promise.all(
   .mt-3 { margin-top: 1rem; }
   .mb-4 { margin-bottom: 1.5rem; }
 
-  /* RESPONSIVIDADE (MOBILE) */
   @media (max-width: 768px) {
-    .nav-container {
-      flex-direction: column;
-      gap: 0.8rem;
-      padding: 0.8rem 1rem;
-    }
-    .nav-bar {
-      height: auto;
-      padding: 0.5rem 0;
-    }
-    .hero-split {
-      grid-template-columns: 1fr;
-      text-align: center;
-      gap: 1.5rem;
-      padding: 2rem 0;
-    }
-    .hero-crest-frame {
-      margin: 0 auto;
-    }
-    .hero-info {
-      align-items: center;
-    }
-    .hero-actions {
-      justify-content: center;
-    }
-    .hero-title {
-      font-size: 2rem;
-    }
+    .nav-container { flex-direction: column; gap: 0.8rem; padding: 0.8rem 1rem; }
+    .nav-bar { height: auto; padding: 0.5rem 0; }
+    .hero-split { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; padding: 2rem 0; }
+    .hero-crest-frame { margin: 0 auto; }
+    .hero-info { align-items: center; }
+    .hero-actions { justify-content: center; }
+    .hero-title { font-size: 2rem; }
   }
 </style>
