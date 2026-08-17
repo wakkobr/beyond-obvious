@@ -1,0 +1,33 @@
+---
+// src/pages/terminal/index.astro
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import NavLogo from '../../components/NavLogo.astro';
+
+type TerminalPost = CollectionEntry<'terminal'>;
+
+interface ProcessedPost extends TerminalPost {
+  slug: string;
+  stars: string;
+  formattedDate: string;
+}
+
+const posts = await getCollection('terminal');
+
+const sortedPosts: ProcessedPost[] = posts
+  .sort((a: TerminalPost, b: TerminalPost) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .map((post: TerminalPost): ProcessedPost => ({
+    ...post,
+    slug: post.id.replace(/\.[^/.]+$/, ''),
+    stars: '★'.repeat(parseInt(post.data.rating || '5', 10)),
+    formattedDate: new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    }),
+  }));
+
+const rawCategories: string[] = posts.map((p: TerminalPost) => String(p.data.category).toUpperCase());
+const uniqueCategories: string[] = Array.from(new Set<string>(rawCategories));
+const categories: string[] = ['TODOS', ...uniqueCategories];
+---
