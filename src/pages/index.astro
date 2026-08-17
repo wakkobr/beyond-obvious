@@ -2,6 +2,7 @@
 // src/pages/index.astro
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import Logo from '../components/Logo.astro';
 
 const posts = await getCollection('terminal');
 
@@ -58,7 +59,7 @@ const postsWithContent = await Promise.all(
         <div class="crest-corner top-right"></div>
         <div class="crest-corner bottom-left"></div>
         <div class="crest-corner bottom-right"></div>
-        <img src="/logo.svg" alt="Emblema Corvo Beyond Obvious" class="hero-crest-img" />
+        <Logo className="hero-crest-img" />
       </div>
 
       <div class="hero-info">
