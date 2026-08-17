@@ -53,8 +53,8 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
       </a>
       <div class="nav-links">
         <a href="/">&larr; Hub Principal</a>
-        <a href="/vault">Cofre Arcano</a>
         <a href="/terminal" class="active">Terminal</a>
+        <a href="/about">Sobre</a>
       </div>
     </div>
   </nav>
@@ -74,7 +74,7 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
           <button 
             type="button" 
             class={`filter-btn ${idx === 0 ? 'active' : ''}`} 
-            data-category={cat.toLowerCase()}
+            data-target={cat.toLowerCase().trim()}
           >
             {cat}
           </button>
@@ -87,9 +87,12 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
       <div class="posts-grid" id="posts-container">
         {sortedPosts.length > 0 ? (
           sortedPosts.map((post: ProcessedPost) => (
-            <article class="hud-card post-card" data-category={String(post.data.category || '').toLowerCase().trim()}>
+            <article 
+              class="hud-card post-card" 
+              data-cat={String(post.data.category || '').toLowerCase().trim()}
+            >
               <div class="card-meta">
-                <span class="category-tag">
+                <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
                   {String(post.data.category || '').toUpperCase()}
                 </span>
                 <span class="star-rating">
@@ -127,29 +130,25 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
     <p>© 2026 BEYOND OBVIOUS • @W4KKO_</p>
   </footer>
 
-  <!-- SCRIPT DE FILTRAGEM DINÂMICA -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const postCards = document.querySelectorAll('.post-card');
+  <!-- SCRIPT DE FILTRAGEM SEM DEPENDÊNCIA EXTERNA -->
+  <script is:inline>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.post-card');
 
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
 
-          const selectedCat = (btn.getAttribute('data-category') || '').toLowerCase();
+        const target = (btn.getAttribute('data-target') || '').toLowerCase().trim();
 
-          postCards.forEach(card => {
-            const cardEl = card as HTMLElement;
-            const cardCat = (cardEl.getAttribute('data-category') || '').toLowerCase();
-            
-            if (selectedCat === 'todos' || cardCat === selectedCat) {
-              cardEl.style.display = 'flex';
-            } else {
-              cardEl.style.display = 'none';
-            }
-          });
+        cards.forEach((card) => {
+          const itemCat = (card.getAttribute('data-cat') || '').toLowerCase().trim();
+          if (target === 'todos' || itemCat === target) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
         });
       });
     });
@@ -164,6 +163,10 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
     --bg-surface: #16181D;
     --accent-crimson: #E63946;
     --accent-blue: #4CC9F0;
+    --accent-purple: #9D4EDD;
+    --accent-pink: #F72585;
+    --accent-gold: #F4A261;
+    --accent-green: #2A9D8F;
     --text-primary: #E0E1DD;
     --text-secondary: #8D99AE;
   }
@@ -281,9 +284,14 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
   }
 
   .post-card {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  /* Ocultar posts no filtro */
+  .post-card.is-hidden {
+    display: none !important;
   }
 
   .hud-card { 
@@ -301,7 +309,14 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
   .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.35rem; margin: 0.3rem 0 0.5rem; color: var(--text-primary); }
   .card-desc { color: var(--text-secondary); margin: 0 0 1rem; font-size: 0.95rem; line-height: 1.5; }
   .card-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.4rem; }
-  .category-tag { color: var(--accent-blue); font-weight: 700; }
+  
+  .category-tag { font-weight: 700; color: var(--accent-blue); }
+  .cat-avian { color: #4CC9F0; }
+  .cat-rpg { color: #9D4EDD; }
+  .cat-gaming { color: #F72585; }
+  .cat-narrativas { color: #F4A261; }
+  .cat-nexus { color: #2A9D8F; }
+
   .star-rating { color: #F4A261; }
 
   .post-date {
