@@ -1,0 +1,65 @@
+---
+// src/components/NavLogo.astro
+interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<div class={`nav-logo-svg ${className}`}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" width="100%" height="100%">
+    <defs>
+      <filter id="neonGlowC">
+        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- Texto HUD com Glifos -->
+    <text x="30" y="58" font-family="'Orbitron', 'Rajdhani', sans-serif" font-size="32" font-weight="800" fill="#E0E1DD" letter-spacing="3">BEY</text>
+
+    <!-- Glifo "O" de Beyond (Corvo/Nodo Rúnico) -->
+    <g transform="translate(112, 28)">
+      <polygon points="18,3 32,15 32,33 18,45 4,33 4,15" fill="#16181D" stroke="#E63946" stroke-width="2.5"/>
+      <polygon points="18,12 26,24 10,24" fill="#E63946" filter="url(#neonGlowC)"/>
+      <circle cx="18" cy="24" r="2.5" fill="#FFFFFF"/>
+    </g>
+
+    <!-- "ND" -->
+    <text x="156" y="58" font-family="'Orbitron', 'Rajdhani', sans-serif" font-size="32" font-weight="800" fill="#E0E1DD" letter-spacing="3">ND</text>
+
+    <!-- "OBVIOUS" -->
+    <text x="232" y="58" font-family="'Orbitron', 'Rajdhani', sans-serif" font-size="32" font-weight="800" fill="#E63946" letter-spacing="3">OBVIOUS</text>
+
+    <!-- Linha Decorativa Inferior (Terminal HUD) -->
+    <line x1="30" y1="74" x2="490" y2="74" stroke="#8D99AE" stroke-width="1" stroke-opacity="0.3"/>
+    <rect x="30" y="72" width="24" height="4" fill="#E63946"/>
+    <rect x="466" y="72" width="24" height="4" fill="#4CC9F0"/>
+
+    <!-- Tag de Status -->
+    <text x="260" y="86" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#8D99AE" letter-spacing="3" text-anchor="middle">SISTEMA//ARCANO.ATIVO</text>
+  </svg>
+</div>
+
+<style>
+  .nav-logo-svg {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    width: 250px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  .nav-logo-svg:hover {
+    transform: translateY(-1px);
+    filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.4));
+  }
+  .nav-logo-svg svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
