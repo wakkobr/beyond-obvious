@@ -44,8 +44,8 @@ const sortedPosts: ProcessedPost[] = posts
       </a>
       <div class="nav-links">
         <a href="#stream" data-pt="Transmissões" data-en="Streams">Transmissões</a>
-        <a href="/vault" data-pt="Cofre Arcano" data-en="Arcane Vault">Cofre Arcano</a>
         <a href="/terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
+        <a href="/about" data-pt="Sobre" data-en="About">Sobre</a>
         <a href="#signal" data-pt="Sinal" data-en="Signal">Sinal</a>
         <button id="lang-toggle" class="lang-btn">EN</button>
       </div>
@@ -67,12 +67,12 @@ const sortedPosts: ProcessedPost[] = posts
         <div class="status-badge">◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA</div>
         <h1 class="hero-title">BEYOND OBVIOUS</h1>
         <p class="hero-sub">@W4KKO_ • <span data-pt="Tecnomago & Narrador" data-en="Technomancer & Storyteller">Tecnomago & Narrador</span></p>
-        <p class="hero-bio" data-pt="Onde o arcano encontra a lógica e as narrativas vão além do óbvio. Explorando lore de RPG de mesa, mecânicas de jogos, ficção científica e construção de mundos." data-en="Where arcana meets logic, and stories cut deeper than the obvious. Exploring tabletop lore, game mechanics, sci-fi, and worldbuilding.">
-          Onde o arcano encontra a lógica e as narrativas vão além do óbvio. Explorando lore de RPG de mesa, mecânicas de jogos, ficção científica e construção de mundos.
+        <p class="hero-bio" data-pt="Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e transmissões ao vivo." data-en="Where logic meets mystery and narratives go beyond the obvious. Game reviews, tabletop RPG chronicles, sci-fi breakdowns, and live streams.">
+          Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e transmissões ao vivo.
         </p>
         <div class="hero-actions">
           <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
-          <a href="/vault" class="btn btn-outline" data-pt="🗺️ EXPLORAR COFRE ARCANO" data-en="🗺️ EXPLORE ARCANE VAULT">🗺️ EXPLORAR COFRE ARCANO</a>
+          <a href="/terminal" class="btn btn-outline" data-pt="📜 EXPLORAR TERMINAL" data-en="📜 EXPLORE TERMINAL">📜 EXPLORAR TERMINAL</a>
         </div>
       </div>
     </section>
@@ -93,25 +93,10 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
-    <!-- 02 // COFRE ARCANO -->
-    <section id="vault" class="section">
-      <h2 class="section-title">02 // <span data-pt="O COFRE ARCANO" data-en="THE ARCANE VAULT">O COFRE ARCANO</span></h2>
-      <div class="hud-card">
-        <h3 class="card-title" data-pt="Cenário Autoral & Relatos de Sessão" data-en="Original RPG Setting & Session Logs">Cenário Autoral & Relatos de Sessão</h3>
-        <p class="card-desc" data-pt="Todo o lore do meu mundo, cosmologia, mapas e registros completos das sessões que mestro centralizados no World Anvil." data-en="Complete setting lore, cosmology, maps, and detailed campaign session logs hosted on World Anvil.">
-          Todo o lore do meu mundo, cosmologia, mapas e registros completos das sessões que mestro centralizados no World Anvil.
-        </p>
-        <div class="card-actions-row mt-3">
-          <a href="/vault" class="btn btn-primary" data-pt="📖 Ver Repositório do Cofre" data-en="📖 Open Vault Repository">📖 Ver Repositório do Cofre</a>
-          <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="btn btn-outline" data-pt="🌐 World Anvil Direto &rarr;" data-en="🌐 Direct World Anvil &rarr;">🌐 World Anvil Direto &rarr;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 // TERMINAL DE MÍDIA -->
+    <!-- 02 // TERMINAL DE MÍDIA -->
     <section id="terminal" class="section">
       <div class="section-title-wrapper">
-        <h2 class="section-title">03 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
+        <h2 class="section-title">02 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
         <a href="/terminal" class="view-all-link" data-pt="Ver Arquivo Geral &rarr;" data-en="View All Records &rarr;">Ver Arquivo Geral &rarr;</a>
       </div>
 
@@ -119,8 +104,8 @@ const sortedPosts: ProcessedPost[] = posts
         {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => (
           <div class="hud-card">
             <div class="card-meta">
-              <span class="category-tag">
-                {post.data.category.toUpperCase()}
+              <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
+                {String(post.data.category || '').toUpperCase()}
               </span>
               <span class="star-rating">
                 {post.stars}
@@ -145,9 +130,9 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
-    <!-- 04 // SIGNAL (CANAIS & CONTATO) -->
+    <!-- 03 // SIGNAL (CANAIS & CONTATO) -->
     <section id="signal" class="section">
-      <h2 class="section-title">04 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT & CHANNELS">SIGNAL // PONTOS DE CONTATO</span></h2>
+      <h2 class="section-title">03 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT & CHANNELS">SIGNAL // PONTOS DE CONTATO</span></h2>
       <div class="hud-card">
         <p class="card-desc mb-4" data-pt="Conecte-se às frequências ativas da transmissão, servidores e documentações." data-en="Connect to active stream frequencies, community servers, and lore documentations.">
           Conecte-se às frequências ativas da transmissão, servidores e documentações.
@@ -216,6 +201,10 @@ const sortedPosts: ProcessedPost[] = posts
     --bg-surface: #16181D;
     --accent-crimson: #E63946;
     --accent-blue: #4CC9F0;
+    --accent-purple: #9D4EDD;
+    --accent-pink: #F72585;
+    --accent-gold: #F4A261;
+    --accent-green: #2A9D8F;
     --text-primary: #E0E1DD;
     --text-secondary: #8D99AE;
   }
@@ -382,7 +371,14 @@ const sortedPosts: ProcessedPost[] = posts
   .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; margin: 0 0 0.5rem; color: var(--text-primary); }
   .card-desc { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
   .card-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem; }
-  .category-tag { color: var(--accent-blue); font-weight: 700; }
+  
+  .category-tag { font-weight: 700; }
+  .cat-avian { color: #4CC9F0; }
+  .cat-rpg { color: #9D4EDD; }
+  .cat-gaming { color: #F72585; }
+  .cat-narrativas { color: #F4A261; }
+  .cat-nexus { color: #2A9D8F; }
+
   .star-rating { color: #F4A261; }
 
   .card-actions-row { display: flex; gap: 1rem; flex-wrap: wrap; }
