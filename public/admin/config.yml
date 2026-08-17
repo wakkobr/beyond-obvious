@@ -1,49 +1,35 @@
 backend:
   name: github
-  repo: wakkobr/beyond-obvious # Substitua 'seu-usuario' pelo seu username do GitHub quando criar
+  repo: SEU_USUARIO/SEU_REPOSITORIO # substitua pelo seu repo se necessário
   branch: main
-  base_url: https://decap-oauth.vercel.app
-  auth_endpoint: auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "terminal"
-    label: "Terminal de Mídia (Reviews/Logs)"
+    label: "Terminal de Mídia"
     folder: "src/content/terminal"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
-      - { label: "Título da Obra / Post", name: "title", widget: "string" }
-      - { label: "Data de Registro", name: "publishDate", widget: "datetime" }
-      - { 
-          label: "Idioma", 
-          name: "lang", 
-          widget: "select", 
-          options: ["pt-br", "en"], 
-          default: "pt-br" 
-        }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo", name: "summary", widget: "string" }
       - { 
           label: "Categoria", 
           name: "category", 
           widget: "select", 
-          options: [
-            { label: "📖 Livro / Graphic Novel", value: "book" },
-            { label: "🎬 Filme / Série", value: "cinema" },
-            { label: "⛩️ Anime / Animação", value: "anime" },
-            { label: "🎲 RPG de Mesa", value: "ttrpg" },
-            { label: "🎮 Jogo / Narrativa", value: "gaming" }
-          ] 
+          options: ["avian", "rpg", "gaming", "narrativas", "nexus"],
+          default: "avian"
         }
+      - { label: "Data de Publicação", name: "publishDate", widget: "datetime" }
       - { 
-          label: "Avaliação (1 a 5)", 
+          label: "Avaliação (Estrelas)", 
           name: "rating", 
           widget: "select", 
-          options: ["5", "4", "3", "2", "1"], 
-          default: "5" 
+          options: ["1", "2", "3", "4", "5"],
+          default: "5",
+          required: false 
         }
-      - { label: "Resumo Curto", name: "summary", widget: "string" }
-      - { label: "Link Externo (Opcional - World Anvil, MAL, etc.)", name: "externalLink", widget: "string", required: false }
-      - { label: "Imagem de Capa (Opcional)", name: "coverImage", widget: "image", required: false }
-      - { label: "Texto da Análise / Relato", name: "body", widget: "markdown" }
+      - { label: "Link Externo (Opcional)", name: "externalLink", widget: "string", required: false }
+      - { label: "Corpo do Texto", name: "body", widget: "markdown" }

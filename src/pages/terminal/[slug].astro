@@ -1,5 +1,5 @@
 ---
-// src/pages/terminal/[...slug].astro
+// src/pages/terminal/[slug].astro
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import NavLogo from '../../components/NavLogo.astro';
@@ -7,7 +7,6 @@ import NavLogo from '../../components/NavLogo.astro';
 export async function getStaticPaths() {
   const posts = await getCollection('terminal');
   return posts.map((post: CollectionEntry<'terminal'>) => {
-    // Remove a extensão .md ou .mdx mantendo o caminho da pasta: ex: 'avian/fundamentos'
     const slug = post.id.replace(/\.[^/.]+$/, '');
     return {
       params: { slug },
