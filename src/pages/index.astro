@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Logo from '../components/Logo.astro';
 import NavLogo from '../components/NavLogo.astro';
+import TwitchStatus from '../components/TwitchStatus.astro';
 
 type TerminalPost = CollectionEntry<'terminal'>;
 
@@ -36,7 +37,6 @@ const sortedPosts: ProcessedPost[] = posts
 </head>
 <body>
 
-  <!-- NAVEGAÇÃO -->
   <nav class="nav-bar">
     <div class="nav-container">
       <a href="/" class="nav-brand">
@@ -53,7 +53,6 @@ const sortedPosts: ProcessedPost[] = posts
   </nav>
 
   <main class="container">
-    <!-- 00 // THE NEXUS (HERO DUAS COLUNAS) -->
     <section class="hero-split">
       <div class="hero-crest-frame">
         <div class="crest-corner top-left"></div>
@@ -77,7 +76,10 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
-    <!-- 01 // TRANSMISSÕES -->
+    <section class="stream-status-section">
+      <TwitchStatus channelName="w4kko_" />
+    </section>
+
     <section id="stream" class="section">
       <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
       <div class="hud-card">
@@ -93,7 +95,6 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
-    <!-- 02 // TERMINAL DE MÍDIA -->
     <section id="terminal" class="section">
       <div class="section-title-wrapper">
         <h2 class="section-title">02 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
@@ -130,7 +131,6 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
-    <!-- 03 // SIGNAL (CANAIS & CONTATO) -->
     <section id="signal" class="section">
       <h2 class="section-title">03 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT & CHANNELS">SIGNAL // PONTOS DE CONTATO</span></h2>
       <div class="hud-card">
@@ -138,7 +138,7 @@ const sortedPosts: ProcessedPost[] = posts
           Conecte-se às frequências ativas da transmissão, servidores e documentações.
         </p>
         <div class="signal-grid">
-          <a href="https://twitch.tv" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <a href="https://twitch.tv/w4kko_" target="_blank" rel="noopener noreferrer" class="signal-card">
             <span class="signal-icon">🟣</span>
             <div class="signal-info">
               <span class="signal-name">Twitch</span>
@@ -171,12 +171,10 @@ const sortedPosts: ProcessedPost[] = posts
     </section>
   </main>
 
-  <!-- RODAPÉ -->
   <footer class="footer">
     <p>© 2026 BEYOND OBVIOUS • @W4KKO_</p>
   </footer>
 
-  <!-- SCRIPT ALTERNADOR IDIOMA -->
   <script>
     const toggleBtn = document.getElementById('lang-toggle');
     let currentLang = 'pt';
@@ -279,9 +277,9 @@ const sortedPosts: ProcessedPost[] = posts
     transition: all 0.2s ease;
   }
 
-  .lang-btn:hover {
-    background: rgba(76, 201, 240, 0.15);
-    box-shadow: 0 0 8px rgba(76, 201, 240, 0.4);
+  .lang-btn:hover { 
+    background: rgba(76, 201, 240, 0.15); 
+    box-shadow: 0 0 8px rgba(76, 201, 240, 0.4); 
   }
 
   .hero-split {
@@ -289,7 +287,7 @@ const sortedPosts: ProcessedPost[] = posts
     grid-template-columns: 240px 1fr;
     gap: 2.5rem;
     align-items: center;
-    padding: 4rem 0 3rem;
+    padding: 4rem 0 2.5rem;
   }
 
   .hero-crest-frame {
@@ -333,13 +331,17 @@ const sortedPosts: ProcessedPost[] = posts
   .hero-bio { color: var(--text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6; }
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
+  .stream-status-section {
+    margin-bottom: 1.5rem;
+  }
+
   .btn { display: inline-block; padding: 0.75rem 1.5rem; font-family: 'Rajdhani', sans-serif; font-weight: 700; text-decoration: none; border-radius: 4px; text-transform: uppercase; cursor: pointer; }
   .btn-primary { background: var(--accent-crimson); color: white; border: none; }
   .btn-primary:hover { background: #ff4d5a; box-shadow: 0 0 12px rgba(230,57,70,0.4); }
   .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(224,225,221,0.2); }
   .btn-outline:hover { border-color: var(--accent-crimson); }
 
-  .section { padding: 3rem 0 1rem; }
+  .section { padding: 2.5rem 0 1rem; }
   .section-title-wrapper {
     display: flex;
     justify-content: space-between;
@@ -381,7 +383,6 @@ const sortedPosts: ProcessedPost[] = posts
 
   .star-rating { color: #F4A261; }
 
-  .card-actions-row { display: flex; gap: 1rem; flex-wrap: wrap; }
   .card-actions-terminal { display: flex; justify-content: flex-end; }
   .tags-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
