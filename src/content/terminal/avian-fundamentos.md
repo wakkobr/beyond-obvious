@@ -1,10 +1,11 @@
 ---
 title: "Avian: O Céu que se Partiu e as Cicatrizes do Mundo"
-summary: "Quatro séculos após o grande cataclismo, Avian sobrevive entre reinos cautelosos, ruínas anômalas e verdades divinas fragmentadas."
-category: "avian"
+summary: Quatro séculos após o grande cataclismo, Avian sobrevive entre reinos
+  cautelosos, ruínas anômalas e verdades divinas fragmentadas.
+category: avian
 publishDate: 2026-08-10
-rating: "5"
-externalLink: "https://www.worldanvil.com/w/avian-wakkobr"
+rating: null
+externalLink: https://www.worldanvil.com/w/avian-wakkobr
 ---
 
 ## A Idade da Imprudência e a Ruptura
