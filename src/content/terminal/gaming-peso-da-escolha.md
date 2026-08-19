@@ -1,9 +1,10 @@
 ---
-title: "O Peso da Escolha em Narrativas Interativas"
-summary: "Por que jogos como Life is Strange e Tell Me Why continuam sendo referências no impacto emocional das decisões."
-category: "gaming"
+title: O Peso da Escolha em Narrativas Interativas
+summary: Por que jogos como Life is Strange e Tell Me Why continuam sendo
+  referências no impacto emocional das decisões.
+category: gaming
 publishDate: 2026-08-14
-rating: "5"
+rating: "3"
 ---
 
 ## Responsabilidade Moral em Jogos
