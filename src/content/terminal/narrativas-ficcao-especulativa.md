@@ -1,9 +1,10 @@
 ---
 title: "Ficção Especulativa: Quebra-Cabeças Temporais e Filosóficos"
-summary: "Desconstruindo séries, livros e filmes que utilizam linhas temporais não-lineares para explorar a condição humana."
-category: "narrativas"
+summary: Desconstruindo séries, livros e filmes que utilizam linhas temporais
+  não-lineares para explorar a condição humana.
+category: narrativas
 publishDate: 2026-08-15
-rating: "5"
+rating: "4"
 ---
 
 ## A Arte da Não-Linearidade
