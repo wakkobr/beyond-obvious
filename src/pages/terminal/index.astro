@@ -19,7 +19,7 @@ const sortedPosts: ProcessedPost[] = posts
   .map((post: TerminalPost): ProcessedPost => ({
     ...post,
     slug: post.id.replace(/\.[^/.]+$/, ''),
-    stars: '★'.repeat(parseInt(post.data.rating || '5', 10)),
+    stars: post.data.rating ? '★'.repeat(parseInt(post.data.rating, 10)) : '',
     formattedDate: new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
       year: 'numeric',
       month: 'short',
@@ -96,7 +96,9 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
                   {String(post.data.category || '').toUpperCase()}
                 </span>
                 <span class="star-rating">
-                  {post.stars}
+                  {post.stars && (
+                    <span class="star-rating">{post.stars}</span>
+                  )}
                 </span>
               </div>
               
