@@ -1,7 +1,9 @@
 backend:
   name: github
-  repo: SEU_USUARIO/SEU_REPOSITORIO # substitua pelo seu repo se necessário
-  branch: main
+  repo: wakkobr/beyond-obvious # Ex: wakkobr/beyond-obvious
+  branch: main # ou master
+  base_url: https://decap-cms-oauth.vercel.app # URL do proxy de auth
+  auth_endpoint: auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
