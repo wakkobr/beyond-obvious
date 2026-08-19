@@ -4,22 +4,22 @@ interface Props {
   channelName?: string;
 }
 
-const { channelName = "w4kko_" } = Astro.props;
+const { channelName = "w4kkomancer_" } = Astro.props;
 ---
 
 <div class="twitch-widget hud-card" id="twitch-status-card" data-channel={channelName}>
   <div class="widget-header">
     <div class="signal-indicator" id="signal-badge">
       <span class="pulse-dot"></span>
-      <span class="status-label" id="status-text">SINTONIZANDO SINAL...</span>
+      <span class="status-label" id="status-text" data-pt="SINTONIZANDO SINAL..." data-en="TUNING SIGNAL...">SINTONIZANDO SINAL...</span>
     </div>
     <span class="channel-tag">◈ TWITCH.TV/{channelName.toUpperCase()}</span>
   </div>
 
   <div class="widget-body">
     <div class="status-info">
-      <h3 class="widget-title" id="stream-title">SISTEMA EM ESPERA</h3>
-      <p class="widget-desc" id="stream-game">Transmissões de RPG, Narrativas & Gameplay Tecnomágica.</p>
+      <h3 class="widget-title" id="stream-title" data-pt="SISTEMA EM ESPERA" data-en="SYSTEM ON STANDBY">SISTEMA EM ESPERA</h3>
+      <p class="widget-desc" id="stream-game" data-pt="Transmissões de RPG, Narrativas & Gameplay Tecnomágica." data-en="RPG, Narrative Adventures & Technomantic Gameplay.">Transmissões de RPG, Narrativas & Gameplay Tecnomágica.</p>
     </div>
 
     <div class="widget-actions">
@@ -30,28 +30,27 @@ const { channelName = "w4kko_" } = Astro.props;
         class="btn btn-twitch" 
         id="twitch-cta-btn"
       >
-        <span class="twitch-icon">🟣</span> Acessar Frequência
+        <span class="twitch-icon">🟣</span> <span id="btn-text" data-pt="Acessar Frequência" data-en="Access Frequency">Acessar Frequência</span>
       </a>
     </div>
   </div>
 </div>
 
 <script is:inline>
-  // Script leve para verificar status da Twitch no cliente
   const checkTwitchStatus = async () => {
     const card = document.getElementById('twitch-status-card');
     if (!card) return;
 
-    const channel = card.getAttribute('data-channel') || 'w4kko_';
+    const channel = card.getAttribute('data-channel') || 'w4kkomancer_';
     const statusText = document.getElementById('status-text');
     const streamTitle = document.getElementById('stream-title');
     const streamGame = document.getElementById('stream-game');
-    const signalBadge = document.getElementById('signal-badge');
-    const ctaBtn = document.getElementById('twitch-cta-btn');
+    const btnText = document.getElementById('btn-text');
+    
+    // Puxa o idioma atual salvo no Toggle do index.astro
+    const currentLang = localStorage.getItem('siteLang') || 'pt';
 
     try {
-      // Usando uma API pública/worker leve de verificação de status Twitch
-      // Se não houver worker configurado, mantém o fallback elegante offline
       const response = await fetch(`https://decapi.me/twitch/uptime/${channel}`);
       const data = await response.text();
 
@@ -60,21 +59,44 @@ const { channelName = "w4kko_" } = Astro.props;
       if (isLive) {
         card.classList.add('is-live');
         card.classList.remove('is-offline');
-        if (statusText) statusText.textContent = `AO VIVO // ${data}`;
-        if (streamTitle) streamTitle.textContent = 'TRANSMISSÃO EM ANDAMENTO';
-        if (streamGame) streamGame.textContent = 'O Nexus está aberto. Conecte-se ao sinal agora.';
-        if (ctaBtn) ctaBtn.innerHTML = '<span class="twitch-icon">🔴</span> Sintonizar Live';
+        
+        // Define textos dinâmicos AO VIVO com base no idioma
+        statusText.setAttribute('data-pt', `AO VIVO // ${data}`);
+        statusText.setAttribute('data-en', `LIVE // ${data}`);
+        streamTitle.setAttribute('data-pt', 'TRANSMISSÃO EM ANDAMENTO');
+        streamTitle.setAttribute('data-en', 'TRANSMISSION IN PROGRESS');
+        streamGame.setAttribute('data-pt', 'O Nexus está aberto. Conecte-se ao sinal agora.');
+        streamGame.setAttribute('data-en', 'The Nexus is open. Connect to the signal now.');
+        btnText.setAttribute('data-pt', 'Sintonizar Live');
+        btnText.setAttribute('data-en', 'Tune in Live');
+        
+        // Atualiza a bolinha roxa pra vermelha
+        const twitchIconSpan = document.querySelector('.twitch-icon');
+        if(twitchIconSpan) twitchIconSpan.textContent = '🔴';
+        
       } else {
         card.classList.add('is-offline');
         card.classList.remove('is-live');
-        if (statusText) statusText.textContent = 'FREQUÊNCIA // STANDBY';
-        if (streamTitle) streamTitle.textContent = 'SISTEMA EM ESPERA';
-        if (streamGame) streamGame.textContent = 'Próxima live em breve. Siga o canal para notificações.';
+        
+        // Define textos dinâmicos OFFLINE com base no idioma
+        statusText.setAttribute('data-pt', 'FREQUÊNCIA // STANDBY');
+        statusText.setAttribute('data-en', 'FREQUENCY // STANDBY');
+        streamTitle.setAttribute('data-pt', 'SISTEMA EM ESPERA');
+        streamTitle.setAttribute('data-en', 'SYSTEM ON STANDBY');
+        streamGame.setAttribute('data-pt', 'Próxima live em breve. Siga o canal para notificações.');
+        streamGame.setAttribute('data-en', 'Next live soon. Follow the channel for alerts.');
+        btnText.setAttribute('data-pt', 'Acessar Frequência');
+        btnText.setAttribute('data-en', 'Access Frequency');
       }
+
+      // Dispara a tradução para os elementos de dentro do widget na hora do carregamento
+      if(statusText) statusText.innerHTML = currentLang === 'pt' ? statusText.getAttribute('data-pt') : statusText.getAttribute('data-en');
+      if(streamTitle) streamTitle.innerHTML = currentLang === 'pt' ? streamTitle.getAttribute('data-pt') : streamTitle.getAttribute('data-en');
+      if(streamGame) streamGame.innerHTML = currentLang === 'pt' ? streamGame.getAttribute('data-pt') : streamGame.getAttribute('data-en');
+      if(btnText) btnText.innerHTML = currentLang === 'pt' ? btnText.getAttribute('data-pt') : btnText.getAttribute('data-en');
+
     } catch (e) {
-      // Fallback em caso de bloqueio de requisição
       card.classList.add('is-offline');
-      if (statusText) statusText.textContent = 'FREQUÊNCIA // STANDBY';
     }
   };
 
@@ -82,142 +104,21 @@ const { channelName = "w4kko_" } = Astro.props;
 </script>
 
 <style>
-  .twitch-widget {
-    background: rgba(22, 24, 29, 0.95);
-    border: 1px solid rgba(224, 225, 221, 0.15);
-    border-radius: 6px;
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .widget-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(224, 225, 221, 0.08);
-    padding-bottom: 0.8rem;
-    margin-bottom: 1rem;
-  }
-
-  .signal-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    color: #4CC9F0;
-  }
-
-  .pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #4CC9F0;
-    box-shadow: 0 0 8px #4CC9F0;
-  }
-
-  /* ESTADO AO VIVO (CRIMSON GLOW) */
-  .twitch-widget.is-live {
-    border-color: rgba(230, 57, 70, 0.6);
-    box-shadow: 0 0 20px rgba(230, 57, 70, 0.2);
-  }
-
-  .twitch-widget.is-live .signal-indicator {
-    border-color: rgba(230, 57, 70, 0.5);
-    color: #E63946;
-  }
-
-  .twitch-widget.is-live .pulse-dot {
-    background-color: #E63946;
-    box-shadow: 0 0 10px #E63946;
-    animation: livePulse 1.5s infinite;
-  }
-
-  @keyframes livePulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
-    70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(230, 57, 70, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
-  }
-
-  .channel-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #8D99AE;
-  }
-
-  .widget-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .widget-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.3rem;
-    margin: 0 0 0.3rem;
-    color: #E0E1DD;
-    letter-spacing: 1px;
-  }
-
-  .widget-desc {
-    color: #8D99AE;
-    font-size: 0.95rem;
-    margin: 0;
-    line-height: 1.4;
-  }
-
-  .btn-twitch {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 1.4rem;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    text-decoration: none;
-    border-radius: 4px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    background: rgba(145, 70, 255, 0.15);
-    border: 1px solid rgba(145, 70, 255, 0.4);
-    color: #E0E1DD;
-    transition: all 0.2s ease;
-  }
-
-  .btn-twitch:hover {
-    background: #9146FF;
-    color: #FFFFFF;
-    box-shadow: 0 0 15px rgba(145, 70, 255, 0.5);
-  }
-
-  .twitch-widget.is-live .btn-twitch {
-    background: #E63946;
-    border-color: #E63946;
-    color: #FFFFFF;
-    box-shadow: 0 0 12px rgba(230, 57, 70, 0.4);
-  }
-
-  .twitch-widget.is-live .btn-twitch:hover {
-    background: #FF4D5A;
-  }
-
-  @media (max-width: 768px) {
-    .widget-body {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .btn-twitch {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  .twitch-widget { background: rgba(22, 24, 29, 0.95); border: 1px solid rgba(224, 225, 221, 0.15); border-radius: 6px; padding: 1.5rem; position: relative; overflow: hidden; transition: all 0.3s ease; }
+  .widget-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(224, 225, 221, 0.08); padding-bottom: 0.8rem; margin-bottom: 1rem; }
+  .signal-indicator { display: inline-flex; align-items: center; gap: 0.6rem; font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; padding: 0.3rem 0.8rem; border-radius: 20px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(76, 201, 240, 0.3); color: #4CC9F0; }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #4CC9F0; box-shadow: 0 0 8px #4CC9F0; }
+  .twitch-widget.is-live { border-color: rgba(230, 57, 70, 0.6); box-shadow: 0 0 20px rgba(230, 57, 70, 0.2); }
+  .twitch-widget.is-live .signal-indicator { border-color: rgba(230, 57, 70, 0.5); color: #E63946; }
+  .twitch-widget.is-live .pulse-dot { background-color: #E63946; box-shadow: 0 0 10px #E63946; animation: livePulse 1.5s infinite; }
+  @keyframes livePulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); } 70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(230, 57, 70, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); } }
+  .channel-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #8D99AE; }
+  .widget-body { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
+  .widget-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; margin: 0 0 0.3rem; color: #E0E1DD; letter-spacing: 1px; }
+  .widget-desc { color: #8D99AE; font-size: 0.95rem; margin: 0; line-height: 1.4; }
+  .btn-twitch { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem; font-family: 'Rajdhani', sans-serif; font-weight: 700; text-decoration: none; border-radius: 4px; text-transform: uppercase; white-space: nowrap; background: rgba(145, 70, 255, 0.15); border: 1px solid rgba(145, 70, 255, 0.4); color: #E0E1DD; transition: all 0.2s ease; }
+  .btn-twitch:hover { background: #9146FF; color: #FFFFFF; box-shadow: 0 0 15px rgba(145, 70, 255, 0.5); }
+  .twitch-widget.is-live .btn-twitch { background: #E63946; border-color: #E63946; color: #FFFFFF; box-shadow: 0 0 12px rgba(230, 57, 70, 0.4); }
+  .twitch-widget.is-live .btn-twitch:hover { background: #FF4D5A; }
+  @media (max-width: 768px) { .widget-body { flex-direction: column; align-items: flex-start; } .btn-twitch { width: 100%; justify-content: center; box-sizing: border-box; } }
 </style>
