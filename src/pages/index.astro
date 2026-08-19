@@ -132,7 +132,7 @@ const sortedPosts: ProcessedPost[] = posts
     </section>
 
     <section id="signal" class="section">
-      <h2 class="section-title">03 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT NODES">SIGNAL // PONTOS DE CONTATO</span></h2>
+      <h2 class="section-title">03 // <span data-pt="SINAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT NODES">SIGNAL // PONTOS DE CONTATO</span></h2>
       <div class="hud-card">
         <p class="card-desc mb-4" data-pt="Conecte-se às frequências ativas da transmissão, servidores e documentações." data-en="Connect to active stream frequencies, community servers, and lore documentations.">
           Conecte-se às frequências ativas da transmissão, servidores e documentações.
@@ -182,7 +182,7 @@ const sortedPosts: ProcessedPost[] = posts
 
     // Função que aplica as traduções
     const applyLanguage = () => {
-      toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+      if (toggleBtn) toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
       document.querySelectorAll('[data-pt]').forEach(el => {
         const target = el as HTMLElement;
         // Uso de innerHTML para não quebrar entidades HTML como &rarr; (setinha)
