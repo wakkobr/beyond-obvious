@@ -8,7 +8,7 @@ const terminal = defineCollection({
     summary: z.string(),
     category: z.string(),
     publishDate: z.coerce.date(),
-    rating: z.string().optional(),
+    rating: z.string().optional().nullable(),
     externalLink: z.string().optional(),
   }),
 });
