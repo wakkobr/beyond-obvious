@@ -169,7 +169,7 @@ const sortedPosts: ProcessedPost[] = posts
               <span class="signal-handle">Avian Wiki</span>
             </div>
           </a>
-          <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <a href="#discord-widget" class="signal-card">
             <span class="signal-icon">💬</span>
             <div class="signal-info">
               <span class="signal-name">Discord</span>
@@ -177,6 +177,50 @@ const sortedPosts: ProcessedPost[] = posts
             </div>
           </a>
         </div>
+
+        <!-- WIDGET DISCORD HUD -->
+        <div class="discord-widget-container" id="discord-widget">
+          <div class="discord-hud-card">
+            <div class="crest-corner top-left"></div>
+            <div class="crest-corner top-right"></div>
+            <div class="crest-corner bottom-left"></div>
+            <div class="crest-corner bottom-right"></div>
+
+            <div class="discord-hud-header">
+              <div class="discord-status-tag">
+                <span class="pulse-dot"></span>
+                <span data-pt="FREQ // DISCORD ONLINE" data-en="FREQ // DISCORD ONLINE">FREQ // DISCORD ONLINE</span>
+              </div>
+              <span class="discord-loc">LOC: NEXUS // SERV-697</span>
+            </div>
+
+            <div class="discord-hud-body">
+              <div class="discord-server-info">
+                <div class="discord-icon-frame">
+                  <span class="discord-icon-inner">BO</span>
+                </div>
+                <div>
+                  <h3 id="discord-server-name" class="discord-name">BEYOND OBVIOUS</h3>
+                  <p class="discord-presence">
+                    <span class="online-count" id="discord-online-count">--</span> <span data-pt="agentes conectados no Nexus" data-en="agents connected in Nexus">agentes conectados no Nexus</span>
+                  </p>
+                </div>
+              </div>
+
+              <a id="discord-invite-btn" href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
+                ⚡ ESTABELECER CONEXÃO
+              </a>
+            </div>
+
+            <div class="discord-hud-members">
+              <div class="members-title" data-pt="AGENTES EM SINAL:" data-en="ACTIVE AGENTS:">AGENTES EM SINAL:</div>
+              <div class="members-list" id="discord-members-list">
+                <span class="loading-text" data-pt="Sincronizando frequências..." data-en="Syncing frequencies...">Sincronizando frequências...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
@@ -186,8 +230,9 @@ const sortedPosts: ProcessedPost[] = posts
     <p>© 2026 BEYOND OBVIOUS • @w4kkomancer_</p>
   </footer>
 
-  <!-- SCRIPT DE TRADUÇÃO -->
+  <!-- SCRIPT DE TRADUÇÃO & DISCORD API -->
   <script>
+    // 1. Controle de Idioma
     const toggleBtn = document.getElementById('lang-toggle');
     let currentLang = localStorage.getItem('siteLang') || 'pt';
 
@@ -210,6 +255,70 @@ const sortedPosts: ProcessedPost[] = posts
       localStorage.setItem('siteLang', currentLang);
       applyLanguage();
     });
+
+    // 2. Consulta da API do Discord Widget
+    async function fetchDiscordWidget() {
+      const serverId = '697506206390157333';
+      const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Falha ao carregar API do Discord');
+        
+        const data = await response.json();
+
+        // Nome do Servidor
+        const nameEl = document.getElementById('discord-server-name');
+        if (nameEl && data.name) nameEl.innerText = data.name.toUpperCase();
+        
+        // Contagem Online
+        const countEl = document.getElementById('discord-online-count');
+        if (countEl) countEl.innerText = data.presence_count || (data.members ? data.members.length : '0');
+        
+        // Link de Convite Instantâneo
+        const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement;
+        if (inviteBtn && data.instant_invite) {
+          inviteBtn.href = data.instant_invite;
+        }
+
+        // Renderização dos Membros Conectados (Até 8)
+        const membersContainer = document.getElementById('discord-members-list');
+        if (membersContainer) {
+          membersContainer.innerHTML = '';
+
+          if (data.members && data.members.length > 0) {
+            data.members.slice(0, 8).forEach((member: any) => {
+              const chip = document.createElement('div');
+              chip.className = 'member-chip';
+              chip.innerHTML = `
+                <img class="member-avatar" src="${member.avatar_url}" alt="${member.username}" loading="lazy" />
+                <span>${member.username}</span>
+              `;
+              membersContainer.appendChild(chip);
+            });
+
+            if (data.members.length > 8) {
+              const moreChip = document.createElement('div');
+              moreChip.className = 'member-chip member-more';
+              moreChip.innerText = `+${data.members.length - 8} ${currentLang === 'pt' ? 'mais' : 'more'}`;
+              membersContainer.appendChild(moreChip);
+            }
+          } else {
+            membersContainer.innerHTML = `<span class="loading-text">${currentLang === 'pt' ? 'Nenhum agente online no momento.' : 'No agents online right now.'}</span>`;
+          }
+        }
+      } catch (err) {
+        console.warn('Erro Discord Widget:', err);
+        const countEl = document.getElementById('discord-online-count');
+        if (countEl) countEl.innerText = '0';
+        const membersContainer = document.getElementById('discord-members-list');
+        if (membersContainer) {
+          membersContainer.innerHTML = `<span class="loading-text">${currentLang === 'pt' ? 'Frequência temporariamente indisponível.' : 'Frequency temporarily unavailable.'}</span>`;
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchDiscordWidget);
   </script>
 
 </body>
@@ -497,6 +606,165 @@ const sortedPosts: ProcessedPost[] = posts
   .signal-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; }
   .signal-handle { font-size: 0.75rem; color: var(--text-secondary); }
 
+  /* ESTILOS DO WIDGET DISCORD HUD */
+  .discord-widget-container {
+    margin-top: 1.8rem;
+  }
+
+  .discord-hud-card {
+    position: relative;
+    background: rgba(11, 12, 16, 0.85);
+    border: 1px solid rgba(76, 201, 240, 0.2);
+    padding: 1.4rem;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+  }
+
+  .discord-hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .discord-status-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-blue);
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-blue);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px var(--accent-blue); }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
+  .discord-loc {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+
+  .discord-hud-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+
+  .discord-server-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .discord-icon-frame {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--accent-blue);
+    background: #16181d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .discord-icon-inner {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+  }
+
+  .discord-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: 1px;
+  }
+
+  .discord-presence {
+    margin: 0.2rem 0 0 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .online-count {
+    color: var(--accent-blue);
+    font-weight: 700;
+  }
+
+  .btn-discord-join {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .discord-hud-members {
+    border-top: 1px solid rgba(224, 225, 221, 0.08);
+    padding-top: 0.9rem;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  .members-title {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .members-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .member-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(76, 201, 240, 0.2);
+    padding: 3px 8px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    border-radius: 3px;
+  }
+
+  .member-avatar {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+  }
+
+  .member-more {
+    border-color: rgba(230, 57, 70, 0.4);
+    color: var(--text-secondary);
+  }
+
+  .loading-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
   .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; display: inline-block; font-weight: 600; }
   .btn-link:hover { color: var(--accent-crimson); }
 
@@ -519,5 +787,7 @@ const sortedPosts: ProcessedPost[] = posts
     .hero-info { align-items: center; }
     .hero-actions { justify-content: center; }
     .hero-title { font-size: 2rem; }
+    .discord-hud-body { flex-direction: column; align-items: flex-start; }
+    .btn-discord-join { width: 100%; text-align: center; }
   }
 </style>
