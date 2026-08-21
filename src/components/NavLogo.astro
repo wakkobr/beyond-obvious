@@ -7,59 +7,87 @@ interface Props {
 const { className = "" } = Astro.props;
 ---
 
-<div class={`nav-logo-svg ${className}`}>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" width="100%" height="100%">
-    <defs>
-      <filter id="neonGlowC">
-        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-        <feMerge>
-          <feMergeNode in="coloredBlur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    </defs>
-
-    <!-- Texto HUD com Glifos -->
-    <text x="30" y="58" font-family="'Orbitron', 'Rajdhani', sans-serif" font-size="32" font-weight="800" fill="#E0E1DD" letter-spacing="3">BEY</text>
-
-    <!-- Glifo "O" de Beyond (Corvo/Nodo Rúnico) -->
-    <g transform="translate(112, 28)">
-      <polygon points="18,3 32,15 32,33 18,45 4,33 4,15" fill="#16181D" stroke="#E63946" stroke-width="2.5"/>
-      <polygon points="18,12 26,24 10,24" fill="#E63946" filter="url(#neonGlowC)"/>
-      <circle cx="18" cy="24" r="2.5" fill="#FFFFFF"/>
-    </g>
-
-    <!-- "ND" -->
-    <text x="156" y="58" font-family="'Orbitron', 'Rajdhani', sans-serif" font-size="32" font-weight="800" fill="#E0E1DD" letter-spacing="3">ND</text>
-
-    <!-- "OBVIOUS" -->
-    <text x="232" y="58" font-family="'Orbitron', 'Rajdhani', sans-serif" font-size="32" font-weight="800" fill="#E63946" letter-spacing="3">OBVIOUS</text>
-
-    <!-- Linha Decorativa Inferior (Terminal HUD) -->
-    <line x1="30" y1="74" x2="490" y2="74" stroke="#8D99AE" stroke-width="1" stroke-opacity="0.3"/>
-    <rect x="30" y="72" width="24" height="4" fill="#E63946"/>
-    <rect x="466" y="72" width="24" height="4" fill="#4CC9F0"/>
-
-    <!-- Tag de Status -->
-    <text x="260" y="86" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#8D99AE" letter-spacing="3" text-anchor="middle">SISTEMA//ARCANO.ATIVO</text>
-  </svg>
+<div class={`nav-logo-hud ${className}`}>
+  <div class="logo-text">
+    <span class="text-beyond">BEYOND</span>
+    <span class="text-obvious">OBVIOUS</span>
+  </div>
+  
+  <div class="hud-subline">
+    <span class="hud-marker-left"></span>
+    <span class="hud-status">SISTEMA // ARCANO.ATIVO</span>
+    <span class="hud-marker-right"></span>
+  </div>
 </div>
 
 <style>
-  .nav-logo-svg {
+  .nav-logo-hud {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    user-select: none;
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    line-height: 1;
+    display: flex;
+    gap: 8px;
+  }
+
+  .text-beyond {
+    color: #E0E1DD;
+  }
+
+  .text-obvious {
+    color: #E63946;
+  }
+
+  .hud-subline {
     display: flex;
     align-items: center;
-    height: 48px;
-    width: 250px;
-    transition: transform 0.2s ease, filter 0.2s ease;
-  }
-  .nav-logo-svg:hover {
-    transform: translateY(-1px);
-    filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.4));
-  }
-  .nav-logo-svg svg {
     width: 100%;
-    height: 100%;
-    display: block;
+    margin-top: 5px;
+    position: relative;
+  }
+
+  .hud-status {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: #4CC9F0; /* Ciano HUD */
+    padding: 0 6px;
+    white-space: nowrap;
+    transition: text-shadow 0.2s ease;
+  }
+
+  .hud-marker-left {
+    height: 2px;
+    width: 18px;
+    background-color: #E63946;
+  }
+
+  .hud-marker-right {
+    height: 2px;
+    flex-grow: 1;
+    background: linear-gradient(90deg, rgba(76, 201, 240, 0.3), #4CC9F0);
+  }
+
+  /* Efeitos no Hover */
+  .nav-logo-hud:hover .text-obvious {
+    text-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
+  }
+
+  .nav-logo-hud:hover .hud-status {
+    text-shadow: 0 0 8px rgba(76, 201, 240, 0.8);
+  }
+  
+  .nav-logo-hud:hover .hud-marker-right {
+    box-shadow: 0 0 8px #4CC9F0;
   }
 </style>
