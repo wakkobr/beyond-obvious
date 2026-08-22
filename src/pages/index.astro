@@ -37,6 +37,7 @@ const sortedPosts: ProcessedPost[] = posts
 </head>
 <body>
 
+  <!-- NAVEGAÇÃO -->
   <nav class="nav-bar">
     <div class="nav-container">
       <a href="/" class="nav-brand">
@@ -45,6 +46,7 @@ const sortedPosts: ProcessedPost[] = posts
       <div class="nav-links">
         <a href="#stream" data-pt="Transmissões" data-en="Streams">Transmissões</a>
         <a href="/terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
+        <a href="/dossier" data-pt="Dossiê" data-en="Dossier">Dossiê</a>
         <a href="/about" data-pt="Sobre" data-en="About">Sobre</a>
         <a href="#signal" data-pt="Sinal" data-en="Signal">Sinal</a>
         <button id="lang-toggle" class="lang-btn">EN</button>
@@ -53,6 +55,7 @@ const sortedPosts: ProcessedPost[] = posts
   </nav>
 
   <main class="container">
+    <!-- HERO / IDENTIDADE -->
     <section class="hero-split">
       <div class="hero-crest-frame">
         <div class="crest-corner top-left"></div>
@@ -71,6 +74,11 @@ const sortedPosts: ProcessedPost[] = posts
         <p class="hero-bio" data-pt="Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e transmissões ao vivo." data-en="Where logic meets mystery and narratives go beyond the obvious. Game reviews, tabletop RPG chronicles, sci-fi breakdowns, and live streams.">
           Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e transmissões ao vivo.
         </p>
+
+        <a href="/dossier" class="dossier-hero-link" data-pt="[ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]" data-en="[ 📁 ACCESS OPERATOR DOSSIER // CLASSIFIED ]">
+          [ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]
+        </a>
+
         <div class="hero-actions">
           <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
           <a href="/terminal" class="btn btn-outline" data-pt="📜 EXPLORAR TERMINAL" data-en="📜 EXPLORE TERMINAL">📜 EXPLORAR TERMINAL</a>
@@ -78,15 +86,17 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
+    <!-- STATUS DA TWITCH -->
     <section class="stream-status-section">
       <TwitchStatus channelName="w4kkomancer_" />
     </section>
 
+    <!-- 01 // TRANSMISSÕES -->
     <section id="stream" class="section">
       <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
       <div class="hud-card">
-        <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, and live tabletop RPG sessions.">
-          Aventuras narrativas, escolhas de peso e sessões de RPG de mesa ao vivo.
+        <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, card strategies, and live tabletop RPG sessions.">
+          Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo.
         </p>
         <div class="tags-grid">
           <span class="tag">🎮 Storytelling (Life is Strange, Tell Me Why)</span>
@@ -98,6 +108,7 @@ const sortedPosts: ProcessedPost[] = posts
       </div>
     </section>
 
+    <!-- 02 // TERMINAL DE MÍDIA -->
     <section id="terminal" class="section">
       <div class="section-title-wrapper">
         <h2 class="section-title">02 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
@@ -178,11 +189,11 @@ const sortedPosts: ProcessedPost[] = posts
             </div>
           </a>
 
-          <a href="https://x.com/w4kkomancer" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <a href="https://x.com/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
             <span class="signal-icon">✖️</span>
             <div class="signal-info">
               <span class="signal-name">X</span>
-              <span class="signal-handle">@w4kkomancer</span>
+              <span class="signal-handle">@w4kkomancer_</span>
             </div>
           </a>
 
@@ -194,16 +205,16 @@ const sortedPosts: ProcessedPost[] = posts
             </div>
           </a>
 
-          <a href="https://instagram.com/w4kkomancer" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <a href="https://instagram.com/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
             <span class="signal-icon">📸</span>
             <div class="signal-info">
               <span class="signal-name">Instagram</span>
-              <span class="signal-handle">@w4kkomancer</span>
+              <span class="signal-handle">@w4kkomancer_</span>
             </div>
           </a>
         </div>
 
-        <!-- Widget Discord Dinâmico -->
+        <!-- WIDGET DISCORD PRIVADO & COMPACTO -->
         <div class="discord-widget-container" id="discord-widget">
           <div class="discord-hud-card">
             <div class="crest-corner top-left"></div>
@@ -243,10 +254,12 @@ const sortedPosts: ProcessedPost[] = posts
     </section>
   </main>
 
+  <!-- RODAPÉ -->
   <footer class="footer">
     <p>© 2026 BEYOND OBVIOUS • @w4kkomancer_</p>
   </footer>
 
+  <!-- SCRIPT DE TRADUÇÃO & DISCORD API -->
   <script>
     // 1. Controle de Idioma Bilíngue
     const toggleBtn = document.getElementById('lang-toggle');
@@ -272,7 +285,7 @@ const sortedPosts: ProcessedPost[] = posts
       applyLanguage();
     });
 
-    // 2. Consulta da API do Discord Widget (Somente Contagem e Link)
+    // 2. Consulta da API do Discord Widget (Apenas Contagem e Link)
     async function fetchDiscordWidget() {
       const serverId = '697506206390157333';
       const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
@@ -445,7 +458,10 @@ const sortedPosts: ProcessedPost[] = posts
 
   .status-badge { 
     display: inline-block; 
-    font-size: 0.75rem; 
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem; 
+    letter-spacing: 1px;
     color: var(--accent-blue); 
     border: 1px solid rgba(76,201,240,0.3); 
     padding: 0.3rem 0.8rem; 
@@ -467,14 +483,36 @@ const sortedPosts: ProcessedPost[] = posts
     font-family: 'Rajdhani', sans-serif; 
     font-size: 1.3rem; 
     font-weight: 700; 
-    margin: 0.5rem 0 1rem; 
+    margin: 0.5rem 0 0.8rem; 
   }
 
   .hero-bio { 
     color: var(--text-secondary); 
-    margin: 0 0 1.5rem; 
+    margin: 0 0 1rem; 
     font-size: 1rem; 
     line-height: 1.6; 
+  }
+
+  .dossier-hero-link {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    padding: 0.2rem 0.5rem;
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px dashed rgba(76, 201, 240, 0.4);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+
+  .dossier-hero-link:hover {
+    color: #fff;
+    background: rgba(76, 201, 240, 0.25);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
   }
 
   .hero-actions { 
@@ -571,6 +609,7 @@ const sortedPosts: ProcessedPost[] = posts
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
+  /* GRADE UNIFICADA DE SINAIS */
   .signal-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -592,6 +631,7 @@ const sortedPosts: ProcessedPost[] = posts
   .signal-card:hover { 
     border-color: var(--accent-crimson); 
     transform: translateY(-2px); 
+    background: rgba(230, 57, 70, 0.05);
   }
   .signal-icon { font-size: 1.2rem; }
   .signal-info { display: flex; flex-direction: column; }
