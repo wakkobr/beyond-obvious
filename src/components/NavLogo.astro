@@ -15,7 +15,13 @@ const { className = "" } = Astro.props;
   
   <div class="hud-subline">
     <span class="hud-marker-left"></span>
-    <span class="hud-status">SISTEMA // ARCANO.ATIVO</span>
+    <span 
+      class="hud-status" 
+      data-pt="SISTEMA // ARCANO.ATIVO" 
+      data-en="SYSTEM // ARCANE.ACTIVE"
+    >
+      SISTEMA // ARCANO.ATIVO
+    </span>
     <span class="hud-marker-right"></span>
   </div>
 </div>
@@ -60,7 +66,7 @@ const { className = "" } = Astro.props;
     font-weight: 700;
     font-size: 0.65rem;
     letter-spacing: 2px;
-    color: #4CC9F0; /* Ciano HUD */
+    color: #4CC9F0;
     padding: 0 6px;
     white-space: nowrap;
     transition: text-shadow 0.2s ease;
@@ -78,7 +84,6 @@ const { className = "" } = Astro.props;
     background: linear-gradient(90deg, rgba(76, 201, 240, 0.3), #4CC9F0);
   }
 
-  /* Efeitos no Hover */
   .nav-logo-hud:hover .text-obvious {
     text-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
   }
