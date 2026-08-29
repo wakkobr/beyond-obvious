@@ -56,11 +56,10 @@ const sortedPosts: ProcessedPost[] = posts
     </div>
   </section>
 
-  <!-- 01 // TRANSMISSÕES (STATUS DA TWITCH INTEGRADO DENTRO DA SEÇÃO) -->
+  <!-- 01 // TRANSMISSÕES -->
   <section id="stream" class="section">
     <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
     
-    <!-- Widget de Status da Twitch logo abaixo do título -->
     <div class="stream-status-wrapper">
       <TwitchStatus channelName="w4kkomancer_" />
     </div>
@@ -299,7 +298,7 @@ const sortedPosts: ProcessedPost[] = posts
     grid-template-columns: 240px 1fr;
     gap: 2.5rem;
     align-items: center;
-    padding: 4rem 0 2.5rem;
+    padding: 3.5rem 0 2rem;
   }
 
   .hero-crest-frame {
@@ -382,7 +381,10 @@ const sortedPosts: ProcessedPost[] = posts
     margin-bottom: 1.5rem;
   }
 
-  .section { padding: 2.5rem 0 1rem; }
+  /* Padding ajustado para âncoras perfeitas */
+  .section { 
+    padding: 0.5rem 0 2rem; 
+  }
   
   .section-title-wrapper {
     display: flex;
