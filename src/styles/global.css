@@ -19,7 +19,11 @@
 /* Rolagem suave e compensação calibrada para o header sticky */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 100px !important;
+}
+
+[id] {
+  scroll-margin-top: 100px !important;
 }
 
 body {

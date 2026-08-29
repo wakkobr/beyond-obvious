@@ -57,7 +57,7 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 
   <!-- 01 // TRANSMISSÕES -->
-  <section id="stream" class="section">
+  <section id="stream" class="section section-anchor">
     <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
     
     <div class="stream-status-wrapper">
@@ -79,7 +79,7 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 
   <!-- 02 // TERMINAL DE MÍDIA -->
-  <section id="terminal" class="section">
+  <section id="terminal" class="section section-anchor">
     <div class="section-title-wrapper">
       <h2 class="section-title">02 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
       <a href="/terminal" class="view-all-link" data-pt="Ver Arquivo Geral &rarr;" data-en="View All Records &rarr;">Ver Arquivo Geral &rarr;</a>
@@ -118,7 +118,7 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 
   <!-- 03 // REDE DE VTUBERS & OPERADORES -->
-  <section id="vtubers" class="section">
+  <section id="vtubers" class="section section-anchor">
     <div class="section-title-wrapper">
       <h2 class="section-title">03 // <span data-pt="OPERADORES // REDE DE VTUBERS" data-en="OPERATORS // VTUBER NETWORK">OPERADORES // REDE DE VTUBERS</span></h2>
       <a href="/vtubers" class="view-all-link" data-pt="Acessar Diretório &rarr;" data-en="Access Directory &rarr;">Acessar Diretório &rarr;</a>
@@ -152,14 +152,13 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 
   <!-- 04 // PONTOS DE CONTATO -->
-  <section id="signal" class="section">
+  <section id="signal" class="section section-anchor">
     <h2 class="section-title">04 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT NODES">SIGNAL // PONTOS DE CONTATO</span></h2>
     <div class="hud-card">
       <p class="card-desc mb-4" data-pt="Conecte-se às transmissões, documentações de campanha e canais de comunicação." data-en="Connect to streams, campaign documentation, and communication channels.">
         Conecte-se às transmissões, documentações de campanha e canais de comunicação.
       </p>
 
-      <!-- Grade Unificada de Sinais -->
       <div class="signal-grid">
         <a href="https://twitch.tv/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
           <span class="signal-icon">🟣</span>
@@ -298,7 +297,7 @@ const sortedPosts: ProcessedPost[] = posts
     grid-template-columns: 240px 1fr;
     gap: 2.5rem;
     align-items: center;
-    padding: 3.5rem 0 2rem;
+    padding: 3rem 0 2rem;
   }
 
   .hero-crest-frame {
@@ -381,9 +380,13 @@ const sortedPosts: ProcessedPost[] = posts
     margin-bottom: 1.5rem;
   }
 
-  /* Padding ajustado para âncoras perfeitas */
+  /* REGRAS DAS SEÇÕES E SCROLL */
+  .section-anchor {
+    scroll-margin-top: 100px !important;
+  }
+
   .section { 
-    padding: 0.5rem 0 2rem; 
+    padding: 0 0 2rem; 
   }
   
   .section-title-wrapper {
