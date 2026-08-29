@@ -5,10 +5,5 @@
       "source": "/admin",
       "destination": "/admin/index.html"
     }
-  ],
-  "overrides": {
-    "404.html": {
-      "path": "404.html"
-    }
-  }
+  ]
 }
