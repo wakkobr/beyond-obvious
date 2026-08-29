@@ -1,17 +1,10 @@
 {
   "cleanUrls": true,
-  "routes": [
+  "trailingSlash": false,
+  "rewrites": [
     {
-      "src": "/admin",
-      "dest": "/admin/index.html"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "status": 404,
-      "dest": "/404.html"
+      "source": "/admin",
+      "destination": "/admin/index.html"
     }
   ]
 }
