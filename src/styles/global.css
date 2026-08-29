@@ -16,14 +16,9 @@
   box-sizing: border-box;
 }
 
-/* Rolagem suave e compensação calibrada para o header sticky */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px !important;
-}
-
-[id] {
-  scroll-margin-top: 100px !important;
+  scroll-padding-top: 85px;
 }
 
 body {
@@ -40,12 +35,7 @@ body {
   width: 100%;
   max-width: 1040px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-/* Compensação precisa para qualquer âncora */
-section[id], [id] {
-  scroll-margin-top: 80px;
+  padding: 2rem 1.5rem 6rem; /* 6rem no final para permitir que as seções subam até o topo */
 }
 
 /* CARDS HUD COMPARTILHADOS */
