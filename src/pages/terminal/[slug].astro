@@ -1,6 +1,6 @@
 ---
 // src/pages/terminal/[slug].astro
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -19,7 +19,9 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+
+// Novo padrão do Astro para renderizar coleções Markdown
+const { Content } = await render(entry);
 
 const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating, 10)) : '';
 ---
@@ -37,26 +39,22 @@ const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating,
 </head>
 <body>
 
-  <!-- HEADER MODULAR -->
   <Header currentPage="terminal" />
 
   <main class="container">
     
-    <!-- LINK DE RETORNO -->
     <div class="back-nav">
       <a href="/terminal" class="back-link" data-pt="&larr; RETORNAR AO TERMINAL" data-en="&larr; RETURN TO TERMINAL">
         &larr; RETORNAR AO TERMINAL
       </a>
     </div>
 
-    <!-- ARTIGO DO TERMINAL -->
     <article class="hud-card post-article">
       <div class="crest-corner top-left"></div>
       <div class="crest-corner top-right"></div>
       <div class="crest-corner bottom-left"></div>
       <div class="crest-corner bottom-right"></div>
 
-      <!-- CABEÇALHO DO POST -->
       <header class="article-header">
         <div class="article-meta">
           <span class={`category-tag cat-${String(entry.data.category || '').toLowerCase().trim()}`}>
@@ -69,19 +67,16 @@ const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating,
         {entry.data.summary && <p class="article-summary">{entry.data.summary}</p>}
       </header>
 
-      <!-- IMAGEM DE CAPA (SE HOUVER) -->
       {entry.data.coverImage && (
         <div class="cover-frame">
           <img src={entry.data.coverImage} alt={entry.data.title} class="cover-img" />
         </div>
       )}
 
-      <!-- CONTEÚDO MARKDOWN RENDERIZADO -->
       <div class="markdown-body">
         <Content />
       </div>
 
-      <!-- LINK EXTERNO OPCIONAL -->
       {entry.data.externalLink && (
         <div class="external-box">
           <a href={entry.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn btn-outline-blue" data-pt="🌐 ACESSAR REGISTRO COMPLETO // WORLD ANVIL &rarr;" data-en="🌐 ACCESS FULL RECORD // WORLD ANVIL &rarr;">
@@ -93,10 +88,8 @@ const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating,
 
   </main>
 
-  <!-- FOOTER MODULAR -->
   <Footer />
 
-  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
   <I18nScript />
 
 </body>
