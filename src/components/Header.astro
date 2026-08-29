@@ -14,7 +14,16 @@ const { currentPage = "" } = Astro.props;
     <a href="/" class="nav-brand">
       <NavLogo />
     </a>
-    <div class="nav-links">
+
+    <!-- BOTÃO HAMBÚRGUER (MOBILE) -->
+    <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Abrir Menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- LINKS DE NAVEGAÇÃO -->
+    <div id="nav-menu" class="nav-links">
       <a href="/#stream" class={currentPage === "streams" ? "active" : ""} data-pt="Transmissões" data-en="Streams">Transmissões</a>
       <a href="/terminal" class={currentPage === "terminal" ? "active" : ""} data-pt="Terminal" data-en="Terminal">Terminal</a>
       <a href="/vtubers" class={currentPage === "vtubers" ? "active" : ""} data-pt="VTubers" data-en="VTubers">VTubers</a>
@@ -25,6 +34,25 @@ const { currentPage = "" } = Astro.props;
     </div>
   </div>
 </nav>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const navLinks = navMenu?.querySelectorAll('a');
+
+  toggleBtn?.addEventListener('click', () => {
+    navMenu?.classList.toggle('is-open');
+    toggleBtn?.classList.toggle('is-active');
+  });
+
+  // Fecha o menu ao clicar em qualquer link
+  navLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu?.classList.remove('is-open');
+      toggleBtn?.classList.remove('is-active');
+    });
+  });
+</script>
 
 <style>
   .nav-bar { 
@@ -84,8 +112,67 @@ const { currentPage = "" } = Astro.props;
     box-shadow: 0 0 8px rgba(76, 201, 240, 0.4); 
   }
 
+  /* BOTÃO HAMBÚRGUER */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 110;
+  }
+
+  .menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-blue, #4CC9F0);
+    transition: all 0.3s ease;
+  }
+
+  .menu-toggle.is-active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--accent-crimson, #E63946);
+  }
+
+  .menu-toggle.is-active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.is-active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--accent-crimson, #E63946);
+  }
+
   @media (max-width: 768px) {
-    .nav-container { flex-direction: column; gap: 0.8rem; padding: 0.8rem 1rem; }
-    .nav-bar { height: auto; padding: 0.5rem 0; }
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: rgba(11, 12, 16, 0.98);
+      border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      gap: 1.2rem;
+      display: none;
+    }
+
+    .nav-links.is-open {
+      display: flex;
+    }
+
+    .nav-links a {
+      font-size: 1.15rem;
+      padding: 0.4rem 0;
+    }
   }
 </style>

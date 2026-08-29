@@ -260,10 +260,10 @@ const sortedPosts: ProcessedPost[] = posts
 
 <!-- SCRIPT NATIVO DE SCROLL EXATO E DISCORD -->
 <script>
-  // Alinhamento exato via JS para ignorar limites de render do browser
-  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
+  // Alinhamento exato via JS com tipagem TypeScript
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
       const targetId = href?.includes('#') ? href.split('#')[1] : null;
       if (!targetId) return;
 
@@ -297,10 +297,10 @@ const sortedPosts: ProcessedPost[] = posts
       
       const countEl = document.getElementById('discord-online-count');
       if (countEl) {
-        countEl.innerText = data.presence_count || (data.members ? data.members.length : '0');
+        countEl.innerText = String(data.presence_count ?? (data.members ? data.members.length : 0));
       }
       
-      const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement;
+      const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement | null;
       if (inviteBtn && data.instant_invite) {
         inviteBtn.href = data.instant_invite;
       }
