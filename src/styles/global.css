@@ -16,7 +16,13 @@
   box-sizing: border-box;
 }
 
-html, body {
+/* Rolagem suave e compensação para o header sticky */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* 70px do header + 20px de respiro */
+}
+
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -31,6 +37,11 @@ html, body {
   max-width: 1040px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
+}
+
+/* Garante que qualquer elemento com id tenha margem ao receber clique de âncora */
+[id], section {
+  scroll-margin-top: 90px;
 }
 
 /* CARDS HUD COMPARTILHADOS */
