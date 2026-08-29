@@ -56,14 +56,15 @@ const sortedPosts: ProcessedPost[] = posts
     </div>
   </section>
 
-  <!-- STATUS DA TWITCH -->
-  <section class="stream-status-section">
-    <TwitchStatus channelName="w4kkomancer_" />
-  </section>
-
-  <!-- 01 // TRANSMISSÕES -->
+  <!-- 01 // TRANSMISSÕES (STATUS DA TWITCH INTEGRADO DENTRO DA SEÇÃO) -->
   <section id="stream" class="section">
     <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
+    
+    <!-- Widget de Status da Twitch logo abaixo do título -->
+    <div class="stream-status-wrapper">
+      <TwitchStatus channelName="w4kkomancer_" />
+    </div>
+
     <div class="hud-card">
       <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, card strategies, and live tabletop RPG sessions.">
         Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo.
@@ -258,7 +259,7 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 </Layout>
 
-<!-- SCRIPT DO DISCORD (APENAS NA HOME) -->
+<!-- SCRIPT DO DISCORD -->
 <script>
   async function fetchDiscordWidget() {
     const serverId = '697506206390157333';
@@ -293,7 +294,6 @@ const sortedPosts: ProcessedPost[] = posts
 </script>
 
 <style>
-  /* ESTILOS EXCLUSIVOS DA HOME */
   .hero-split {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -378,11 +378,12 @@ const sortedPosts: ProcessedPost[] = posts
     flex-wrap: wrap; 
   }
 
-  .stream-status-section {
+  .stream-status-wrapper {
     margin-bottom: 1.5rem;
   }
 
   .section { padding: 2.5rem 0 1rem; }
+  
   .section-title-wrapper {
     display: flex;
     justify-content: space-between;
@@ -391,12 +392,18 @@ const sortedPosts: ProcessedPost[] = posts
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
   }
+  
   .section-title { 
     font-family: 'Rajdhani', sans-serif; 
     font-size: 1.5rem; 
     color: var(--accent-crimson); 
-    margin: 0; 
+    margin: 0 0 1.2rem; 
   }
+  
+  .section-title-wrapper .section-title {
+    margin: 0;
+  }
+
   .view-all-link {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
