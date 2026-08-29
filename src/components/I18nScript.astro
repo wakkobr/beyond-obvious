@@ -1,0 +1,32 @@
+---
+// src/components/I18nScript.astro
+---
+
+<script>
+  const setupLanguageToggle = () => {
+    const toggleBtn = document.getElementById('lang-toggle');
+    let currentLang = localStorage.getItem('siteLang') || 'pt';
+
+    const applyLanguage = () => {
+      if (toggleBtn) {
+        toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+      }
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        const target = el as HTMLElement;
+        target.innerHTML = currentLang === 'pt' ? target.dataset.pt! : target.dataset.en!;
+      });
+    };
+
+    if (currentLang === 'en') {
+      applyLanguage();
+    }
+
+    toggleBtn?.addEventListener('click', () => {
+      currentLang = currentLang === 'pt' ? 'en' : 'pt';
+      localStorage.setItem('siteLang', currentLang);
+      applyLanguage();
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', setupLanguageToggle);
+</script>

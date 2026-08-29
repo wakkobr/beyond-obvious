@@ -1,6 +1,8 @@
 ---
 // src/pages/about.astro
-import NavLogo from '../components/NavLogo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import I18nScript from '../components/I18nScript.astro';
 ---
 
 <!DOCTYPE html>
@@ -16,22 +18,8 @@ import NavLogo from '../components/NavLogo.astro';
 </head>
 <body>
 
-  <!-- NAVEGAÇÃO -->
-  <nav class="nav-bar">
-    <div class="nav-container">
-      <a href="/" class="nav-brand">
-        <NavLogo />
-      </a>
-      <div class="nav-links">
-        <a href="/#stream" data-pt="Transmissões" data-en="Streams">Transmissões</a>
-        <a href="/terminal" data-pt="Terminal" data-en="Terminal">Terminal</a>
-        <a href="/dossier" data-pt="Dossiê" data-en="Dossier">Dossiê</a>
-        <a href="/about" class="active" data-pt="Sobre" data-en="About">Sobre</a>
-        <a href="/#signal" data-pt="Sinal" data-en="Signal">Sinal</a>
-        <button id="lang-toggle" class="lang-btn">EN</button>
-      </div>
-    </div>
-  </nav>
+  <!-- HEADER MODULAR -->
+  <Header currentPage="about" />
 
   <main class="container">
     
@@ -123,36 +111,11 @@ import NavLogo from '../components/NavLogo.astro';
 
   </main>
 
-  <!-- RODAPÉ -->
-  <footer class="footer">
-    <p>© 2026 BEYOND OBVIOUS • @w4kkomancer_</p>
-  </footer>
+  <!-- FOOTER MODULAR -->
+  <Footer />
 
-  <!-- SCRIPT DE TRADUÇÃO -->
-  <script>
-    const toggleBtn = document.getElementById('lang-toggle');
-    let currentLang = localStorage.getItem('siteLang') || 'pt';
-
-    const applyLanguage = () => {
-      if (toggleBtn) {
-        toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
-      }
-      document.querySelectorAll('[data-pt]').forEach(el => {
-        const target = el as HTMLElement;
-        target.innerHTML = currentLang === 'pt' ? target.dataset.pt! : target.dataset.en!;
-      });
-    };
-
-    if (currentLang === 'en') {
-      applyLanguage();
-    }
-
-    toggleBtn?.addEventListener('click', () => {
-      currentLang = currentLang === 'pt' ? 'en' : 'pt';
-      localStorage.setItem('siteLang', currentLang);
-      applyLanguage();
-    });
-  </script>
+  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
+  <I18nScript />
 
 </body>
 </html>
@@ -180,61 +143,6 @@ import NavLogo from '../components/NavLogo.astro';
   }
 
   .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
-  /* NAVEGAÇÃO */
-  .nav-bar { 
-    background: rgba(11, 12, 16, 0.95); 
-    border-bottom: 1px solid rgba(230, 57, 70, 0.2); 
-    position: sticky; 
-    top: 0; 
-    backdrop-filter: blur(10px); 
-    z-index: 100; 
-    height: 70px;
-    display: flex;
-    align-items: center;
-  }
-
-  .nav-container { 
-    width: 100%;
-    max-width: 960px; 
-    margin: 0 auto; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 0 1.5rem; 
-  }
-  
-  .nav-brand { display: flex; align-items: center; text-decoration: none; }
-  .nav-links { display: flex; gap: 1.4rem; align-items: center; }
-
-  .nav-links a { 
-    color: var(--text-secondary); 
-    text-decoration: none; 
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1rem; 
-    font-weight: 600; 
-    transition: color 0.2s ease;
-  }
-
-  .nav-links a:hover, .nav-links a.active { color: var(--accent-crimson); }
-
-  .lang-btn { 
-    background: transparent; 
-    border: 1px solid var(--accent-blue); 
-    color: var(--accent-blue); 
-    padding: 0.2rem 0.6rem; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700; 
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-  }
-
-  .lang-btn:hover { 
-    background: rgba(76, 201, 240, 0.15); 
-    box-shadow: 0 0 8px rgba(76, 201, 240, 0.4); 
-  }
 
   /* CABEÇALHO */
   .about-header {
@@ -310,10 +218,8 @@ import NavLogo from '../components/NavLogo.astro';
     margin: 0;
   }
 
-  .btn-outline-blue {
-    background: transparent;
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
+  .btn {
+    display: inline-block;
     padding: 0.6rem 1.2rem;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
@@ -322,8 +228,15 @@ import NavLogo from '../components/NavLogo.astro';
     text-transform: uppercase;
     font-size: 0.9rem;
     letter-spacing: 1px;
-    transition: all 0.2s ease;
+    cursor: pointer;
     white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .btn-outline-blue {
+    background: transparent;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
   }
 
   .btn-outline-blue:hover {
@@ -384,19 +297,7 @@ import NavLogo from '../components/NavLogo.astro';
   .mt-3 { margin-top: 1rem; }
   .mb-3 { margin-bottom: 1rem; }
 
-  /* RODAPÉ */
-  .footer { 
-    text-align: center; 
-    padding: 3rem 0; 
-    color: var(--text-secondary); 
-    font-size: 0.85rem; 
-    border-top: 1px solid rgba(224,225,221,0.05); 
-    margin-top: 4rem; 
-  }
-
   @media (max-width: 768px) {
-    .nav-container { flex-direction: column; gap: 0.8rem; padding: 0.8rem 1rem; }
-    .nav-bar { height: auto; padding: 0.5rem 0; }
     .about-title { font-size: 1.8rem; }
     .lore-bridge-card { flex-direction: column; align-items: flex-start; }
     .btn-outline-blue { width: 100%; text-align: center; }

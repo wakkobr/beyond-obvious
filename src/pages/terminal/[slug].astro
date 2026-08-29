@@ -1,36 +1,27 @@
 ---
 // src/pages/terminal/[slug].astro
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import NavLogo from '../../components/NavLogo.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import I18nScript from '../../components/I18nScript.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('terminal');
-  return posts.map((post: CollectionEntry<'terminal'>) => {
-    const slug = post.id.replace(/\.[^/.]+$/, '');
-    return {
-      params: { slug },
-      props: { post },
-    };
-  });
+  return posts.map((entry: CollectionEntry<'terminal'>) => ({
+    params: { slug: entry.id.replace(/\.[^/.]+$/, '') },
+    props: { entry },
+  }));
 }
 
 interface Props {
-  post: CollectionEntry<'terminal'>;
+  entry: CollectionEntry<'terminal'>;
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { entry } = Astro.props;
+const { Content } = await entry.render();
 
-const formattedDate = new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
-
-const ratingNum = parseInt(post.data.rating || '5', 10);
-const ratingStars = '★'.repeat(isNaN(ratingNum) ? 5 : ratingNum);
-const postSlugId = post.id.replace(/\.[^/.]+$/, '').toUpperCase();
+const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating, 10)) : '';
 ---
 
 <!DOCTYPE html>
@@ -39,76 +30,74 @@ const postSlugId = post.id.replace(/\.[^/.]+$/, '').toUpperCase();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>{post.data.title} // TERMINAL // BEYOND OBVIOUS</title>
+  <title>{entry.data.title} // TERMINAL - BEYOND OBVIOUS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- NAVEGAÇÃO -->
-  <nav class="nav-bar">
-    <div class="nav-container">
-      <a href="/" class="nav-brand">
-        <NavLogo />
-      </a>
-      <div class="nav-links">
-        <a href="/">&larr; Hub Principal</a>
-        <a href="/terminal">Terminal</a>
-        <a href="/about">Sobre</a>
-      </div>
-    </div>
-  </nav>
+  <!-- HEADER MODULAR -->
+  <Header currentPage="terminal" />
 
   <main class="container">
-    <article class="post-article">
+    
+    <!-- LINK DE RETORNO -->
+    <div class="back-nav">
+      <a href="/terminal" class="back-link" data-pt="&larr; RETORNAR AO TERMINAL" data-en="&larr; RETURN TO TERMINAL">
+        &larr; RETORNAR AO TERMINAL
+      </a>
+    </div>
+
+    <!-- ARTIGO DO TERMINAL -->
+    <article class="hud-card post-article">
+      <div class="crest-corner top-left"></div>
+      <div class="crest-corner top-right"></div>
+      <div class="crest-corner bottom-left"></div>
+      <div class="crest-corner bottom-right"></div>
+
       <!-- CABEÇALHO DO POST -->
       <header class="article-header">
-        <div class="header-meta">
-          <span class="category-badge">{post.data.category.toUpperCase()}</span>
-          <span class="rating-stars">{ratingStars}</span>
+        <div class="article-meta">
+          <span class={`category-tag cat-${String(entry.data.category || '').toLowerCase().trim()}`}>
+            {String(entry.data.category || '').toUpperCase()}
+          </span>
+          {starDisplay && <span class="star-rating">{starDisplay}</span>}
+          <span class="article-date">{new Date(entry.data.publishDate).toLocaleDateString('pt-BR')}</span>
         </div>
-
-        <h1 class="article-title">{post.data.title}</h1>
-        
-        <div class="article-date-row">
-          <span class="meta-item">◈ DATA: {formattedDate}</span>
-          <span class="meta-item">◈ REGISTRO: ID-{postSlugId}</span>
-        </div>
-
-        {post.data.summary ? (
-          <div class="article-summary-box">
-            <p>{post.data.summary}</p>
-          </div>
-        ) : null}
+        <h1 class="article-title">{entry.data.title}</h1>
+        {entry.data.summary && <p class="article-summary">{entry.data.summary}</p>}
       </header>
 
-      <!-- CORPO DO TEXTO MARKDOWN -->
-      <div class="article-content">
+      <!-- IMAGEM DE CAPA (SE HOUVER) -->
+      {entry.data.coverImage && (
+        <div class="cover-frame">
+          <img src={entry.data.coverImage} alt={entry.data.title} class="cover-img" />
+        </div>
+      )}
+
+      <!-- CONTEÚDO MARKDOWN RENDERIZADO -->
+      <div class="markdown-body">
         <Content />
       </div>
 
-      <!-- RODAPÉ DO POST -->
-      <footer class="article-footer">
-        {post.data.externalLink ? (
-          <div class="external-box">
-            <span class="ext-label">Frequência Externa Vinculada:</span>
-            <a href={post.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-              🌐 Acessar Fonte Externa &rarr;
-            </a>
-          </div>
-        ) : null}
-
-        <div class="footer-nav">
-          <a href="/#terminal" class="btn btn-primary">&larr; Voltar ao Terminal</a>
+      <!-- LINK EXTERNO OPCIONAL -->
+      {entry.data.externalLink && (
+        <div class="external-box">
+          <a href={entry.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn btn-outline-blue" data-pt="🌐 ACESSAR REGISTRO COMPLETO // WORLD ANVIL &rarr;" data-en="🌐 ACCESS FULL RECORD // WORLD ANVIL &rarr;">
+            🌐 ACESSAR REGISTRO COMPLETO // WORLD ANVIL &rarr;
+          </a>
         </div>
-      </footer>
+      )}
     </article>
+
   </main>
 
-  <footer class="footer">
-    <p>© 2026 BEYOND OBVIOUS • @W4KKO_</p>
-  </footer>
+  <!-- FOOTER MODULAR -->
+  <Footer />
+
+  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
+  <I18nScript />
 
 </body>
 </html>
@@ -119,6 +108,10 @@ const postSlugId = post.id.replace(/\.[^/.]+$/, '').toUpperCase();
     --bg-surface: #16181D;
     --accent-crimson: #E63946;
     --accent-blue: #4CC9F0;
+    --accent-purple: #9D4EDD;
+    --accent-pink: #F72585;
+    --accent-gold: #F4A261;
+    --accent-green: #2A9D8F;
     --text-primary: #E0E1DD;
     --text-secondary: #8D99AE;
   }
@@ -131,50 +124,43 @@ const postSlugId = post.id.replace(/\.[^/.]+$/, '').toUpperCase();
     line-height: 1.7;
   }
 
-  .container { max-width: 800px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-  
-  .nav-bar { 
-    background: rgba(11, 12, 16, 0.95); 
-    border-bottom: 1px solid rgba(230, 57, 70, 0.2); 
-    position: sticky; 
-    top: 0; 
-    backdrop-filter: blur(10px); 
-    z-index: 100; 
-    height: 70px;
-    display: flex;
-    align-items: center;
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  .back-nav {
+    padding: 2rem 0 1.5rem;
   }
 
-  .nav-container { 
-    width: 100%;
-    max-width: 960px; 
-    margin: 0 auto; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 0 1.5rem; 
-  }
-  
-  .nav-brand { display: flex; align-items: center; text-decoration: none; }
-  .nav-links { display: flex; gap: 1.4rem; align-items: center; }
-  .nav-links a { 
-    color: var(--text-secondary); 
-    text-decoration: none; 
+  .back-link {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 1rem; 
-    font-weight: 600; 
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--accent-blue);
+    text-decoration: none;
+    letter-spacing: 1px;
     transition: color 0.2s ease;
   }
-  .nav-links a:hover { color: var(--accent-crimson); }
 
-  /* ARTIGO */
-  .post-article {
-    background: var(--bg-surface);
-    border: 1px solid rgba(224, 225, 221, 0.1);
-    border-radius: 8px;
-    padding: 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  .back-link:hover {
+    color: var(--accent-crimson);
   }
+
+  .post-article {
+    position: relative;
+    background: var(--bg-surface);
+    border: 1px solid rgba(224, 225, 221, 0.12);
+    border-radius: 6px;
+    padding: 2.5rem;
+  }
+
+  .crest-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+  }
+  .crest-corner.top-left { top: -1px; left: -1px; border-top: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
+  .crest-corner.top-right { top: -1px; right: -1px; border-top: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
+  .crest-corner.bottom-left { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
+  .crest-corner.bottom-right { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
 
   .article-header {
     border-bottom: 1px solid rgba(224, 225, 221, 0.1);
@@ -182,147 +168,157 @@ const postSlugId = post.id.replace(/\.[^/.]+$/, '').toUpperCase();
     margin-bottom: 2rem;
   }
 
-  .header-meta {
+  .article-meta {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
   }
 
-  .category-badge {
-    background: rgba(76, 201, 240, 0.1);
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-  }
+  .category-tag { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+  .category-tag.cat-gaming { color: var(--accent-pink); }
+  .category-tag.cat-ttrpg { color: var(--accent-purple); }
+  .category-tag.cat-book { color: var(--accent-blue); }
+  .category-tag.cat-cinema { color: var(--accent-gold); }
+  .category-tag.cat-anime { color: var(--accent-green); }
 
-  .rating-stars {
-    color: #F4A261;
-    font-size: 1.2rem;
-    letter-spacing: 2px;
+  .star-rating { color: var(--accent-gold); letter-spacing: 2px; }
+
+  .article-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: auto;
   }
 
   .article-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.2rem;
-    line-height: 1.2;
-    margin: 0.5rem 0 1rem;
+    font-size: 2rem;
     color: var(--text-primary);
+    margin: 0 0 0.8rem;
+    line-height: 1.2;
+    letter-spacing: 1px;
   }
 
-  .article-date-row {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+  .article-summary {
     color: var(--text-secondary);
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.2rem;
-  }
-
-  .article-summary-box {
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 3px solid var(--accent-crimson);
-    padding: 1rem 1.2rem;
-    border-radius: 0 4px 4px 0;
-  }
-
-  .article-summary-box p {
+    font-size: 1.1rem;
+    line-height: 1.5;
     margin: 0;
-    color: #cad2c5;
     font-style: italic;
   }
 
-  /* ESTILOS DE CORPO MARKDOWN */
-  .article-content {
-    font-size: 1.05rem;
+  .cover-frame {
+    width: 100%;
+    max-height: 380px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(224, 225, 221, 0.1);
+  }
+
+  .cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ESTILOS DO MARKDOWN BODY */
+  .markdown-body {
     color: var(--text-primary);
+    font-size: 1.05rem;
   }
 
-  .article-content :global(h2), .article-content :global(h3) {
+  .markdown-body :global(h2) {
     font-family: 'Rajdhani', sans-serif;
+    font-size: 1.5rem;
     color: var(--accent-crimson);
-    margin-top: 2rem;
-    margin-bottom: 0.8rem;
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
+    padding-bottom: 0.4rem;
   }
 
-  .article-content :global(h2) { font-size: 1.6rem; }
-  .article-content :global(h3) { font-size: 1.3rem; }
+  .markdown-body :global(h3) {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.25rem;
+    color: var(--accent-blue);
+    margin: 1.5rem 0 0.8rem;
+  }
 
-  .article-content :global(p) {
+  .markdown-body :global(p) {
     margin-bottom: 1.4rem;
   }
 
-  .article-content :global(ul), .article-content :global(ol) {
-    margin-left: 1.8rem;
+  .markdown-body :global(ul), .markdown-body :global(ol) {
     margin-bottom: 1.4rem;
+    padding-left: 1.5rem;
   }
 
-  .article-content :global(blockquote) {
+  .markdown-body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .markdown-body :global(blockquote) {
     border-left: 3px solid var(--accent-blue);
+    background: rgba(11, 12, 16, 0.6);
+    padding: 0.8rem 1.2rem;
     margin: 1.5rem 0;
-    padding: 0.5rem 1rem;
-    background: rgba(76, 201, 240, 0.05);
+    font-style: italic;
     color: var(--text-secondary);
   }
 
-  .article-footer {
-    border-top: 1px solid rgba(224, 225, 221, 0.1);
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  .markdown-body :global(code) {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+
+  .markdown-body :global(pre) {
+    background: #0B0C10;
+    border: 1px solid rgba(224, 225, 221, 0.1);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
   }
 
   .external-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    border-radius: 6px;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(224, 225, 221, 0.1);
+    text-align: center;
   }
 
-  .ext-label {
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
     font-family: 'Rajdhani', sans-serif;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
   }
 
-  .btn { 
-    display: inline-block; 
-    padding: 0.6rem 1.2rem; 
-    font-family: 'Rajdhani', sans-serif; 
-    font-weight: 700; 
-    text-decoration: none; 
-    border-radius: 4px; 
-    text-transform: uppercase; 
-    cursor: pointer; 
+  .btn-outline-blue {
+    background: transparent;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
   }
-  .btn-primary { background: var(--accent-crimson); color: white; border: none; }
-  .btn-primary:hover { background: #ff4d5a; }
-  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(224,225,221,0.2); }
-  .btn-outline:hover { border-color: var(--accent-crimson); }
 
-  .footer { 
-    text-align: center; 
-    padding: 3rem 0; 
-    color: var(--text-secondary); 
-    font-size: 0.85rem; 
-    border-top: 1px solid rgba(224,225,221,0.05); 
-    margin-top: 4rem; 
+  .btn-outline-blue:hover {
+    background: rgba(76, 201, 240, 0.2);
+    box-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
+    color: #fff;
   }
 
   @media (max-width: 768px) {
-    .post-article { padding: 1.5rem; }
-    .article-title { font-size: 1.7rem; }
-    .external-box { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
-    .nav-container { flex-direction: column; gap: 0.8rem; padding: 0.8rem 1rem; }
-    .nav-bar { height: auto; padding: 0.5rem 0; }
+    .post-article { padding: 1.5rem 1.2rem; }
+    .article-title { font-size: 1.6rem; }
   }
 </style>
