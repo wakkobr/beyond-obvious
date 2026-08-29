@@ -14,8 +14,7 @@ const vtubers = [
     originNodePt: "Terminal Central // Beyond Obvious",
     originNodeEn: "Core Terminal // Beyond Obvious",
     nodeUrl: "https://beyond-obvious.net",
-    avatar: "", // Deixe vazio para o frame HUD ou adicione "/images/w4kko-avatar.png"
-    freq: "#4CC9F0",
+    avatar: "/images/w4kko-avatar.png",
     accentColor: "cyan",
     twitch: "https://twitch.tv/w4kkomancer_",
     youtube: "https://www.youtube.com/channel/UCqw0c6fhpxKFAb-eDPHDKew",
@@ -32,8 +31,7 @@ const vtubers = [
     originNodePt: "Santuário // Moonhaven",
     originNodeEn: "Sanctuary // Moonhaven",
     nodeUrl: "https://moonhaven.beyond-obvious.net",
-    avatar: "", // Adicione a imagem quando tiver
-    freq: "#9D4EDD",
+    avatar: "/images/denilunae-avatar.png",
     accentColor: "purple",
     twitch: "https://twitch.tv",
     youtube: "",
@@ -109,7 +107,12 @@ const vtubers = [
               <div class="avatar-box">
                 <div class={`avatar-frame avatar-border-${vt.accentColor}`}>
                   {vt.avatar ? (
-                    <img src={vt.avatar} alt={vt.name} class="avatar-img" />
+                    <img 
+                      src={vt.avatar} 
+                      alt={vt.name} 
+                      class="avatar-img" 
+                      loading="lazy"
+                    />
                   ) : (
                     <div class="avatar-placeholder">
                       <span class="ph-glyph">◈</span>
@@ -118,9 +121,6 @@ const vtubers = [
                     </div>
                   )}
                 </div>
-                <span class="freq-tag" style={`color: ${vt.freq}; border-color: ${vt.freq}40;`}>
-                  {vt.freq}
-                </span>
               </div>
 
               <!-- INFO DO VTUBER -->
@@ -405,27 +405,39 @@ const vtubers = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
   }
 
   .avatar-frame {
-    width: 120px;
-    height: 120px;
-    background: rgba(11, 12, 16, 0.9);
-    border-radius: 6px;
+    width: 130px;
+    height: 130px;
+    background: #0B0C10;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
   }
 
-  .avatar-border-cyan { border: 2px solid rgba(76, 201, 240, 0.4); }
-  .avatar-border-purple { border: 2px solid rgba(157, 78, 221, 0.4); }
+  .avatar-border-cyan { 
+    border: 2px solid rgba(76, 201, 240, 0.4); 
+    box-shadow: inset 0 0 12px rgba(76, 201, 240, 0.15);
+  }
+  .avatar-border-purple { 
+    border: 2px solid rgba(157, 78, 221, 0.4); 
+    box-shadow: inset 0 0 12px rgba(157, 78, 221, 0.15);
+  }
 
   .avatar-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
+    transition: transform 0.3s ease;
+  }
+
+  .vtuber-card:hover .avatar-img {
+    transform: scale(1.05);
   }
 
   .avatar-placeholder {
@@ -434,20 +446,12 @@ const vtubers = [
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 0.5rem;
   }
 
   .ph-glyph { font-size: 1.5rem; color: var(--accent-blue); }
   .ph-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-primary); }
   .ph-note { font-size: 0.65rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
-
-  .freq-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 700;
-    border: 1px solid currentColor;
-    padding: 1px 6px;
-    border-radius: 3px;
-  }
 
   /* INFO */
   .vtuber-info {
