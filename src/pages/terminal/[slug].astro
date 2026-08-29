@@ -22,7 +22,13 @@ const { Content } = await render(entry);
 const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating, 10)) : '';
 ---
 
-<Layout title={`${entry.data.title} // TERMINAL - BEYOND OBVIOUS`} currentPage="terminal">
+<Layout
+  title={`${entry.data.title} // TERMINAL - BEYOND OBVIOUS`}
+  description={entry.data.summary || "Registro arquivado no Terminal Central do Além do Óbvio."}
+  image={entry.data.coverImage || "/og-image.png"}
+  currentPage="terminal"
+  type="article"
+>
   <!-- LINK DE RETORNO -->
   <div class="back-nav">
     <a href="/terminal" class="back-link" data-pt="&larr; RETORNAR AO TERMINAL" data-en="&larr; RETURN TO TERMINAL">
