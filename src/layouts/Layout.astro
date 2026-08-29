@@ -29,16 +29,14 @@ const {
 </head>
 <body>
 
-  <!-- HEADER MODULAR -->
   <Header currentPage={currentPage} />
 
-  <!-- CONTEÚDO DA PÁGINA ESPECÍFICA -->
-  <slot />
+  <main class="container">
+    <slot />
+  </main>
 
-  <!-- FOOTER MODULAR -->
   <Footer />
 
-  <!-- SCRIPT GLOBAL DE IDIOMA -->
   <I18nScript />
 
 </body>
