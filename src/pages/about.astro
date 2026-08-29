@@ -1,165 +1,102 @@
 ---
 // src/pages/about.astro
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import I18nScript from '../components/I18nScript.astro';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>SOBRE // BEYOND OBVIOUS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-  <!-- HEADER MODULAR -->
-  <Header currentPage="about" />
-
-  <main class="container">
-    
-    <!-- CABEÇALHO DA PÁGINA -->
-    <header class="about-header">
-      <div class="status-badge" data-pt="◈ MANIFESTO // HUB DE OPERADORES & DIRETRIZ EDITORIAL" data-en="◈ MANIFESTO // OPERATOR HUB & EDITORIAL DIRECTIVE">
-        ◈ MANIFESTO // HUB DE OPERADORES & DIRETRIZ EDITORIAL
-      </div>
-      <h1 class="about-title">BEYOND OBVIOUS</h1>
-      <p class="about-sub" data-pt="ONDE A LÓGICA ENCONTRA O MISTÉRIO • O NEXUS DE OPERADORES" data-en="WHERE LOGIC MEETS MYSTERY • THE OPERATOR NEXUS">ONDE A LÓGICA ENCONTRA O MISTÉRIO • O NEXUS DE OPERADORES</p>
-    </header>
-
-    <!-- BANNER DE ACESSO AO DOSSIÊ (LORE BRIDGE) -->
-    <div class="lore-bridge-card">
-      <div class="lore-bridge-info">
-        <span class="lore-tag" data-pt="ARQUIVO DE PERSONAGEM" data-en="CHARACTER ARCHIVE">ARQUIVO DE PERSONAGEM</span>
-        <h3 class="lore-title" data-pt="Procurando pelo perfil e lore de @w4kkomancer_?" data-en="Looking for @w4kkomancer_'s profile and lore?">Procurando pelo perfil e lore de @w4kkomancer_?</h3>
-        <p class="lore-desc" data-pt="Acesse a ficha técnica, história dos familiares (M.I.A.U. & C.O.R.V.O.) e diretrizes de transmissão." data-en="Access character stats, companion backstories (M.I.A.U. & C.O.R.V.O.), and streaming guidelines.">
-          Acesse a ficha técnica, história dos familiares (M.I.A.U. & C.O.R.V.O.) e diretrizes de transmissão.
-        </p>
-      </div>
-      <a href="/dossier" class="btn btn-outline-blue" data-pt="📁 ABRIR DOSSIÊ" data-en="📁 OPEN DOSSIER">📁 ABRIR DOSSIÊ</a>
+<Layout title="SOBRE // BEYOND OBVIOUS" currentPage="about">
+  
+  <!-- CABEÇALHO DA PÁGINA -->
+  <header class="about-header">
+    <div class="status-badge" data-pt="◈ MANIFESTO // HUB DE OPERADORES & DIRETRIZ EDITORIAL" data-en="◈ MANIFESTO // OPERATOR HUB & EDITORIAL DIRECTIVE">
+      ◈ MANIFESTO // HUB DE OPERADORES & DIRETRIZ EDITORIAL
     </div>
+    <h1 class="about-title">BEYOND OBVIOUS</h1>
+    <p class="about-sub" data-pt="ONDE A LÓGICA ENCONTRA O MISTÉRIO • O NEXUS DE OPERADORES" data-en="WHERE LOGIC MEETS MYSTERY • THE OPERATOR NEXUS">ONDE A LÓGICA ENCONTRA O MISTÉRIO • O NEXUS DE OPERADORES</p>
+  </header>
 
-    <!-- 01 // A PROPOSTA & O HUB DE VTUBERS -->
-    <section class="section">
-      <h2 class="section-title">01 // <span data-pt="O PROJETO & O NEXUS DE VTUBERS" data-en="THE PROJECT & THE VTUBER NEXUS">O PROJETO & O NEXUS DE VTUBERS</span></h2>
+  <!-- BANNER DE ACESSO AO DOSSIÊ (LORE BRIDGE) -->
+  <div class="lore-bridge-card">
+    <div class="lore-bridge-info">
+      <span class="lore-tag" data-pt="ARQUIVO DE PERSONAGEM" data-en="CHARACTER ARCHIVE">ARQUIVO DE PERSONAGEM</span>
+      <h3 class="lore-title" data-pt="Procurando pelo perfil e lore de @w4kkomancer_?" data-en="Looking for @w4kkomancer_'s profile and lore?">Procurando pelo perfil e lore de @w4kkomancer_?</h3>
+      <p class="lore-desc" data-pt="Acesse a ficha técnica, história dos familiares (M.I.A.U. & C.O.R.V.O.) e diretrizes de transmissão." data-en="Access character stats, companion backstories (M.I.A.U. & C.O.R.V.O.), and streaming guidelines.">
+        Acesse a ficha técnica, história dos familiares (M.I.A.U. & C.O.R.V.O.) e diretrizes de transmissão.
+      </p>
+    </div>
+    <a href="/dossier" class="btn btn-outline-blue" data-pt="📁 ABRIR DOSSIÊ" data-en="📁 OPEN DOSSIER">📁 ABRIR DOSSIÊ</a>
+  </div>
+
+  <!-- 01 // A PROPOSTA & O HUB DE VTUBERS -->
+  <section class="section">
+    <h2 class="section-title">01 // <span data-pt="O PROJETO & O NEXUS DE VTUBERS" data-en="THE PROJECT & THE VTUBER NEXUS">O PROJETO & O NEXUS DE VTUBERS</span></h2>
+    <div class="hud-card">
+      <p data-pt="O Beyond Obvious é um porto seguro descentralizado no coração da malha digital. Muito além de um canal isolado, este portal foi forjado para ser um ponto de convergência para VTubers, criadores de conteúdo e operadores virtuais. Em uma era de consumo acelerado e algoritmos rígidos, fornecemos o sinal, a infraestrutura e a comunidade para que avatares de diferentes dimensões conectem suas transmissões, compartilhem crônicas e construam redes autônomas." data-en="Beyond Obvious is a decentralized haven at the heart of the digital matrix. Far beyond an isolated channel, this hub was forged as a convergence node for VTubers, content creators, and virtual operators. In an era of rapid consumption and rigid algorithms, we provide the signal, infrastructure, and community for avatars across dimensions to connect broadcasts, share chronicles, and build sovereign networks.">
+        O Beyond Obvious é um porto seguro descentralizado no coração da malha digital. Muito além de um canal isolado, este portal foi forjado para ser um ponto de convergência para VTubers, criadores de conteúdo e operadores virtuais. Em uma era de consumo acelerado e algoritmos rígidos, fornecemos o sinal, a infraestrutura e a comunidade para que avatares de diferentes dimensões conectem suas transmissões, compartilhem crônicas e construam redes autônomas.
+      </p>
+      <p class="mt-3" data-pt="Seja investigando as consequências de escolhas morais em jogos de narrativa pesada, compilando crônicas para campanhas de RPG de mesa ou quebrando sinergias matemáticas em duelos táticos de cartas, o foco é sempre o mesmo: desacelerar, analisar a fundo e ir além do óbvio." data-en="Whether examining the weight of moral choices in narrative-driven games, compiling chronicles for tabletop RPG campaigns, or deconstructing mathematical synergies in tactical card duels, the principle remains: slow down, analyze deeply, and go beyond the obvious.">
+        Seja investigando as consequências de escolhas morais em jogos de narrativa pesada, compilando crônicas para campanhas de RPG de mesa ou quebrando sinergias matemáticas em duelos táticos de cartas, o foco é sempre o mesmo: desacelerar, analisar a fundo e ir além do óbvio.
+      </p>
+    </div>
+  </section>
+
+  <!-- 02 // PILARES DE CONTEÚDO -->
+  <section class="section">
+    <h2 class="section-title">02 // <span data-pt="PILARES DO ECOSSISTEMA" data-en="ECOSYSTEM PILLARS">PILARES DO ECOSSISTEMA</span></h2>
+    <div class="pillars-grid">
+      
       <div class="hud-card">
-        <p data-pt="O Beyond Obvious é um porto seguro descentralizado no coração da malha digital. Muito além de um canal isolado, este portal foi forjado para ser um ponto de convergência para VTubers, criadores de conteúdo e operadores virtuais. Em uma era de consumo acelerado e algoritmos rígidos, fornecemos o sinal, a infraestrutura e a comunidade para que avatares de diferentes dimensões conectem suas transmissões, compartilhem crônicas e construam redes autônomas." data-en="Beyond Obvious is a decentralized haven at the heart of the digital matrix. Far beyond an isolated channel, this hub was forged as a convergence node for VTubers, content creators, and virtual operators. In an era of rapid consumption and rigid algorithms, we provide the signal, infrastructure, and community for avatars across dimensions to connect broadcasts, share chronicles, and build sovereign networks.">
-          O Beyond Obvious é um porto seguro descentralizado no coração da malha digital. Muito além de um canal isolado, este portal foi forjado para ser um ponto de convergência para VTubers, criadores de conteúdo e operadores virtuais. Em uma era de consumo acelerado e algoritmos rígidos, fornecemos o sinal, a infraestrutura e a comunidade para que avatares de diferentes dimensões conectem suas transmissões, compartilhem crônicas e construam redes autônomas.
-        </p>
-        <p class="mt-3" data-pt="Seja investigando as consequências de escolhas morais em jogos de narrativa pesada, compilando crônicas para campanhas de RPG de mesa ou quebrando sinergias matemáticas em duelos táticos de cartas, o foco é sempre o mesmo: desacelerar, analisar a fundo e ir além do óbvio." data-en="Whether examining the weight of moral choices in narrative-driven games, compiling chronicles for tabletop RPG campaigns, or deconstructing mathematical synergies in tactical card duels, the principle remains: slow down, analyze deeply, and go beyond the obvious.">
-          Seja investigando as consequências de escolhas morais em jogos de narrativa pesada, compilando crônicas para campanhas de RPG de mesa ou quebrando sinergias matemáticas em duelos táticos de cartas, o foco é sempre o mesmo: desacelerar, analisar a fundo e ir além do óbvio.
+        <h3 class="card-title text-blue" data-pt="🌐 HUB DE OPERADORES // VTUBERS" data-en="🌐 OPERATOR HUB // VTUBERS">🌐 HUB DE OPERADORES // VTUBERS</h3>
+        <p class="card-desc" data-pt="Ponto de ancoragem para streamers e avatares virtuais. Transmissões em conjunto, amplificação de sinal e divulgação de projetos independentes." data-en="Anchor node for virtual avatars and streamers. Collaborative broadcasts, signal relaying, and spotlighting independent creators.">
+          Ponto de ancoragem para streamers e avatares virtuais. Transmissões em conjunto, amplificação de sinal e divulgação de projetos independentes.
         </p>
       </div>
-    </section>
 
-    <!-- 02 // PILARES DE CONTEÚDO -->
-    <section class="section">
-      <h2 class="section-title">02 // <span data-pt="PILARES DO ECOSSISTEMA" data-en="ECOSYSTEM PILLARS">PILARES DO ECOSSISTEMA</span></h2>
-      <div class="pillars-grid">
-        
-        <div class="hud-card">
-          <h3 class="card-title text-cyan" data-pt="🌐 HUB DE OPERADORES // VTUBERS" data-en="🌐 OPERATOR HUB // VTUBERS">🌐 HUB DE OPERADORES // VTUBERS</h3>
-          <p class="card-desc" data-pt="Ponto de ancoragem para streamers e avatares virtuais. Transmissões em conjunto, amplificação de sinal e divulgação de projetos independentes." data-en="Anchor node for virtual avatars and streamers. Collaborative broadcasts, signal relaying, and spotlighting independent creators.">
-            Ponto de ancoragem para streamers e avatares virtuais. Transmissões em conjunto, amplificação de sinal e divulgação de projetos independentes.
-          </p>
-        </div>
-
-        <div class="hud-card">
-          <h3 class="card-title text-purple" data-pt="🎲 RPG DE MESA & FORJA DE MUNDOS" data-en="🎲 TABLETOP RPG & WORLDFORGING">🎲 RPG DE MESA & FORJA DE MUNDOS</h3>
-          <p class="card-desc" data-pt="Desenvolvimento do cenário autoral de Avian, one-shots, análises de regras, dramaturgia de campanhas e registros de sessões." data-en="Development of the original world of Avian, one-shots, rules deep dives, campaign dramaturgy, and session logs.">
-            Desenvolvimento do cenário autoral de Avian, one-shots, análises de regras, dramaturgia de campanhas e registros de sessões.
-          </p>
-        </div>
-
-        <div class="hud-card">
-          <h3 class="card-title text-crimson" data-pt="🎮 JOGOS NARRATIVOS" data-en="🎮 NARRATIVE-DRIVEN GAMES">🎮 JOGOS NARRATIVOS</h3>
-          <p class="card-desc" data-pt="Aventuras focadas em decisões difíceis (Life is Strange, Tell Me Why), investigação de lore e desconstrução de roteiros." data-en="Decision-heavy adventures (Life is Strange, Tell Me Why), deep lore investigation, and storytelling deconstruction.">
-            Aventuras focadas em decisões difíceis (Life is Strange, Tell Me Why), investigação de lore e desconstrução de roteiros.
-          </p>
-        </div>
-
-        <div class="hud-card">
-          <h3 class="card-title text-blue" data-pt="🃏 CARD GAMES & ESTRATÉGIA" data-en="🃏 CARD GAMES & TACTICS">🃏 CARD GAMES & ESTRATÉGIA</h3>
-          <p class="card-desc" data-pt="Testes de decks, leitura de probabilidade, jogadas ranqueadas e dinâmicas rápidas em Marvel SNAP e jogos de estratégia." data-en="Deck testing, probability tracking, ranked matches, and fast-paced dynamics across Marvel SNAP and strategy titles.">
-            Testes de decks, leitura de probabilidade, jogadas ranqueadas e dinâmicas rápidas em Marvel SNAP e jogos de estratégia.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 03 // ESTRUTURA & TECNOLOGIA -->
-    <section class="section">
-      <h2 class="section-title">03 // <span data-pt="ARQUITETURA & PILHA TÉCNICA" data-en="ARCHITECTURE & TECH STACK">ARQUITETURA & PILHA TÉCNICA</span></h2>
       <div class="hud-card">
-        <p class="mb-3" data-pt="Este portal é construído sem rastreadores intrusivos ou bloatware, priorizando performance pura, tipografia HUD nítida e controle descentralizado." data-en="This hub is engineered without trackers or bloatware, prioritizing pure performance, clean HUD typography, and decentralized independence.">
-          Este portal é construído sem rastreadores intrusivos ou bloatware, priorizando performance pura, tipografia HUD nítida e controle descentralizado.
+        <h3 class="card-title text-purple" data-pt="🎲 RPG DE MESA & FORJA DE MUNDOS" data-en="🎲 TABLETOP RPG & WORLDFORGING">🎲 RPG DE MESA & FORJA DE MUNDOS</h3>
+        <p class="card-desc" data-pt="Desenvolvimento do cenário autoral de Avian, one-shots, análises de regras, dramaturgia de campanhas e registros de sessões." data-en="Development of the original world of Avian, one-shots, rules deep dives, campaign dramaturgy, and session logs.">
+          Desenvolvimento do cenário autoral de Avian, one-shots, análises de regras, dramaturgia de campanhas e registros de sessões.
         </p>
-        <div class="tags-grid">
-          <span class="tag">⚡ Astro Framework</span>
-          <span class="tag">📝 Markdown Content Collections</span>
-          <span class="tag">🎨 Custom HUD Aesthetic</span>
-          <span class="tag">🌐 Bilíngue / Bilingual (PT / EN)</span>
-        </div>
       </div>
-    </section>
 
-  </main>
+      <div class="hud-card">
+        <h3 class="card-title text-crimson" data-pt="🎮 JOGOS NARRATIVOS" data-en="🎮 NARRATIVE-DRIVEN GAMES">🎮 JOGOS NARRATIVOS</h3>
+        <p class="card-desc" data-pt="Aventuras focadas em decisões difíceis (Life is Strange, Tell Me Why), investigação de lore e desconstrução de roteiros." data-en="Decision-heavy adventures (Life is Strange, Tell Me Why), deep lore investigation, and storytelling deconstruction.">
+          Aventuras focadas em decisões difíceis (Life is Strange, Tell Me Why), investigação de lore e desconstrução de roteiros.
+        </p>
+      </div>
 
-  <!-- FOOTER MODULAR -->
-  <Footer />
+      <div class="hud-card">
+        <h3 class="card-title text-gold" data-pt="🃏 CARD GAMES & ESTRATÉGIA" data-en="🃏 CARD GAMES & TACTICS">🃏 CARD GAMES & ESTRATÉGIA</h3>
+        <p class="card-desc" data-pt="Testes de decks, leitura de probabilidade, jogadas ranqueadas e dinâmicas rápidas em Marvel SNAP e jogos de estratégia." data-en="Deck testing, probability tracking, ranked matches, and fast-paced dynamics across Marvel SNAP and strategy titles.">
+          Testes de decks, leitura de probabilidade, jogadas ranqueadas e dinâmicas rápidas em Marvel SNAP e jogos de estratégia.
+        </p>
+      </div>
 
-  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
-  <I18nScript />
+    </div>
+  </section>
 
-</body>
-</html>
+  <!-- 03 // ESTRUTURA & TECNOLOGIA -->
+  <section class="section">
+    <h2 class="section-title">03 // <span data-pt="ARQUITETURA & PILHA TÉCNICA" data-en="ARCHITECTURE & TECH STACK">ARQUITETURA & PILHA TÉCNICA</span></h2>
+    <div class="hud-card">
+      <p class="mb-3" data-pt="Este portal é construído sem rastreadores intrusivos ou bloatware, priorizando performance pura, tipografia HUD nítida e controle descentralizado." data-en="This hub is engineered without trackers or bloatware, prioritizing pure performance, clean HUD typography, and decentralized independence.">
+        Este portal é construído sem rastreadores intrusivos ou bloatware, priorizando performance pura, tipografia HUD nítida e controle descentralizado.
+      </p>
+      <div class="tags-grid">
+        <span class="tag">⚡ Astro Framework</span>
+        <span class="tag">📝 Markdown Content Collections</span>
+        <span class="tag">🎨 Custom HUD Aesthetic</span>
+        <span class="tag">🌐 Bilíngue / Bilingual (PT / EN)</span>
+      </div>
+    </div>
+  </section>
+
+</Layout>
 
 <style>
-  :root {
-    --bg-canvas: #0B0C10;
-    --bg-surface: #16181D;
-    --accent-crimson: #E63946;
-    --accent-blue: #4CC9F0;
-    --accent-purple: #9D4EDD;
-    --accent-pink: #F72585;
-    --accent-gold: #F4A261;
-    --accent-green: #2A9D8F;
-    --text-primary: #E0E1DD;
-    --text-secondary: #8D99AE;
-  }
-
-  body {
-    margin: 0;
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-  }
-
-  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
   /* CABEÇALHO */
   .about-header {
     padding: 3rem 0 1.5rem;
-  }
-
-  .status-badge { 
-    display: inline-block; 
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem; 
-    letter-spacing: 1.5px;
-    color: var(--accent-blue); 
-    border: 1px solid rgba(76, 201, 240, 0.3); 
-    padding: 0.3rem 0.8rem; 
-    border-radius: 20px; 
-    margin-bottom: 0.8rem; 
   }
 
   .about-title { 
@@ -177,7 +114,7 @@ import I18nScript from '../components/I18nScript.astro';
     font-size: 1.15rem; 
     font-weight: 700; 
     margin: 0.4rem 0 0; 
-    letter-spacing: 2px;
+    letter-spacing: 2px; 
   }
 
   /* LORE BRIDGE CARD */
@@ -218,25 +155,12 @@ import I18nScript from '../components/I18nScript.astro';
     margin: 0;
   }
 
-  .btn {
-    display: inline-block;
-    padding: 0.6rem 1.2rem;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    text-decoration: none;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-  }
-
   .btn-outline-blue {
     background: transparent;
     border: 1px solid var(--accent-blue);
     color: var(--accent-blue);
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 
   .btn-outline-blue:hover {
@@ -256,13 +180,6 @@ import I18nScript from '../components/I18nScript.astro';
     border-bottom: 1px solid rgba(224, 225, 221, 0.1);
     padding-bottom: 0.4rem;
     letter-spacing: 1px;
-  }
-
-  .hud-card { 
-    background: var(--bg-surface); 
-    border: 1px solid rgba(224, 225, 221, 0.1); 
-    border-radius: 6px; 
-    padding: 1.5rem; 
   }
 
   .pillars-grid {
@@ -286,16 +203,6 @@ import I18nScript from '../components/I18nScript.astro';
 
   .tags-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
-
-  /* CORES UTILITÁRIAS */
-  .text-crimson { color: var(--accent-crimson); }
-  .text-cyan { color: var(--accent-blue); }
-  .text-blue { color: #4CC9F0; }
-  .text-purple { color: var(--accent-purple); }
-  .text-gold { color: var(--accent-gold); }
-  .text-green { color: var(--accent-green); }
-  .mt-3 { margin-top: 1rem; }
-  .mb-3 { margin-bottom: 1rem; }
 
   @media (max-width: 768px) {
     .about-title { font-size: 1.8rem; }

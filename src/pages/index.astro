@@ -2,9 +2,7 @@
 // src/pages/index.astro
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import I18nScript from '../components/I18nScript.astro';
+import Layout from '../layouts/Layout.astro';
 import Logo from '../components/Logo.astro';
 import TwitchStatus from '../components/TwitchStatus.astro';
 
@@ -26,323 +24,276 @@ const sortedPosts: ProcessedPost[] = posts
   }));
 ---
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>BEYOND OBVIOUS // @w4kkomancer_</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
+<Layout title="BEYOND OBVIOUS // @w4kkomancer_" currentPage="home">
+  <!-- HERO / IDENTIDADE -->
+  <section class="hero-split">
+    <div class="hero-crest-frame">
+      <div class="crest-corner top-left"></div>
+      <div class="crest-corner top-right"></div>
+      <div class="crest-corner bottom-left"></div>
+      <div class="crest-corner bottom-right"></div>
+      <Logo className="hero-crest-img" />
+    </div>
 
-  <!-- HEADER MODULAR -->
-  <Header currentPage="home" />
-
-  <main class="container">
-    <!-- HERO / IDENTIDADE -->
-    <section class="hero-split">
-      <div class="hero-crest-frame">
-        <div class="crest-corner top-left"></div>
-        <div class="crest-corner top-right"></div>
-        <div class="crest-corner bottom-left"></div>
-        <div class="crest-corner bottom-right"></div>
-        <Logo className="hero-crest-img" />
+    <div class="hero-info">
+      <div class="status-badge" data-pt="◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA" data-en="◈ SYSTEM ONLINE // ACTIVE TRANSMISSION">
+        ◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA
       </div>
+      <h1 class="hero-title">BEYOND OBVIOUS</h1>
+      <p class="hero-sub">@w4kkomancer_ • <span data-pt="Tecnomago & Narrador" data-en="Technomancer & Storyteller">Tecnomago & Narrador</span></p>
+      <p class="hero-bio" data-pt="Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e portal de convergência para operadores virtuais." data-en="Where logic meets mystery and narratives go beyond the obvious. Game reviews, tabletop RPG chronicles, sci-fi breakdowns, and a convergence node for virtual operators.">
+        Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e portal de convergência para operadores virtuais.
+      </p>
 
-      <div class="hero-info">
-        <div class="status-badge" data-pt="◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA" data-en="◈ SYSTEM ONLINE // ACTIVE TRANSMISSION">
-          ◈ SISTEMA ONLINE // TRANSMISSÃO ATIVA
+      <a href="/dossier" class="dossier-hero-link" data-pt="[ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]" data-en="[ 📁 ACCESS OPERATOR DOSSIER // CLASSIFIED ]">
+        [ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]
+      </a>
+
+      <div class="hero-actions">
+        <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
+        <a href="/terminal" class="btn btn-outline" data-pt="📜 EXPLORAR TERMINAL" data-en="📜 EXPLORE TERMINAL">📜 EXPLORAR TERMINAL</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS DA TWITCH -->
+  <section class="stream-status-section">
+    <TwitchStatus channelName="w4kkomancer_" />
+  </section>
+
+  <!-- 01 // TRANSMISSÕES -->
+  <section id="stream" class="section">
+    <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
+    <div class="hud-card">
+      <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, card strategies, and live tabletop RPG sessions.">
+        Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo.
+      </p>
+      <div class="tags-grid">
+        <span class="tag">🎮 Storytelling (Life is Strange, Tell Me Why)</span>
+        <span class="tag">🃏 Marvel SNAP & Card Games</span>
+        <span class="tag" data-pt="🎲 Mesas de RPG & One-shots" data-en="🎲 Tabletop RPGs & One-shots">🎲 Mesas de RPG & One-shots</span>
+        <span class="tag">⛏️ Sandbox & Minecraft</span>
+        <span class="tag">💬 Just Chatting & Lore</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 // TERMINAL DE MÍDIA -->
+  <section id="terminal" class="section">
+    <div class="section-title-wrapper">
+      <h2 class="section-title">02 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
+      <a href="/terminal" class="view-all-link" data-pt="Ver Arquivo Geral &rarr;" data-en="View All Records &rarr;">Ver Arquivo Geral &rarr;</a>
+    </div>
+
+    <div class="posts-grid">
+      {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => (
+        <div class="hud-card">
+          <div class="card-meta">
+            <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
+              {String(post.data.category || '').toUpperCase()}
+            </span>
+            {post.stars && (
+              <span class="star-rating">
+                {post.stars}
+              </span>
+            )}
+          </div>
+          <h3 class="card-title">{post.data.title}</h3>
+          <p class="card-desc">
+            {post.data.summary}
+          </p>
+          
+          <div class="card-actions-terminal mt-3">
+            <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Ler Registro Completo &rarr;" data-en="Read Full Log &rarr;">
+              Ler Registro Completo &rarr;
+            </a>
+          </div>
         </div>
-        <h1 class="hero-title">BEYOND OBVIOUS</h1>
-        <p class="hero-sub">@w4kkomancer_ • <span data-pt="Tecnomago & Narrador" data-en="Technomancer & Storyteller">Tecnomago & Narrador</span></p>
-        <p class="hero-bio" data-pt="Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e portal de convergência para operadores virtuais." data-en="Where logic meets mystery and narratives go beyond the obvious. Game reviews, tabletop RPG chronicles, sci-fi breakdowns, and a convergence node for virtual operators.">
-          Onde a lógica encontra o mistério e as narrativas vão além do óbvio. Análises de jogos, crônicas de RPG de mesa, desconstrução de ficção e portal de convergência para operadores virtuais.
-        </p>
+      )) : (
+        <div class="hud-card">
+          <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
+        </div>
+      )}
+    </div>
+  </section>
 
-        <a href="/dossier" class="dossier-hero-link" data-pt="[ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]" data-en="[ 📁 ACCESS OPERATOR DOSSIER // CLASSIFIED ]">
-          [ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]
+  <!-- 03 // REDE DE VTUBERS & OPERADORES -->
+  <section id="vtubers" class="section">
+    <div class="section-title-wrapper">
+      <h2 class="section-title">03 // <span data-pt="OPERADORES // REDE DE VTUBERS" data-en="OPERATORS // VTUBER NETWORK">OPERADORES // REDE DE VTUBERS</span></h2>
+      <a href="/vtubers" class="view-all-link" data-pt="Acessar Diretório &rarr;" data-en="Access Directory &rarr;">Acessar Diretório &rarr;</a>
+    </div>
+
+    <div class="hud-card vtuber-hub-preview">
+      <p class="card-desc mb-4" data-pt="O Beyond Obvious é um hub de retransmissão e acolhimento para avatares virtuais e VTubers independentes conectados à malha arcano-digital." data-en="Beyond Obvious is a relay and convergence node for virtual avatars and independent VTubers synced to the arcane-digital matrix.">
+        O Beyond Obvious é um hub de retransmissão e acolhimento para avatares virtuais e VTubers independentes conectados à malha arcano-digital.
+      </p>
+
+      <div class="operators-quick-grid">
+        <a href="/dossier" class="operator-quick-card border-cyan">
+          <span class="quick-icon">🔮</span>
+          <div class="quick-info">
+            <span class="quick-name">w4kkomancer_</span>
+            <span class="quick-role" data-pt="Guardião do Nexus • Tecnomago" data-en="Nexus Warden • Technomancer">Guardião do Nexus • Tecnomago</span>
+          </div>
+          <span class="quick-arrow">&rarr;</span>
         </a>
 
-        <div class="hero-actions">
-          <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
-          <a href="/terminal" class="btn btn-outline" data-pt="📜 EXPLORAR TERMINAL" data-en="📜 EXPLORE TERMINAL">📜 EXPLORAR TERMINAL</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- STATUS DA TWITCH -->
-    <section class="stream-status-section">
-      <TwitchStatus channelName="w4kkomancer_" />
-    </section>
-
-    <!-- 01 // TRANSMISSÕES -->
-    <section id="stream" class="section">
-      <h2 class="section-title">01 // <span data-pt="TRANSMISSÕES AO VIVO" data-en="LIVE TRANSMISSIONS">TRANSMISSÕES AO VIVO</span></h2>
-      <div class="hud-card">
-        <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, card strategies, and live tabletop RPG sessions.">
-          Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo.
-        </p>
-        <div class="tags-grid">
-          <span class="tag">🎮 Storytelling (Life is Strange, Tell Me Why)</span>
-          <span class="tag">🃏 Marvel SNAP & Card Games</span>
-          <span class="tag" data-pt="🎲 Mesas de RPG & One-shots" data-en="🎲 Tabletop RPGs & One-shots">🎲 Mesas de RPG & One-shots</span>
-          <span class="tag">⛏️ Sandbox & Minecraft</span>
-          <span class="tag">💬 Just Chatting & Lore</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02 // TERMINAL DE MÍDIA -->
-    <section id="terminal" class="section">
-      <div class="section-title-wrapper">
-        <h2 class="section-title">02 // <span data-pt="TERMINAL DE MÍDIA" data-en="MEDIA TERMINAL">TERMINAL DE MÍDIA</span></h2>
-        <a href="/terminal" class="view-all-link" data-pt="Ver Arquivo Geral &rarr;" data-en="View All Records &rarr;">Ver Arquivo Geral &rarr;</a>
-      </div>
-
-      <div class="posts-grid">
-        {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => (
-          <div class="hud-card">
-            <div class="card-meta">
-              <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
-                {String(post.data.category || '').toUpperCase()}
-              </span>
-              {post.stars && (
-                <span class="star-rating">
-                  {post.stars}
-                </span>
-              )}
-            </div>
-            <h3 class="card-title">{post.data.title}</h3>
-            <p class="card-desc">
-              {post.data.summary}
-            </p>
-            
-            <div class="card-actions-terminal mt-3">
-              <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Ler Registro Completo &rarr;" data-en="Read Full Log &rarr;">
-                Ler Registro Completo &rarr;
-              </a>
-            </div>
+        <a href="https://moonhaven.beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="operator-quick-card border-purple">
+          <span class="quick-icon">🌙</span>
+          <div class="quick-info">
+            <span class="quick-name">DeniLunae</span>
+            <span class="quick-role" data-pt="Santuário Moonhaven • Guardiã Lunar" data-en="Moonhaven Sanctuary • Lunar Guardian">Santuário Moonhaven • Guardiã Lunar</span>
           </div>
-        )) : (
-          <div class="hud-card">
-            <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
+          <span class="quick-arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 // PONTOS DE CONTATO -->
+  <section id="signal" class="section">
+    <h2 class="section-title">04 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT NODES">SIGNAL // PONTOS DE CONTATO</span></h2>
+    <div class="hud-card">
+      <p class="card-desc mb-4" data-pt="Conecte-se às transmissões, documentações de campanha e canais de comunicação." data-en="Connect to streams, campaign documentation, and communication channels.">
+        Conecte-se às transmissões, documentações de campanha e canais de comunicação.
+      </p>
+
+      <!-- Grade Unificada de Sinais -->
+      <div class="signal-grid">
+        <a href="https://twitch.tv/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">🟣</span>
+          <div class="signal-info">
+            <span class="signal-name">Twitch</span>
+            <span class="signal-handle">@w4kkomancer_</span>
           </div>
-        )}
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCqw0c6fhpxKFAb-eDPHDKew" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">🔴</span>
+          <div class="signal-info">
+            <span class="signal-name">YouTube</span>
+            <span class="signal-handle" data-pt="VODs & Sessões" data-en="VODs & Sessions">VODs & Sessões</span>
+          </div>
+        </a>
+
+        <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">🗺️</span>
+          <div class="signal-info">
+            <span class="signal-name">World Anvil</span>
+            <span class="signal-handle">Avian Wiki</span>
+          </div>
+        </a>
+
+        <a href="https://bsky.app/profile/beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">🦋</span>
+          <div class="signal-info">
+            <span class="signal-name">Bluesky</span>
+            <span class="signal-handle">@beyond-obvious.net</span>
+          </div>
+        </a>
+
+        <a href="https://x.com/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">✖️</span>
+          <div class="signal-info">
+            <span class="signal-name">X</span>
+            <span class="signal-handle">@w4kkomancer_</span>
+          </div>
+        </a>
+
+        <a href="https://tiktok.com/@w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">🎵</span>
+          <div class="signal-info">
+            <span class="signal-name">TikTok</span>
+            <span class="signal-handle">@w4kkomancer_</span>
+          </div>
+        </a>
+
+        <a href="https://instagram.com/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
+          <span class="signal-icon">📸</span>
+          <div class="signal-info">
+            <span class="signal-name">Instagram</span>
+            <span class="signal-handle">@w4kkomancer_</span>
+          </div>
+        </a>
       </div>
-    </section>
 
-    <!-- 03 // REDE DE VTUBERS & OPERADORES -->
-    <section id="vtubers" class="section">
-      <div class="section-title-wrapper">
-        <h2 class="section-title">03 // <span data-pt="OPERADORES // REDE DE VTUBERS" data-en="OPERATORS // VTUBER NETWORK">OPERADORES // REDE DE VTUBERS</span></h2>
-        <a href="/vtubers" class="view-all-link" data-pt="Acessar Diretório &rarr;" data-en="Access Directory &rarr;">Acessar Diretório &rarr;</a>
-      </div>
+      <!-- WIDGET DISCORD -->
+      <div class="discord-widget-container" id="discord-widget">
+        <div class="discord-hud-card">
+          <div class="crest-corner top-left"></div>
+          <div class="crest-corner top-right"></div>
+          <div class="crest-corner bottom-left"></div>
+          <div class="crest-corner bottom-right"></div>
 
-      <div class="hud-card vtuber-hub-preview">
-        <p class="card-desc mb-4" data-pt="O Beyond Obvious é um hub de retransmissão e acolhimento para avatares virtuais e VTubers independentes conectados à malha arcano-digital." data-en="Beyond Obvious is a relay and convergence node for virtual avatars and independent VTubers synced to the arcane-digital matrix.">
-          O Beyond Obvious é um hub de retransmissão e acolhimento para avatares virtuais e VTubers independentes conectados à malha arcano-digital.
-        </p>
-
-        <div class="operators-quick-grid">
-          <a href="/dossier" class="operator-quick-card border-cyan">
-            <span class="quick-icon">🔮</span>
-            <div class="quick-info">
-              <span class="quick-name">w4kkomancer_</span>
-              <span class="quick-role" data-pt="Guardião do Nexus • Tecnomago" data-en="Nexus Warden • Technomancer">Guardião do Nexus • Tecnomago</span>
+          <div class="discord-hud-header">
+            <div class="discord-status-tag">
+              <span class="pulse-dot"></span>
+              <span data-pt="FREQ // DISCORD ONLINE" data-en="FREQ // DISCORD ONLINE">FREQ // DISCORD ONLINE</span>
             </div>
-            <span class="quick-arrow">&rarr;</span>
-          </a>
+            <span class="discord-loc">LOC: NEXUS // SERV-697</span>
+          </div>
 
-          <a href="https://moonhaven.beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="operator-quick-card border-purple">
-            <span class="quick-icon">🌙</span>
-            <div class="quick-info">
-              <span class="quick-name">DeniLunae</span>
-              <span class="quick-role" data-pt="Santuário Moonhaven • Guardiã Lunar" data-en="Moonhaven Sanctuary • Lunar Guardian">Santuário Moonhaven • Guardiã Lunar</span>
-            </div>
-            <span class="quick-arrow">&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 // PONTOS DE CONTATO -->
-    <section id="signal" class="section">
-      <h2 class="section-title">04 // <span data-pt="SIGNAL // PONTOS DE CONTATO" data-en="SIGNAL // CONTACT NODES">SIGNAL // PONTOS DE CONTATO</span></h2>
-      <div class="hud-card">
-        <p class="card-desc mb-4" data-pt="Conecte-se às transmissões, documentações de campanha e canais de comunicação." data-en="Connect to streams, campaign documentation, and communication channels.">
-          Conecte-se às transmissões, documentações de campanha e canais de comunicação.
-        </p>
-
-        <!-- Grade Unificada de Sinais -->
-        <div class="signal-grid">
-          <a href="https://twitch.tv/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">🟣</span>
-            <div class="signal-info">
-              <span class="signal-name">Twitch</span>
-              <span class="signal-handle">@w4kkomancer_</span>
-            </div>
-          </a>
-
-          <a href="https://www.youtube.com/channel/UCqw0c6fhpxKFAb-eDPHDKew" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">🔴</span>
-            <div class="signal-info">
-              <span class="signal-name">YouTube</span>
-              <span class="signal-handle" data-pt="VODs & Sessões" data-en="VODs & Sessions">VODs & Sessões</span>
-            </div>
-          </a>
-
-          <a href="https://www.worldanvil.com/w/avian-wakkobr" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">🗺️</span>
-            <div class="signal-info">
-              <span class="signal-name">World Anvil</span>
-              <span class="signal-handle">Avian Wiki</span>
-            </div>
-          </a>
-
-          <a href="https://bsky.app/profile/beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">🦋</span>
-            <div class="signal-info">
-              <span class="signal-name">Bluesky</span>
-              <span class="signal-handle">@beyond-obvious.net</span>
-            </div>
-          </a>
-
-          <a href="https://x.com/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">✖️</span>
-            <div class="signal-info">
-              <span class="signal-name">X</span>
-              <span class="signal-handle">@w4kkomancer_</span>
-            </div>
-          </a>
-
-          <a href="https://tiktok.com/@w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">🎵</span>
-            <div class="signal-info">
-              <span class="signal-name">TikTok</span>
-              <span class="signal-handle">@w4kkomancer_</span>
-            </div>
-          </a>
-
-          <a href="https://instagram.com/w4kkomancer_" target="_blank" rel="noopener noreferrer" class="signal-card">
-            <span class="signal-icon">📸</span>
-            <div class="signal-info">
-              <span class="signal-name">Instagram</span>
-              <span class="signal-handle">@w4kkomancer_</span>
-            </div>
-          </a>
-        </div>
-
-        <!-- WIDGET DISCORD -->
-        <div class="discord-widget-container" id="discord-widget">
-          <div class="discord-hud-card">
-            <div class="crest-corner top-left"></div>
-            <div class="crest-corner top-right"></div>
-            <div class="crest-corner bottom-left"></div>
-            <div class="crest-corner bottom-right"></div>
-
-            <div class="discord-hud-header">
-              <div class="discord-status-tag">
-                <span class="pulse-dot"></span>
-                <span data-pt="FREQ // DISCORD ONLINE" data-en="FREQ // DISCORD ONLINE">FREQ // DISCORD ONLINE</span>
+          <div class="discord-hud-body">
+            <div class="discord-server-info">
+              <div class="discord-icon-frame">
+                <span class="discord-icon-inner">BO</span>
               </div>
-              <span class="discord-loc">LOC: NEXUS // SERV-697</span>
-            </div>
-
-            <div class="discord-hud-body">
-              <div class="discord-server-info">
-                <div class="discord-icon-frame">
-                  <span class="discord-icon-inner">BO</span>
-                </div>
-                <div>
-                  <h3 id="discord-server-name" class="discord-name">BEYOND OBVIOUS</h3>
-                  <p class="discord-presence">
-                    <span class="online-count" id="discord-online-count">--</span> <span data-pt="agentes conectados agora" data-en="agents connected right now">agentes conectados agora</span>
-                  </p>
-                </div>
+              <div>
+                <h3 id="discord-server-name" class="discord-name">BEYOND OBVIOUS</h3>
+                <p class="discord-presence">
+                  <span class="online-count" id="discord-online-count">--</span> <span data-pt="agentes conectados agora" data-en="agents connected right now">agentes conectados agora</span>
+                </p>
               </div>
-
-              <a id="discord-invite-btn" href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
-                ⚡ ESTABELECER CONEXÃO
-              </a>
             </div>
+
+            <a id="discord-invite-btn" href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
+              ⚡ ESTABELECER CONEXÃO
+            </a>
           </div>
         </div>
-
       </div>
-    </section>
-  </main>
 
-  <!-- FOOTER MODULAR -->
-  <Footer />
+    </div>
+  </section>
+</Layout>
 
-  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
-  <I18nScript />
+<!-- SCRIPT DO DISCORD (APENAS NA HOME) -->
+<script>
+  async function fetchDiscordWidget() {
+    const serverId = '697506206390157333';
+    const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
 
-  <!-- SCRIPT ESPECÍFICO DO WIDGET DISCORD -->
-  <script>
-    async function fetchDiscordWidget() {
-      const serverId = '697506206390157333';
-      const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Falha ao carregar API do Discord');
+      
+      const data = await response.json();
 
-      try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error('Falha ao carregar API do Discord');
-        
-        const data = await response.json();
-
-        const nameEl = document.getElementById('discord-server-name');
-        if (nameEl && data.name) nameEl.innerText = data.name.toUpperCase();
-        
-        const countEl = document.getElementById('discord-online-count');
-        if (countEl) {
-          countEl.innerText = data.presence_count || (data.members ? data.members.length : '0');
-        }
-        
-        const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement;
-        if (inviteBtn && data.instant_invite) {
-          inviteBtn.href = data.instant_invite;
-        }
-      } catch (err) {
-        console.warn('Erro Discord Widget:', err);
-        const countEl = document.getElementById('discord-online-count');
-        if (countEl) countEl.innerText = '0';
+      const nameEl = document.getElementById('discord-server-name');
+      if (nameEl && data.name) nameEl.innerText = data.name.toUpperCase();
+      
+      const countEl = document.getElementById('discord-online-count');
+      if (countEl) {
+        countEl.innerText = data.presence_count || (data.members ? data.members.length : '0');
       }
+      
+      const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement;
+      if (inviteBtn && data.instant_invite) {
+        inviteBtn.href = data.instant_invite;
+      }
+    } catch (err) {
+      console.warn('Erro Discord Widget:', err);
+      const countEl = document.getElementById('discord-online-count');
+      if (countEl) countEl.innerText = '0';
     }
+  }
 
-    document.addEventListener('DOMContentLoaded', fetchDiscordWidget);
-  </script>
-
-</body>
-</html>
+  document.addEventListener('DOMContentLoaded', fetchDiscordWidget);
+</script>
 
 <style>
-  :root {
-    --bg-canvas: #0B0C10;
-    --bg-surface: #16181D;
-    --accent-crimson: #E63946;
-    --accent-blue: #4CC9F0;
-    --accent-purple: #9D4EDD;
-    --accent-pink: #F72585;
-    --accent-gold: #F4A261;
-    --accent-green: #2A9D8F;
-    --text-primary: #E0E1DD;
-    --text-secondary: #8D99AE;
-  }
-
-  body {
-    margin: 0;
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-  }
-
-  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
+  /* ESTILOS EXCLUSIVOS DA HOME */
   .hero-split {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -369,34 +320,10 @@ const sortedPosts: ProcessedPost[] = posts
     max-height: 100%;
   }
 
-  .crest-corner {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-color: var(--accent-crimson);
-  }
-  .crest-corner.top-left { top: -1px; left: -1px; border-top: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
-  .crest-corner.top-right { top: -1px; right: -1px; border-top: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
-  .crest-corner.bottom-left { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
-  .crest-corner.bottom-right { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
-
   .hero-info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .status-badge { 
-    display: inline-block; 
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem; 
-    letter-spacing: 1px;
-    color: var(--accent-blue); 
-    border: 1px solid rgba(76,201,240,0.3); 
-    padding: 0.3rem 0.8rem; 
-    border-radius: 20px; 
-    margin-bottom: 0.8rem; 
   }
 
   .hero-title { 
@@ -455,21 +382,6 @@ const sortedPosts: ProcessedPost[] = posts
     margin-bottom: 1.5rem;
   }
 
-  .btn { 
-    display: inline-block; 
-    padding: 0.75rem 1.5rem; 
-    font-family: 'Rajdhani', sans-serif; 
-    font-weight: 700; 
-    text-decoration: none; 
-    border-radius: 4px; 
-    text-transform: uppercase; 
-    cursor: pointer; 
-  }
-  .btn-primary { background: var(--accent-crimson); color: white; border: none; }
-  .btn-primary:hover { background: #ff4d5a; box-shadow: 0 0 12px rgba(230,57,70,0.4); }
-  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(224,225,221,0.2); }
-  .btn-outline:hover { border-color: var(--accent-crimson); }
-
   .section { padding: 2.5rem 0 1rem; }
   .section-title-wrapper {
     display: flex;
@@ -497,16 +409,6 @@ const sortedPosts: ProcessedPost[] = posts
     color: var(--accent-crimson);
   }
 
-  .hud-card { 
-    background: var(--bg-surface); 
-    border: 1px solid rgba(224,225,221,0.1); 
-    border-radius: 6px; 
-    padding: 1.5rem; 
-    margin-bottom: 1.5rem; 
-  }
-  .hud-card:hover { 
-    border-color: rgba(230,57,70,0.5); 
-  }
   .card-title { 
     font-family: 'Rajdhani', sans-serif; 
     font-size: 1.3rem; 
@@ -531,7 +433,6 @@ const sortedPosts: ProcessedPost[] = posts
   .cat-gaming { color: #F72585; }
   .cat-narrativas { color: #F4A261; }
   .cat-nexus { color: #2A9D8F; }
-
   .star-rating { color: #F4A261; }
 
   .card-actions-terminal { display: flex; justify-content: flex-end; }
@@ -559,15 +460,11 @@ const sortedPosts: ProcessedPost[] = posts
     transition: all 0.2s ease;
   }
 
-  .operator-quick-card:hover {
-    transform: translateY(-2px);
-  }
-
+  .operator-quick-card:hover { transform: translateY(-2px); }
   .operator-quick-card.border-cyan:hover {
     border-color: var(--accent-blue);
     background: rgba(76, 201, 240, 0.08);
   }
-
   .operator-quick-card.border-purple:hover {
     border-color: var(--accent-purple);
     background: rgba(157, 78, 221, 0.08);
@@ -691,10 +588,6 @@ const sortedPosts: ProcessedPost[] = posts
 
   .online-count { color: var(--accent-blue); font-weight: 700; }
   .btn-discord-join { font-size: 0.85rem; padding: 0.6rem 1.2rem; }
-  .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; display: inline-block; font-weight: 600; }
-  .btn-link:hover { color: var(--accent-crimson); }
-  .mt-3 { margin-top: 1rem; }
-  .mb-4 { margin-bottom: 1.5rem; }
 
   @media (max-width: 768px) {
     .hero-split { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; padding: 2rem 0; }

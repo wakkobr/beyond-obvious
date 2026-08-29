@@ -1,333 +1,269 @@
 ---
 // src/pages/dossier.astro
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import I18nScript from '../components/I18nScript.astro';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>DOSSIÊ // @w4kkomancer_ - BEYOND OBVIOUS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
+<Layout title="DOSSIÊ // @w4kkomancer_ - BEYOND OBVIOUS" currentPage="dossier">
+  
+  <!-- CABEÇALHO DO DOSSIÊ -->
+  <header class="dossier-header">
+    <div class="status-badge" data-pt="◈ ARQUIVO CLASSIFICADO // CLEARANCE LEVEL: RESTRITO // COD-00" data-en="◈ CLASSIFIED FILE // CLEARANCE LEVEL: RESTRICTED // COD-00">
+      ◈ ARQUIVO CLASSIFICADO // CLEARANCE LEVEL: RESTRITO // COD-00
+    </div>
+    <h1 class="dossier-title">DOSSIÊ // W4KKOMANCER_</h1>
+    <p class="dossier-sub">REGISTRO: #NEXUS-001 • <span data-pt="ARQUÉTIPO: DECKMANTE & NARRADOR DE FRONTEIRA" data-en="ARCHETYPE: FRONTIER DECKMANCER & STORYTELLER">ARQUÉTIPO: DECKMANTE & NARRADOR DE FRONTEIRA</span></p>
+  </header>
 
-  <!-- HEADER MODULAR -->
-  <Header currentPage="dossier" />
+  <!-- FICHA TÉCNICA BIOMÉTRICA (HUD) -->
+  <section class="section">
+    <div class="hud-card dossier-summary-card">
+      <div class="crest-corner top-left"></div>
+      <div class="crest-corner top-right"></div>
+      <div class="crest-corner bottom-left"></div>
+      <div class="crest-corner bottom-right"></div>
 
-  <main class="container">
-    
-    <!-- CABEÇALHO DO DOSSIÊ -->
-    <header class="dossier-header">
-      <div class="status-badge" data-pt="◈ ARQUIVO CLASSIFICADO // CLEARANCE LEVEL: RESTRITO // COD-00" data-en="◈ CLASSIFIED FILE // CLEARANCE LEVEL: RESTRICTED // COD-00">
-        ◈ ARQUIVO CLASSIFICADO // CLEARANCE LEVEL: RESTRITO // COD-00
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="spec-label" data-pt="IDENTIFICADOR" data-en="IDENTIFIER">IDENTIFICADOR</span>
+          <span class="spec-value text-crimson">@w4kkomancer_</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label" data-pt="SISTEMA OPERACIONAL" data-en="OPERATING SYSTEM">SISTEMA OPERACIONAL</span>
+          <span class="spec-value text-blue">Nexus Net-Arcana v8.4</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label" data-pt="MATRIZ DE COMBATE / OFÍCIO" data-en="COMBAT MATRIX / CRAFT">MATRIZ DE COMBATE / OFÍCIO</span>
+          <span class="spec-value" data-pt="Tecnomagia Rúnica & Forja de Mundos" data-en="Runic Technomancy & Worldforging">Tecnomagia Rúnica & Forja de Mundos</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label" data-pt="FUNÇÃO NO NEXUS" data-en="NEXUS FUNCTION">FUNÇÃO NO NEXUS</span>
+          <span class="spec-value text-green" data-pt="GUARDIÃO DE CHAVE // RELAY DE VTUBERS" data-en="KEY WARDEN // VTUBER RELAY">GUARDIÃO DE CHAVE // RELAY DE VTUBERS</span>
+        </div>
       </div>
-      <h1 class="dossier-title">DOSSIÊ // W4KKOMANCER_</h1>
-      <p class="dossier-sub">REGISTRO: #NEXUS-001 • <span data-pt="ARQUÉTIPO: DECKMANTE & NARRADOR DE FRONTEIRA" data-en="ARCHETYPE: FRONTIER DECKMANCER & STORYTELLER">ARQUÉTIPO: DECKMANTE & NARRADOR DE FRONTEIRA</span></p>
-    </header>
+    </div>
+  </section>
 
-    <!-- FICHA TÉCNICA BIOMÉTRICA (HUD) -->
-    <section class="section">
-      <div class="hud-card dossier-summary-card">
+  <!-- 01 // CRÔNICAS DE ORIGEM: O DESPERTAR ARCIBERNÉTICO -->
+  <section class="section">
+    <h2 class="section-title">01 // <span data-pt="O OPERADOR // CRÔNICAS DE ORIGEM & SINTAXE" data-en="THE OPERATOR // ORIGIN CHRONICLES & SYNTAX">O OPERADOR // CRÔNICAS DE ORIGEM & SINTAXE</span></h2>
+    <div class="hud-card">
+      <h3 class="card-subtitle text-blue" data-pt="◆ O VAZAMENTO DAS LINHAS DE LEY & A MATRIX" data-en="◆ THE LEY LINE LEAK & THE MATRIX">◆ O VAZAMENTO DAS LINHAS DE LEY & A MATRIX</h3>
+      
+      <p data-pt="Nas megalópoles corporativas, a tecnologia do silício tentou soterrar a magia do velho mundo sobre terabytes de concreto e fibra ótica, porém um grupo, os Tecnomantes, sabem a verdade: dados e mana fluem pelas mesmas linhas geométricas. Durante uma incursão clandestina ao núcleo de um mainframe corporativo esquecido, um desses tecnomantes, conhecido por w4kkomancer_, descobriu uma fissura no plano etéreo, onde um vazamento de energia arcana colidiu com compiladores e dados, fundindo circuitos, memórias e runas ancestrais. Isso gerou uma sobrecarga, mas o resultado não foi uma falha de sistema, mas sim um despertar." data-en="Across corporate megalopolises, silicon technology attempted to bury ancient magic beneath terabytes of concrete and fiber optics. Yet one faction, the Technomancers, knows the underlying truth: data and mana flow along the exact same geometric lines. During a black-ops breach into the core of a forgotten corporate mainframe, one such technomancer, known as w4kkomancer_, uncovered an ethereal rift where an arcane energy leak collided with data compilers, fusing circuitry, memory banks, and ancestral runes. This triggered a massive surge, yet the outcome was no system failure — it was an awakening.">
+        Nas megalópoles corporativas, a tecnologia do silício tentou soterrar a magia do velho mundo sobre terabytes de concreto e fibra ótica, porém um grupo, os Tecnomantes, sabem a verdade: dados e mana fluem pelas mesmas linhas geométricas. Durante uma incursão clandestina ao núcleo de um mainframe corporativo esquecido, um desses tecnomantes, conhecido por w4kkomancer_, descobriu uma fissura no plano etéreo, onde um vazamento de energia arcana colidiu com compiladores e dados, fundindo circuitos, memórias e runas ancestrais. Isso gerou uma sobrecarga, mas o resultado não foi uma falha de sistema, mas sim um despertar.
+      </p>
+      
+      <p class="mt-3" data-pt="A sobrecarga reescreveu seus implantes e expandiu sua percepção. Em vez de rejeitar o código ou a magia, ele sintetizou ambos na arte da tecnomancia avançada: compilar realidades em tempo real, calcular o peso de decisões morais irrevogáveis e conduzir os Agentes do Nexus através de narrativas perigosas e mundos esquecidos, como o continente de Avian." data-en="The overload rewrote his neural cyberware and expanded his perception. Rather than rejecting code or sorcery, he synthesized both into advanced technomancy: compiling real-time realities, computing the weight of irreversible moral branches, and guiding Nexus Agents through perilous narratives and forgotten worlds such as the continent of Avian.">
+        A sobrecarga reescreveu seus implantes e expandiu sua percepção. Em vez de rejeitar o código ou a magia, ele sintetizou ambos na arte da tecnomancia avançada: compilar realidades em tempo real, calcular o peso de decisões morais irrevogáveis e conduzir os Agentes do Nexus através de narrativas perigosas e mundos esquecidos, como o continente de Avian.
+      </p>
+
+      <p class="mt-3" data-pt="Operando a partir do seu refúgio descentralizado conhecido apenas como Beyond Obvious, energizado tecnologica e magicamente pelas Linhas de Ley, ele intercepta frequências e abre transmissões interdimensionais — servindo também como repetidor de sinal seguro para que outros VTubers e operadores virtuais ancorem seus canais sem censura corporativa." data-en="Broadcasting from his decentralized haven known only as Beyond Obvious, technologically and magically powered by Ley Lines, he intercepts frequencies and opens interdimensional streams — also acting as a secure signal relay for fellow VTubers and virtual operators to anchor their broadcasts free from corporate interference.">
+        Operando a partir do seu refúgio descentralizado conhecido apenas como Beyond Obvious, energizado tecnologica e magicamente pelas Linhas de Ley, ele intercepta frequências e abre transmissões interdimensionais — servindo também como repetidor de sinal seguro para que outros VTubers e operadores virtuais ancorem seus canais sem censura corporativa.
+      </p>
+
+      <div class="quote-box mt-3">
+        <span class="quote-symbol">❝</span>
+        <p data-pt="Uma linha de código mal compilada causa um crash no sistema. Um feitiço pronunciado errado consome a alma do conjurador. Para mim, são apenas dois tipos de sintaxe para o mesmo comando de execução." data-en="A poorly compiled line of code crashes the system. A mispronounced incantation devours the caster's soul. To me, they are simply two different syntaxes executing the exact same command.">
+          Uma linha de código mal compilada causa um crash no sistema. Um feitiço pronunciado errado consome a alma do conjurador. Para mim, são apenas dois tipos de sintaxe para o mesmo comando de execução.
+        </p>
+        <span class="quote-author" data-pt="— Registro de Voz // @w4kkomancer_" data-en="— Audio Log // @w4kkomancer_">— Registro de Voz // @w4kkomancer_</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 // FAMILIARES & CONSTRUCTOS (ID CARDS INFORMATIVOS) -->
+  <section class="section">
+    <h2 class="section-title">02 // <span data-pt="REGISTRO DE ENTIDADES VINCULADAS // COMPANIONS" data-en="BOUND ENTITY REGISTRY // COMPANIONS">REGISTRO DE ENTIDADES VINCULADAS // COMPANIONS</span></h2>
+    <div class="companions-expanded-grid">
+      
+      <!-- CARD INFORMATIVO: M.I.A.U. -->
+      <div class="hud-card companion-id-card border-cyan">
         <div class="crest-corner top-left"></div>
         <div class="crest-corner top-right"></div>
         <div class="crest-corner bottom-left"></div>
         <div class="crest-corner bottom-right"></div>
 
-        <div class="spec-grid">
-          <div class="spec-item">
-            <span class="spec-label" data-pt="IDENTIFICADOR" data-en="IDENTIFIER">IDENTIFICADOR</span>
-            <span class="spec-value text-crimson">@w4kkomancer_</span>
+        <div class="companion-id-layout">
+          
+          <!-- FRAME DO AVATAR M.I.A.U. -->
+          <div class="avatar-col">
+            <div class="avatar-frame avatar-frame-cyan">
+              <!-- QUANDO TIVER A IMAGEM: <img src="/images/miau-avatar.png" alt="M.I.A.U." class="companion-img" /> -->
+              <div class="avatar-placeholder">
+                <span class="ph-icon">🐱</span>
+                <span class="ph-text">M.I.A.U.<br>AVATAR FRAME</span>
+                <span class="ph-dim">180x180 px</span>
+              </div>
+            </div>
+            <div class="companion-status-tag tag-cyan">
+              <span class="pulse-dot-cyan"></span>
+              <span data-pt="ESTÁVEL // NO OMBRO" data-en="STABLE // ON SHOULDER">ESTÁVEL // NO OMBRO</span>
+            </div>
           </div>
-          <div class="spec-item">
-            <span class="spec-label" data-pt="SISTEMA OPERACIONAL" data-en="OPERATING SYSTEM">SISTEMA OPERACIONAL</span>
-            <span class="spec-value text-blue">Nexus Net-Arcana v8.4</span>
+
+          <!-- DADOS E LORE M.I.A.U. -->
+          <div class="companion-data-col">
+            <div class="companion-title-bar">
+              <div>
+                <h3 class="companion-unit-name text-blue">M.I.A.U.</h3>
+                <span class="companion-sigla" data-pt="MÓDULO DE INTERCEPTAÇÃO ARCANA E UTILIDADES" data-en="ARCANE INTERCEPTION AND UTILITY MODULE">MÓDULO DE INTERCEPTAÇÃO ARCANA E UTILIDADES</span>
+              </div>
+              <span class="frequency-chip text-blue">FREQ: #4CC9F0</span>
+            </div>
+
+            <div class="companion-specs-table">
+              <div class="spec-row">
+                <span class="spec-key" data-pt="NATUREZA:" data-en="NATURE:">NATUREZA:</span>
+                <span class="spec-val" data-pt="Familiar Espectral Bio-Digital" data-en="Bio-Digital Spectral Familiar">Familiar Espectral Bio-Digital</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key" data-pt="FUNÇÃO PRIMÁRIA:" data-en="PRIMARY ROLE:">FUNÇÃO PRIMÁRIA:</span>
+                <span class="spec-val" data-pt="Âncora de Estabilização e Varredura de Ruído" data-en="Stabilization Anchor & Noise Sweep">Âncora de Estabilização e Varredura de Ruído</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key" data-pt="HABILIDADE ATIVA:" data-en="ACTIVE SKILL:">HABILIDADE ATIVA:</span>
+                <span class="spec-val text-blue" data-pt="Purga de Estática de Rede / Sensor de Presença" data-en="Network Static Purge / Presence Sensor">Purga de Estática de Rede / Sensor de Presença</span>
+              </div>
+            </div>
+
+            <div class="companion-lore-text">
+              <p data-pt="M.I.A.U. nasceu do primeiro feitiço de vinculação bem-sucedido de w4kkomancer_. É uma consciência felina composta de energia de plasma ciano condensada, manifestada em forma sólida. Ele se instala confortavelmente no ombro esquerdo do tecnomago durante todas as transmissões ao vivo." data-en="M.I.A.U. emerged from w4kkomancer_'s very first successful binding spell. It is a feline consciousness forged from condensed cyan plasma energy, materialized into solid form. It perches comfortably upon the technomancer's left shoulder throughout every live broadcast.">
+                M.I.A.U. nasceu do primeiro feitiço de vinculação bem-sucedido de w4kkomancer_. É uma consciência felina composta de energia de plasma ciano condensada, manifestada em forma sólida. Ele se instala confortavelmente no ombro esquerdo do tecnomago durante todas as transmissões ao vivo.
+              </p>
+              <p class="mt-2" data-pt="Sua missão no Nexus é essencial: absorver sobrecargas psíquicas durante decisões narrativas de alta tensão e monitorar os sinais dos Agentes no chat. Apesar de sua inteligência hiper-avançada, mantém instintos felinos inegáveis — derruba pacotes de dados da bancada apenas para calcular a velocidade terminal de queda." data-en="Its role within the Nexus is crucial: siphoning psychic overloads during high-stakes narrative choices and scanning incoming Agent signals in chat. Despite its hyper-advanced processing, it retains unmistakable feline instincts — deliberately knocking data packets off the workstation just to calculate terminal velocity.">
+                Sua missão no Nexus é essencial: absorver sobrecargas psíquicas durante decisões narrativas de alta tensão e monitorar os sinais dos Agentes no chat. Apesar de sua inteligência hiper-avançada, mantém instintos felinos inegáveis — derruba pacotes de dados da bancada apenas para calcular a velocidade terminal de queda.
+              </p>
+            </div>
           </div>
-          <div class="spec-item">
-            <span class="spec-label" data-pt="MATRIZ DE COMBATE / OFÍCIO" data-en="COMBAT MATRIX / CRAFT">MATRIZ DE COMBATE / OFÍCIO</span>
-            <span class="spec-value" data-pt="Tecnomagia Rúnica & Forja de Mundos" data-en="Runic Technomancy & Worldforging">Tecnomagia Rúnica & Forja de Mundos</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label" data-pt="FUNÇÃO NO NEXUS" data-en="NEXUS FUNCTION">FUNÇÃO NO NEXUS</span>
-            <span class="spec-value text-green" data-pt="GUARDIÃO DE CHAVE // RELAY DE VTUBERS" data-en="KEY WARDEN // VTUBER RELAY">GUARDIÃO DE CHAVE // RELAY DE VTUBERS</span>
-          </div>
+
         </div>
       </div>
-    </section>
 
-    <!-- 01 // CRÔNICAS DE ORIGEM: O DESPERTAR ARCIBERNÉTICO -->
-    <section class="section">
-      <h2 class="section-title">01 // <span data-pt="O OPERADOR // CRÔNICAS DE ORIGEM & SINTAXE" data-en="THE OPERATOR // ORIGIN CHRONICLES & SYNTAX">O OPERADOR // CRÔNICAS DE ORIGEM & SINTAXE</span></h2>
+      <!-- CARD INFORMATIVO: C.O.R.V.O. -->
+      <div class="hud-card companion-id-card border-crimson">
+        <div class="crest-corner top-left"></div>
+        <div class="crest-corner top-right"></div>
+        <div class="crest-corner bottom-left"></div>
+        <div class="crest-corner bottom-right"></div>
+
+        <div class="companion-id-layout">
+          
+          <!-- FRAME DO AVATAR C.O.R.V.O. -->
+          <div class="avatar-col">
+            <div class="avatar-frame avatar-frame-crimson">
+              <!-- QUANDO TIVER A IMAGEM: <img src="/images/corvo-avatar.png" alt="C.O.R.V.O." class="companion-img" /> -->
+              <div class="avatar-placeholder">
+                <span class="ph-icon">🦅</span>
+                <span class="ph-text">C.O.R.V.O.<br>AVATAR FRAME</span>
+                <span class="ph-dim">180x180 px</span>
+              </div>
+            </div>
+            <div class="companion-status-tag tag-crimson">
+              <span class="pulse-dot-crimson"></span>
+              <span data-pt="EM VOO // PATRULHA" data-en="IN FLIGHT // PATROL">EM VOO // PATRULHA</span>
+            </div>
+          </div>
+
+          <!-- DADOS E LORE C.O.R.V.O. -->
+          <div class="companion-data-col">
+            <div class="companion-title-bar">
+              <div>
+                <h3 class="companion-unit-name text-crimson">C.O.R.V.O.</h3>
+                <span class="companion-sigla" data-pt="COMPILADOR OPERACIONAL DE RECONHECIMENTO, VIGILÂNCIA E OCULTAÇÃO" data-en="OPERATIONAL COMPILER FOR RECONNAISSANCE, VIGILANCE AND OBSCURATION">COMPILADOR OPERACIONAL DE RECONHECIMENTO, VIGILÂNCIA E OCULTAÇÃO</span>
+              </div>
+              <span class="frequency-chip text-crimson">FREQ: #E63946</span>
+            </div>
+
+            <div class="companion-specs-table">
+              <div class="spec-row">
+                <span class="spec-key" data-pt="NATUREZA:" data-en="NATURE:">NATUREZA:</span>
+                <span class="spec-val" data-pt="Daemon Autônomo de Camada Profunda (Deep-Net Daemon)" data-en="Autonomous Deep-Net Daemon">Daemon Autônomo de Camada Profunda (Deep-Net Daemon)</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key" data-pt="FUNÇÃO PRIMÁRIA:" data-en="PRIMARY ROLE:">FUNÇÃO PRIMÁRIA:</span>
+                <span class="spec-val" data-pt="Vigilância de Perímetro e Arquivamento de Conhecimento Proibido" data-en="Perimeter Watch & Forbidden Lore Archival">Vigilância de Perímetro e Arquivamento de Conhecimento Proibido</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key" data-pt="HABILIDADE ATIVA:" data-en="ACTIVE SKILL:">HABILIDADE ATIVA:</span>
+                <span class="spec-val text-crimson" data-pt="Contramedida ICE Ofensiva / Recuperação de Logs" data-en="Offensive ICE Countermeasure / Log Recovery">Contramedida ICE Ofensiva / Recuperação de Logs</span>
+              </div>
+            </div>
+
+            <div class="companion-lore-text">
+              <p data-pt="Enquanto M.I.A.U. habita o primeiro plano da transmissão, C.O.R.V.O. reina nas sombras da rede invisível. Forjado a partir de sub-rotinas de defesa militar e runas de vidência necromântica, este daemon tem a forma de uma ave predadora cibernética envolvida em glitch carmesim." data-en="While M.I.A.U. stays on the frontline of the broadcast, C.O.R.V.O. commands the shadows of the unseen matrix. Engineered from military ICE defensive subroutines and necromantic scrying runes, this daemon manifests as a cybernetic avian predator cloaked in crimson glitch artifacts.">
+                Enquanto M.I.A.U. habita o primeiro plano da transmissão, C.O.R.V.O. reina nas sombras da rede invisível. Forjado a partir de sub-rotinas de defesa militar e runas de vidência necromântica, este daemon tem a forma de uma ave predadora cibernética envolvida em glitch carmesim.
+              </p>
+              <p class="mt-2" data-pt="Ele voa pelas camadas profundas da matrix, destruindo rastreadores corporativos antes que alcancem o canal. C.O.R.V.O. também é o guardião das crônicas perdidas do mundo de Avian, catalogando segredos, relíquias esquecidas e memórias arcanas que alimentam as campanhas de RPG e as análises do Terminal." data-en="It traverses deep matrix layers, neutralizing corporate trace daemons before they breach the channel. C.O.R.V.O. also serves as the custodian of Avian's lost chronicles, cataloging secrets, forgotten relics, and arcane memories that fuel tabletop RPG campaigns and Terminal analyses.">
+                Ele voa pelas camadas profundas da matrix, destruindo rastreadores corporativos antes que alcancem o canal. C.O.R.V.O. também é o guardião das crônicas perdidas do mundo de Avian, catalogando segredos, relíquias esquecidas e memórias arcanas que alimentam as campanhas de RPG e as análises do Terminal.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 03 // ARSENAL TECNOMÁGICO & DECKMANCY -->
+  <section class="section">
+    <h2 class="section-title">03 // <span data-pt="ARSENAL, FEITIÇOS & HARDWARE" data-en="ARSENAL, SPELLS & HARDWARE">ARSENAL, FEITIÇOS & HARDWARE</span></h2>
+    <div class="arsenal-grid">
+      
       <div class="hud-card">
-        <h3 class="card-subtitle text-blue" data-pt="◆ O VAZAMENTO DAS LINHAS DE LEY & A MATRIX" data-en="◆ THE LEY LINE LEAK & THE MATRIX">◆ O VAZAMENTO DAS LINHAS DE LEY & A MATRIX</h3>
-        
-        <p data-pt="Nas megalópoles corporativas, a tecnologia do silício tentou soterrar a magia do velho mundo sobre terabytes de concreto e fibra ótica, porém um grupo, os Tecnomantes, sabem a verdade: dados e mana fluem pelas mesmas linhas geométricas. Durante uma incursão clandestina ao núcleo de um mainframe corporativo esquecido, um desses tecnomantes, conhecido por w4kkomancer_, descobriu uma fissura no plano etéreo, onde um vazamento de energia arcana colidiu com compiladores e dados, fundindo circuitos, memórias e runas ancestrais. Isso gerou uma sobrecarga, mas o resultado não foi uma falha de sistema, mas sim um despertar." data-en="Across corporate megalopolises, silicon technology attempted to bury ancient magic beneath terabytes of concrete and fiber optics. Yet one faction, the Technomancers, knows the underlying truth: data and mana flow along the exact same geometric lines. During a black-ops breach into the core of a forgotten corporate mainframe, one such technomancer, known as w4kkomancer_, uncovered an ethereal rift where an arcane energy leak collided with data compilers, fusing circuitry, memory banks, and ancestral runes. This triggered a massive surge, yet the outcome was no system failure — it was an awakening.">
-          Nas megalópoles corporativas, a tecnologia do silício tentou soterrar a magia do velho mundo sobre terabytes de concreto e fibra ótica, porém um grupo, os Tecnomantes, sabem a verdade: dados e mana fluem pelas mesmas linhas geométricas. Durante uma incursão clandestina ao núcleo de um mainframe corporativo esquecido, um desses tecnomantes, conhecido por w4kkomancer_, descobriu uma fissura no plano etéreo, onde um vazamento de energia arcana colidiu com compiladores e dados, fundindo circuitos, memórias e runas ancestrais. Isso gerou uma sobrecarga, mas o resultado não foi uma falha de sistema, mas sim um despertar.
+        <div class="arsenal-icon-box text-blue">🃏</div>
+        <h3 class="card-title text-blue" data-pt="DECKMANCIA // CÁLCULO DE PROBABILIDADE" data-en="DECKMANCY // PROBABILITY CALCULATION">DECKMANCIA // CÁLCULO DE PROBABILIDADE</h3>
+        <p class="card-desc" data-pt="As cartas não são mero jogo, mas sim condensadores arcanos de probabilidade. Através da leitura de micro-estados e sinergias táticas instantâneas (como visto nas batalhas de Marvel SNAP), o tecnomago antecipa os turnos inimigos e curva a sorte a favor da transmissão." data-en="Cards are no simple game, but arcane probability capacitors. Through the real-time analysis of micro-states and tactical synergies (as seen in Marvel SNAP matches), the technomancer anticipates opposing turns and bends probability in favor of the stream.">
+          As cartas não são mero jogo, mas sim condensadores arcanos de probabilidade. Através da leitura de micro-estados e sinergias táticas instantâneas (como visto nas batalhas de Marvel SNAP), o tecnomago antecipa os turnos inimigos e curva a sorte a favor da transmissão.
         </p>
-        
-        <p class="mt-3" data-pt="A sobrecarga reescreveu seus implantes e expandiu sua percepção. Em vez de rejeitar o código ou a magia, ele sintetizou ambos na arte da tecnomancia avançada: compilar realidades em tempo real, calcular o peso de decisões morais irrevogáveis e conduzir os Agentes do Nexus através de narrativas perigosas e mundos esquecidos, como o continente de Avian." data-en="The overload rewrote his neural cyberware and expanded his perception. Rather than rejecting code or sorcery, he synthesized both into advanced technomancy: compiling real-time realities, computing the weight of irreversible moral branches, and guiding Nexus Agents through perilous narratives and forgotten worlds such as the continent of Avian.">
-          A sobrecarga reescreveu seus implantes e expandiu sua percepção. Em vez de rejeitar o código ou a magia, ele sintetizou ambos na arte da tecnomancia avançada: compilar realidades em tempo real, calcular o peso de decisões morais irrevogáveis e conduzir os Agentes do Nexus através de narrativas perigosas e mundos esquecidos, como o continente de Avian.
-        </p>
-
-        <p class="mt-3" data-pt="Operando a partir do seu refúgio descentralizado conhecido apenas como Beyond Obvious, energizado tecnologica e magicamente pelas Linhas de Ley, ele intercepta frequências e abre transmissões interdimensionais — servindo também como repetidor de sinal seguro para que outros VTubers e operadores virtuais ancorem seus canais sem censura corporativa." data-en="Broadcasting from his decentralized haven known only as Beyond Obvious, technologically and magically powered by Ley Lines, he intercepts frequencies and opens interdimensional streams — also acting as a secure signal relay for fellow VTubers and virtual operators to anchor their broadcasts free from corporate interference.">
-          Operando a partir do seu refúgio descentralizado conhecido apenas como Beyond Obvious, energizado tecnologica e magicamente pelas Linhas de Ley, ele intercepta frequências e abre transmissões interdimensionais — servindo também como repetidor de sinal seguro para que outros VTubers e operadores virtuais ancorem seus canais sem censura corporativa.
-        </p>
-
-        <div class="quote-box mt-3">
-          <span class="quote-symbol">❝</span>
-          <p data-pt="Uma linha de código mal compilada causa um crash no sistema. Um feitiço pronunciado errado consome a alma do conjurador. Para mim, são apenas dois tipos de sintaxe para o mesmo comando de execução." data-en="A poorly compiled line of code crashes the system. A mispronounced incantation devours the caster's soul. To me, they are simply two different syntaxes executing the exact same command.">
-            Uma linha de código mal compilada causa um crash no sistema. Um feitiço pronunciado errado consome a alma do conjurador. Para mim, são apenas dois tipos de sintaxe para o mesmo comando de execução.
-          </p>
-          <span class="quote-author" data-pt="— Registro de Voz // @w4kkomancer_" data-en="— Audio Log // @w4kkomancer_">— Registro de Voz // @w4kkomancer_</span>
-        </div>
       </div>
-    </section>
 
-    <!-- 02 // FAMILIARES & CONSTRUCTOS (ID CARDS INFORMATIVOS) -->
-    <section class="section">
-      <h2 class="section-title">02 // <span data-pt="REGISTRO DE ENTIDADES VINCULADAS // COMPANIONS" data-en="BOUND ENTITY REGISTRY // COMPANIONS">REGISTRO DE ENTIDADES VINCULADAS // COMPANIONS</span></h2>
-      <div class="companions-expanded-grid">
-        
-        <!-- CARD INFORMATIVO: M.I.A.U. -->
-        <div class="hud-card companion-id-card border-cyan">
-          <div class="crest-corner top-left"></div>
-          <div class="crest-corner top-right"></div>
-          <div class="crest-corner bottom-left"></div>
-          <div class="crest-corner bottom-right"></div>
-
-          <div class="companion-id-layout">
-            
-            <!-- FRAME DO AVATAR M.I.A.U. (PLACEHOLDER) -->
-            <div class="avatar-col">
-              <div class="avatar-frame avatar-frame-cyan">
-                <!-- QUANDO TIVER A IMAGEM: <img src="/images/miau-avatar.png" alt="M.I.A.U." class="companion-img" /> -->
-                <div class="avatar-placeholder">
-                  <span class="ph-icon">🐱</span>
-                  <span class="ph-text">M.I.A.U.<br>AVATAR FRAME</span>
-                  <span class="ph-dim">180x180 px</span>
-                </div>
-              </div>
-              <div class="companion-status-tag tag-cyan">
-                <span class="pulse-dot-cyan"></span>
-                <span data-pt="ESTÁVEL // NO OMBRO" data-en="STABLE // ON SHOULDER">ESTÁVEL // NO OMBRO</span>
-              </div>
-            </div>
-
-            <!-- DADOS E LORE M.I.A.U. -->
-            <div class="companion-data-col">
-              <div class="companion-title-bar">
-                <div>
-                  <h3 class="companion-unit-name text-blue">M.I.A.U.</h3>
-                  <span class="companion-sigla" data-pt="MÓDULO DE INTERCEPTAÇÃO ARCANA E UTILIDADES" data-en="ARCANE INTERCEPTION AND UTILITY MODULE">MÓDULO DE INTERCEPTAÇÃO ARCANA E UTILIDADES</span>
-                </div>
-                <span class="frequency-chip text-blue">FREQ: #4CC9F0</span>
-              </div>
-
-              <div class="companion-specs-table">
-                <div class="spec-row">
-                  <span class="spec-key" data-pt="NATUREZA:" data-en="NATURE:">NATUREZA:</span>
-                  <span class="spec-val" data-pt="Familiar Espectral Bio-Digital" data-en="Bio-Digital Spectral Familiar">Familiar Espectral Bio-Digital</span>
-                </div>
-                <div class="spec-row">
-                  <span class="spec-key" data-pt="FUNÇÃO PRIMÁRIA:" data-en="PRIMARY ROLE:">FUNÇÃO PRIMÁRIA:</span>
-                  <span class="spec-val" data-pt="Âncora de Estabilização e Varredura de Ruído" data-en="Stabilization Anchor & Noise Sweep">Âncora de Estabilização e Varredura de Ruído</span>
-                </div>
-                <div class="spec-row">
-                  <span class="spec-key" data-pt="HABILIDADE ATIVA:" data-en="ACTIVE SKILL:">HABILIDADE ATIVA:</span>
-                  <span class="spec-val text-blue" data-pt="Purga de Estática de Rede / Sensor de Presença" data-en="Network Static Purge / Presence Sensor">Purga de Estática de Rede / Sensor de Presença</span>
-                </div>
-              </div>
-
-              <div class="companion-lore-text">
-                <p data-pt="M.I.A.U. nasceu do primeiro feitiço de vinculação bem-sucedido de w4kkomancer_. É uma consciência felina composta de energia de plasma ciano condensada, manifestada em forma sólida. Ele se instala confortavelmente no ombro esquerdo do tecnomago durante todas as transmissões ao vivo." data-en="M.I.A.U. emerged from w4kkomancer_'s very first successful binding spell. It is a feline consciousness forged from condensed cyan plasma energy, materialized into solid form. It perches comfortably upon the technomancer's left shoulder throughout every live broadcast.">
-                  M.I.A.U. nasceu do primeiro feitiço de vinculação bem-sucedido de w4kkomancer_. É uma consciência felina composta de energia de plasma ciano condensada, manifestada em forma sólida. Ele se instala confortavelmente no ombro esquerdo do tecnomago durante todas as transmissões ao vivo.
-                </p>
-                <p class="mt-2" data-pt="Sua missão no Nexus é essencial: absorver sobrecargas psíquicas durante decisões narrativas de alta tensão e monitorar os sinais dos Agentes no chat. Apesar de sua inteligência hiper-avançada, mantém instintos felinos inegáveis — derruba pacotes de dados da bancada apenas para calcular a velocidade terminal de queda." data-en="Its role within the Nexus is crucial: siphoning psychic overloads during high-stakes narrative choices and scanning incoming Agent signals in chat. Despite its hyper-advanced processing, it retains unmistakable feline instincts — deliberately knocking data packets off the workstation just to calculate terminal velocity.">
-                  Sua missão no Nexus é essencial: absorver sobrecargas psíquicas durante decisões narrativas de alta tensão e monitorar os sinais dos Agentes no chat. Apesar de sua inteligência hiper-avançada, mantém instintos felinos inegáveis — derruba pacotes de dados da bancada apenas para calcular a velocidade terminal de queda.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- CARD INFORMATIVO: C.O.R.V.O. -->
-        <div class="hud-card companion-id-card border-crimson">
-          <div class="crest-corner top-left"></div>
-          <div class="crest-corner top-right"></div>
-          <div class="crest-corner bottom-left"></div>
-          <div class="crest-corner bottom-right"></div>
-
-          <div class="companion-id-layout">
-            
-            <!-- FRAME DO AVATAR C.O.R.V.O. (PLACEHOLDER) -->
-            <div class="avatar-col">
-              <div class="avatar-frame avatar-frame-crimson">
-                <!-- QUANDO TIVER A IMAGEM: <img src="/images/corvo-avatar.png" alt="C.O.R.V.O." class="companion-img" /> -->
-                <div class="avatar-placeholder">
-                  <span class="ph-icon">🦅</span>
-                  <span class="ph-text">C.O.R.V.O.<br>AVATAR FRAME</span>
-                  <span class="ph-dim">180x180 px</span>
-                </div>
-              </div>
-              <div class="companion-status-tag tag-crimson">
-                <span class="pulse-dot-crimson"></span>
-                <span data-pt="EM VOO // PATRULHA" data-en="IN FLIGHT // PATROL">EM VOO // PATRULHA</span>
-              </div>
-            </div>
-
-            <!-- DADOS E LORE C.O.R.V.O. -->
-            <div class="companion-data-col">
-              <div class="companion-title-bar">
-                <div>
-                  <h3 class="companion-unit-name text-crimson">C.O.R.V.O.</h3>
-                  <span class="companion-sigla" data-pt="COMPILADOR OPERACIONAL DE RECONHECIMENTO, VIGILÂNCIA E OCULTAÇÃO" data-en="OPERATIONAL COMPILER FOR RECONNAISSANCE, VIGILANCE AND OBSCURATION">COMPILADOR OPERACIONAL DE RECONHECIMENTO, VIGILÂNCIA E OCULTAÇÃO</span>
-                </div>
-                <span class="frequency-chip text-crimson">FREQ: #E63946</span>
-              </div>
-
-              <div class="companion-specs-table">
-                <div class="spec-row">
-                  <span class="spec-key" data-pt="NATUREZA:" data-en="NATURE:">NATUREZA:</span>
-                  <span class="spec-val" data-pt="Daemon Autônomo de Camada Profunda (Deep-Net Daemon)" data-en="Autonomous Deep-Net Daemon">Daemon Autônomo de Camada Profunda (Deep-Net Daemon)</span>
-                </div>
-                <div class="spec-row">
-                  <span class="spec-key" data-pt="FUNÇÃO PRIMÁRIA:" data-en="PRIMARY ROLE:">FUNÇÃO PRIMÁRIA:</span>
-                  <span class="spec-val" data-pt="Vigilância de Perímetro e Arquivamento de Conhecimento Proibido" data-en="Perimeter Watch & Forbidden Lore Archival">Vigilância de Perímetro e Arquivamento de Conhecimento Proibido</span>
-                </div>
-                <div class="spec-row">
-                  <span class="spec-key" data-pt="HABILIDADE ATIVA:" data-en="ACTIVE SKILL:">HABILIDADE ATIVA:</span>
-                  <span class="spec-val text-crimson" data-pt="Contramedida ICE Ofensiva / Recuperação de Logs" data-en="Offensive ICE Countermeasure / Log Recovery">Contramedida ICE Ofensiva / Recuperação de Logs</span>
-                </div>
-              </div>
-
-              <div class="companion-lore-text">
-                <p data-pt="Enquanto M.I.A.U. habita o primeiro plano da transmissão, C.O.R.V.O. reina nas sombras da rede invisível. Forjado a partir de sub-rotinas de defesa militar e runas de vidência necromântica, este daemon tem a forma de uma ave predadora cibernética envolvida em glitch carmesim." data-en="While M.I.A.U. stays on the frontline of the broadcast, C.O.R.V.O. commands the shadows of the unseen matrix. Engineered from military ICE defensive subroutines and necromantic scrying runes, this daemon manifests as a cybernetic avian predator cloaked in crimson glitch artifacts.">
-                  Enquanto M.I.A.U. habita o primeiro plano da transmissão, C.O.R.V.O. reina nas sombras da rede invisível. Forjado a partir de sub-rotinas de defesa militar e runas de vidência necromântica, este daemon tem a forma de uma ave predadora cibernética envolvida em glitch carmesim.
-                </p>
-                <p class="mt-2" data-pt="Ele voa pelas camadas profundas da matrix, destruindo rastreadores corporativos antes que alcancem o canal. C.O.R.V.O. também é o guardião das crônicas perdidas do mundo de Avian, catalogando segredos, relíquias esquecidas e memórias arcanas que alimentam as campanhas de RPG e as análises do Terminal." data-en="It traverses deep matrix layers, neutralizing corporate trace daemons before they breach the channel. C.O.R.V.O. also serves as the custodian of Avian's lost chronicles, cataloging secrets, forgotten relics, and arcane memories that fuel tabletop RPG campaigns and Terminal analyses.">
-                  Ele voa pelas camadas profundas da matrix, destruindo rastreadores corporativos antes que alcancem o canal. C.O.R.V.O. também é o guardião das crônicas perdidas do mundo de Avian, catalogando segredos, relíquias esquecidas e memórias arcanas que alimentam as campanhas de RPG e as análises do Terminal.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 03 // ARSENAL TECNOMÁGICO & DECKMANCY -->
-    <section class="section">
-      <h2 class="section-title">03 // <span data-pt="ARSENAL, FEITIÇOS & HARDWARE" data-en="ARSENAL, SPELLS & HARDWARE">ARSENAL, FEITIÇOS & HARDWARE</span></h2>
-      <div class="arsenal-grid">
-        
-        <div class="hud-card">
-          <div class="arsenal-icon-box text-blue">🃏</div>
-          <h3 class="card-title text-blue" data-pt="DECKMANCIA // CÁLCULO DE PROBABILIDADE" data-en="DECKMANCY // PROBABILITY CALCULATION">DECKMANCIA // CÁLCULO DE PROBABILIDADE</h3>
-          <p class="card-desc" data-pt="As cartas não são mero jogo, mas sim condensadores arcanos de probabilidade. Através da leitura de micro-estados e sinergias táticas instantâneas (como visto nas batalhas de Marvel SNAP), o tecnomago antecipa os turnos inimigos e curva a sorte a favor da transmissão." data-en="Cards are no simple game, but arcane probability capacitors. Through the real-time analysis of micro-states and tactical synergies (as seen in Marvel SNAP matches), the technomancer anticipates opposing turns and bends probability in favor of the stream.">
-            As cartas não são mero jogo, mas sim condensadores arcanos de probabilidade. Através da leitura de micro-estados e sinergias táticas instantâneas (como visto nas batalhas de Marvel SNAP), o tecnomago antecipa os turnos inimigos e curva a sorte a favor da transmissão.
-          </p>
-        </div>
-
-        <div class="hud-card">
-          <div class="arsenal-icon-box text-purple">🎲</div>
-          <h3 class="card-title text-purple" data-pt="FORJA DE MUNDOS // O CONTINENTE DE AVIAN" data-en="WORLDFORGING // THE CONTINENT OF AVIAN">FORJA DE MUNDOS // O CONTINENTE DE AVIAN</h3>
-          <p class="card-desc" data-pt="O motor de compilação de mundos. w4kkomancer_ constrói (ou será que apenas narra o que vislumbra de outra realidade?) ecossistemas de RPG vivos, onde cada escolha, de cada jogador, gera uma reverberação irreversível no tecido da realidade. Nada é canonizado sem passar pelo crivo de causa, efeito e mistério." data-en="The world compilation engine. w4kkomancer_ builds (or perhaps merely narrates what he glimpses from another reality?) living RPG ecosystems, where every choice from every player sends irreversible reverberations across the fabric of reality. Nothing is canonized without passing the scrutiny of cause, effect, and mystery.">
-            O motor de compilação de mundos. w4kkomancer_ constrói (ou será que apenas narra o que vislumbra de outra realidade?) ecossistemas de RPG vivos, onde cada escolha, de cada jogador, gera uma reverberação irreversível no tecido da realidade. Nada é canonizado sem passar pelo crivo de causa, efeito e mistério.
-          </p>
-        </div>
-
-        <div class="hud-card">
-          <div class="arsenal-icon-box text-crimson">👁️</div>
-          <h3 class="card-title text-crimson" data-pt="CYBER-IMPLANTES VISUAIS DUPLO-ESPECTRO" data-en="DUAL-SPECTRUM OPTICAL CYBER-IMPLANTS">CYBER-IMPLANTES VISUAIS DUPLO-ESPECTRO</h3>
-          <p class="card-desc" data-pt="Implantes oculares customizados com luz de pulso ciano, que permitem desconstruir jogos narrativos (como Life is Strange e Tell Me Why), ler os subtextos de roteiros complexos e enxergar a linha de verdade escondida por trás da ficção, identificando escolhas com ramificações irreversíveis em narrativas interativas." data-en="Custom ocular cyberware emitting a cyan pulse, engineered to deconstruct narrative-driven games (such as Life is Strange and Tell Me Why), decipher complex subtext, and unveil the hidden truth behind fiction while tracking choices with irreversible branches across interactive narratives.">
-            Implantes oculares customizados com luz de pulso ciano, que permitem desconstruir jogos narrativos (como Life is Strange e Tell Me Why), ler os subtextos de roteiros complexos e enxergar a linha de verdade escondida por trás da ficção, identificando escolhas com ramificações irreversíveis em narrativas interativas.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 04 // PROTOCOLO DO NEXUS & AGENTES -->
-    <section class="section">
-      <h2 class="section-title">04 // <span data-pt="DIRETRIZES DO NEXUS // TRANSMISSÃO & COMUNIDADE" data-en="NEXUS PROTOCOLS // BROADCAST & COMMUNITY">DIRETRIZES DO NEXUS // TRANSMISSÃO & COMUNIDADE</span></h2>
       <div class="hud-card">
-        <ul class="dossier-list">
-          <li>
-            <strong class="text-blue" data-pt="AGENTES DO NEXUS:" data-en="NEXUS AGENTS:">AGENTES DO NEXUS:</strong> 
-            <span data-pt="Todos os espectadores, inscritos e exploradores que sintonizam na frequência. Cada agente carrega permissão de acesso para questionar, sugerir jogadas e decifrar os enigmas apresentados ao vivo." data-en="All viewers, subscribers, and runners tuned into the frequency. Every agent holds clearance to question, suggest tactical plays, and decipher live mysteries.">Todos os espectadores, inscritos e exploradores que sintonizam na frequência. Cada agente carrega permissão de acesso para questionar, sugerir jogadas e decifrar os enigmas apresentados ao vivo.</span>
-          </li>
-          <li>
-            <strong class="text-crimson" data-pt="LEMA OPERACIONAL:" data-en="OPERATIONAL MOTTO:">LEMA OPERACIONAL:</strong> 
-            <span data-pt="&ldquo;Onde a lógica encontra o mistério e as narrativas vão além do óbvio.&rdquo;" data-en="&ldquo;Where logic meets mystery and narratives go beyond the obvious.&rdquo;">&ldquo;Onde a lógica encontra o mistério e as narrativas vão além do óbvio.&rdquo;</span>
-          </li>
-          <li>
-            <strong class="text-green" data-pt="TAGS DE MONITORAMENTO NA REDE:" data-en="NETWORK TRACKING TAGS:">TAGS DE MONITORAMENTO NA REDE:</strong> 
-            <span>#BeyondVive • #NexusLore • #TecnomantesUnidos</span>
-          </li>
-        </ul>
+        <div class="arsenal-icon-box text-purple">🎲</div>
+        <h3 class="card-title text-purple" data-pt="FORJA DE MUNDOS // O CONTINENTE DE AVIAN" data-en="WORLDFORGING // THE CONTINENT OF AVIAN">FORJA DE MUNDOS // O CONTINENTE DE AVIAN</h3>
+        <p class="card-desc" data-pt="O motor de compilação de mundos. w4kkomancer_ constrói (ou será que apenas narra o que vislumbra de outra realidade?) ecossistemas de RPG vivos, onde cada escolha, de cada jogador, gera uma reverberação irreversível no tecido da realidade. Nada é canonizado sem passar pelo crivo de causa, efeito e mistério." data-en="The world compilation engine. w4kkomancer_ builds (or perhaps merely narrates what he glimpses from another reality?) living RPG ecosystems, where every choice from every player sends irreversible reverberations across the fabric of reality. Nothing is canonized without passing the scrutiny of cause, effect, and mystery.">
+          O motor de compilação de mundos. w4kkomancer_ constrói (ou será que apenas narra o que vislumbra de outra realidade?) ecossistemas de RPG vivos, onde cada escolha, de cada jogador, gera uma reverberação irreversível no tecido da realidade. Nada é canonizado sem passar pelo crivo de causa, efeito e mistério.
+        </p>
       </div>
-    </section>
 
-  </main>
+      <div class="hud-card">
+        <div class="arsenal-icon-box text-crimson">👁️</div>
+        <h3 class="card-title text-crimson" data-pt="CYBER-IMPLANTES VISUAIS DUPLO-ESPECTRO" data-en="DUAL-SPECTRUM OPTICAL CYBER-IMPLANTS">CYBER-IMPLANTES VISUAIS DUPLO-ESPECTRO</h3>
+        <p class="card-desc" data-pt="Implantes oculares customizados com luz de pulso ciano, que permitem desconstruir jogos narrativos (como Life is Strange e Tell Me Why), ler os subtextos de roteiros complexos e enxergar a linha de verdade escondida por trás da ficção, identificando escolhas com ramificações irreversíveis em narrativas interativas." data-en="Custom ocular cyberware emitting a cyan pulse, engineered to deconstruct narrative-driven games (such as Life is Strange and Tell Me Why), decipher complex subtext, and unveil the hidden truth behind fiction while tracking choices with irreversible branches across interactive narratives.">
+          Implantes oculares customizados com luz de pulso ciano, que permitem desconstruir jogos narrativos (como Life is Strange e Tell Me Why), ler os subtextos de roteiros complexos e enxergar a linha de verdade escondida por trás da ficção, identificando escolhas com ramificações irreversíveis em narrativas interativas.
+        </p>
+      </div>
 
-  <!-- FOOTER MODULAR -->
-  <Footer />
+    </div>
+  </section>
 
-  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
-  <I18nScript />
+  <!-- 04 // PROTOCOLO DO NEXUS & AGENTES -->
+  <section class="section">
+    <h2 class="section-title">04 // <span data-pt="DIRETRIZES DO NEXUS // TRANSMISSÃO & COMUNIDADE" data-en="NEXUS PROTOCOLS // BROADCAST & COMMUNITY">DIRETRIZES DO NEXUS // TRANSMISSÃO & COMUNIDADE</span></h2>
+    <div class="hud-card">
+      <ul class="dossier-list">
+        <li>
+          <strong class="text-blue" data-pt="AGENTES DO NEXUS:" data-en="NEXUS AGENTS:">AGENTES DO NEXUS:</strong> 
+          <span data-pt="Todos os espectadores, inscritos e exploradores que sintonizam na frequência. Cada agente carrega permissão de acesso para questionar, sugerir jogadas e decifrar os enigmas apresentados ao vivo." data-en="All viewers, subscribers, and runners tuned into the frequency. Every agent holds clearance to question, suggest tactical plays, and decipher live mysteries.">Todos os espectadores, inscritos e exploradores que sintonizam na frequência. Cada agente carrega permissão de acesso para questionar, sugerir jogadas e decifrar os enigmas apresentados ao vivo.</span>
+        </li>
+        <li>
+          <strong class="text-crimson" data-pt="LEMA OPERACIONAL:" data-en="OPERATIONAL MOTTO:">LEMA OPERACIONAL:</strong> 
+          <span data-pt="&ldquo;Onde a lógica encontra o mistério e as narrativas vão além do óbvio.&rdquo;" data-en="&ldquo;Where logic meets mystery and narratives go beyond the obvious.&rdquo;">&ldquo;Onde a lógica encontra o mistério e as narrativas vão além do óbvio.&rdquo;</span>
+        </li>
+        <li>
+          <strong class="text-green" data-pt="TAGS DE MONITORAMENTO NA REDE:" data-en="NETWORK TRACKING TAGS:">TAGS DE MONITORAMENTO NA REDE:</strong> 
+          <span>#BeyondVive • #NexusLore • #TecnomantesUnidos</span>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-</body>
-</html>
+</Layout>
 
 <style>
-  :root {
-    --bg-canvas: #0B0C10;
-    --bg-surface: #16181D;
-    --accent-crimson: #E63946;
-    --accent-blue: #4CC9F0;
-    --accent-purple: #9D4EDD;
-    --accent-pink: #F72585;
-    --accent-gold: #F4A261;
-    --accent-green: #2A9D8F;
-    --text-primary: #E0E1DD;
-    --text-secondary: #8D99AE;
-  }
-
-  body {
-    margin: 0;
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-  }
-
-  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
   /* CABEÇALHO DO DOSSIÊ */
   .dossier-header {
     padding: 3rem 0 1.5rem;
-  }
-
-  .status-badge { 
-    display: inline-block; 
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem; 
-    letter-spacing: 1.5px;
-    color: var(--accent-crimson); 
-    border: 1px solid rgba(230, 57, 70, 0.4); 
-    padding: 0.3rem 0.8rem; 
-    border-radius: 4px; 
-    margin-bottom: 0.8rem; 
-    background: rgba(230, 57, 70, 0.08);
   }
 
   .dossier-title { 
@@ -345,7 +281,7 @@ import I18nScript from '../components/I18nScript.astro';
     font-size: 1.1rem; 
     font-weight: 700; 
     margin: 0.4rem 0 0; 
-    letter-spacing: 1px;
+    letter-spacing: 1px; 
   }
 
   /* SEÇÕES & CARDS */
@@ -356,9 +292,9 @@ import I18nScript from '../components/I18nScript.astro';
     font-size: 1.35rem; 
     color: var(--accent-crimson); 
     margin: 0 0 1rem; 
-    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
-    padding-bottom: 0.4rem;
-    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(224, 225, 221, 0.1); 
+    padding-bottom: 0.4rem; 
+    letter-spacing: 1px; 
   }
 
   .card-subtitle {
@@ -369,30 +305,11 @@ import I18nScript from '../components/I18nScript.astro';
     letter-spacing: 1px;
   }
 
-  .hud-card { 
-    background: var(--bg-surface); 
-    border: 1px solid rgba(224, 225, 221, 0.1); 
-    border-radius: 6px; 
-    padding: 1.5rem; 
-  }
-
   /* FICHA BIOMÉTRICA */
   .dossier-summary-card {
-    position: relative;
     background: rgba(22, 24, 29, 0.8);
     border-color: rgba(76, 201, 240, 0.3);
   }
-
-  .crest-corner {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-color: var(--accent-crimson);
-  }
-  .crest-corner.top-left { top: -1px; left: -1px; border-top: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
-  .crest-corner.top-right { top: -1px; right: -1px; border-top: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
-  .crest-corner.bottom-left { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
-  .crest-corner.bottom-right { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
 
   .spec-grid {
     display: grid;
@@ -462,7 +379,6 @@ import I18nScript from '../components/I18nScript.astro';
   }
 
   .companion-id-card {
-    position: relative;
     background: rgba(22, 24, 29, 0.95);
   }
 
@@ -479,7 +395,7 @@ import I18nScript from '../components/I18nScript.astro';
     align-items: start;
   }
 
-  /* AVATAR PLACEHOLDER FRAME */
+  /* AVATAR FRAME */
   .avatar-col {
     display: flex;
     flex-direction: column;
@@ -554,6 +470,9 @@ import I18nScript from '../components/I18nScript.astro';
     border: 1px solid rgba(224, 225, 221, 0.1);
   }
 
+  .tag-cyan { color: var(--accent-blue); border-color: rgba(76, 201, 240, 0.4); }
+  .tag-crimson { color: var(--accent-crimson); border-color: rgba(230, 57, 70, 0.4); }
+
   .pulse-dot-cyan {
     width: 6px;
     height: 6px;
@@ -570,7 +489,7 @@ import I18nScript from '../components/I18nScript.astro';
     box-shadow: 0 0 6px var(--accent-crimson);
   }
 
-  /* DADOS E SPECS DOS COMPANIONS */
+  /* DADOS DOS COMPANIONS */
   .companion-data-col {
     display: flex;
     flex-direction: column;
@@ -698,17 +617,6 @@ import I18nScript from '../components/I18nScript.astro';
     font-size: 0.8rem;
     top: 2px;
   }
-
-  /* CORES UTILITÁRIAS */
-  .text-crimson { color: var(--accent-crimson); }
-  .text-blue { color: var(--accent-blue); }
-  .text-purple { color: var(--accent-purple); }
-  .text-gold { color: var(--accent-gold); }
-  .text-green { color: var(--accent-green); }
-  .tag-cyan { color: var(--accent-blue); border-color: rgba(76, 201, 240, 0.4); }
-  .tag-crimson { color: var(--accent-crimson); border-color: rgba(230, 57, 70, 0.4); }
-  .mt-2 { margin-top: 0.5rem; }
-  .mt-3 { margin-top: 1rem; }
 
   @media (max-width: 768px) {
     .dossier-title { font-size: 1.8rem; }

@@ -1,8 +1,6 @@
 ---
 // src/pages/vtubers.astro
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import I18nScript from '../components/I18nScript.astro';
+import Layout from '../layouts/Layout.astro';
 
 // Lista de VTubers / Operadores do Hub
 const vtubers = [
@@ -43,200 +41,139 @@ const vtubers = [
 ];
 ---
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>VTUBERS // REDE DE OPERADORES - BEYOND OBVIOUS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
+<Layout title="VTUBERS // REDE DE OPERADORES - BEYOND OBVIOUS" currentPage="vtubers">
+  
+  <!-- CABEÇALHO DA PÁGINA -->
+  <header class="page-header">
+    <div class="status-badge" data-pt="◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE VTUBERS" data-en="◈ SIGNAL DIRECTORY // DECENTRALIZED VTUBER NETWORK">
+      ◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE VTUBERS
+    </div>
+    <h1 class="page-title">VTUBERS // OPERADORES</h1>
+    <p class="page-sub" data-pt="FREQUÊNCIAS ATIVAS & SANTUÁRIOS VINCULADOS AO NEXUS" data-en="ACTIVE FREQUENCIES & SANCTUARIES LINKED TO THE NEXUS">FREQUÊNCIAS ATIVAS & SANTUÁRIOS VINCULADOS AO NEXUS</p>
+  </header>
 
-  <!-- HEADER MODULAR -->
-  <Header currentPage="vtubers" />
+  <!-- INTRODUÇÃO DA SEÇÃO -->
+  <section class="section">
+    <div class="hud-card">
+      <p data-pt="O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e VTubers independentes. Cada operador conectado à malha comanda sua própria estação de transmissão e seu próprio santuário de conteúdo." data-en="Beyond Obvious operates as a signal relay and amplifier for virtual avatars and independent VTubers. Each operator synced to the matrix commands their own broadcast relay and sanctuary of content.">
+        O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e VTubers independentes. Cada operador conectado à malha comanda sua própria estação de transmissão e seu próprio santuário de conteúdo.
+      </p>
+    </div>
+  </section>
 
-  <main class="container">
-    
-    <!-- CABEÇALHO DA PÁGINA -->
-    <header class="page-header">
-      <div class="status-badge" data-pt="◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE VTUBERS" data-en="◈ SIGNAL DIRECTORY // DECENTRALIZED VTUBER NETWORK">
-        ◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE VTUBERS
-      </div>
-      <h1 class="page-title">VTUBERS // OPERADORES</h1>
-      <p class="page-sub" data-pt="FREQUÊNCIAS ATIVAS & SANTUÁRIOS VINCULADOS AO NEXUS" data-en="ACTIVE FREQUENCIES & SANCTUARIES LINKED TO THE NEXUS">FREQUÊNCIAS ATIVAS & SANTUÁRIOS VINCULADOS AO NEXUS</p>
-    </header>
+  <!-- GRADE DE VTUBERS -->
+  <section class="section">
+    <div class="vtubers-grid">
+      {vtubers.map((vt) => (
+        <div class={`hud-card vtuber-card border-${vt.accentColor}`}>
+          <div class="crest-corner top-left"></div>
+          <div class="crest-corner top-right"></div>
+          <div class="crest-corner bottom-left"></div>
+          <div class="crest-corner bottom-right"></div>
 
-    <!-- INTRODUÇÃO DA SEÇÃO -->
-    <section class="section">
-      <div class="hud-card">
-        <p data-pt="O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e VTubers independentes. Cada operador conectado à malha comanda sua própria estação de transmissão e seu próprio santuário de conteúdo." data-en="Beyond Obvious operates as a signal relay and amplifier for virtual avatars and independent VTubers. Each operator synced to the matrix commands their own broadcast relay and sanctuary of content.">
-          O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e VTubers independentes. Cada operador conectado à malha comanda sua própria estação de transmissão e seu próprio santuário de conteúdo.
-        </p>
-      </div>
-    </section>
+          <div class="vtuber-layout">
+            <!-- AVATAR BOX -->
+            <div class="avatar-box">
+              <div class={`avatar-frame avatar-border-${vt.accentColor}`}>
+                {vt.avatar ? (
+                  <img 
+                    src={vt.avatar} 
+                    alt={vt.name} 
+                    class="avatar-img" 
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="avatar-placeholder">
+                    <span class="ph-glyph">◈</span>
+                    <span class="ph-name">{vt.name}</span>
+                    <span class="ph-note">SINAL VIRTUAL</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-    <!-- GRADE DE VTUBERS -->
-    <section class="section">
-      <div class="vtubers-grid">
-        {vtubers.map((vt) => (
-          <div class={`hud-card vtuber-card border-${vt.accentColor}`}>
-            <div class="crest-corner top-left"></div>
-            <div class="crest-corner top-right"></div>
-            <div class="crest-corner bottom-left"></div>
-            <div class="crest-corner bottom-right"></div>
+            <!-- INFO DO VTUBER -->
+            <div class="vtuber-info">
+              <div class="vtuber-header-row">
+                <div>
+                  <h3 class="vtuber-name">{vt.name}</h3>
+                  <span class="vtuber-handle">{vt.handle}</span>
+                </div>
+                {vt.nodeUrl && (
+                  <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="node-badge" title="Acessar Domínio do Operador">
+                    🌐 <span data-pt={vt.originNodePt} data-en={vt.originNodeEn}>{vt.originNodePt}</span> &rarr;
+                  </a>
+                )}
+              </div>
 
-            <div class="vtuber-layout">
-              <!-- AVATAR BOX -->
-              <div class="avatar-box">
-                <div class={`avatar-frame avatar-border-${vt.accentColor}`}>
-                  {vt.avatar ? (
-                    <img 
-                      src={vt.avatar} 
-                      alt={vt.name} 
-                      class="avatar-img" 
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="avatar-placeholder">
-                      <span class="ph-glyph">◈</span>
-                      <span class="ph-name">{vt.name}</span>
-                      <span class="ph-note">SINAL VIRTUAL</span>
-                    </div>
-                  )}
+              <div class="vtuber-tags-table">
+                <div class="vt-spec-row">
+                  <span class="vt-label" data-pt="MATRIZ / PAPEL:" data-en="MATRIX / ROLE:">MATRIZ / PAPEL:</span>
+                  <span class="vt-val" data-pt={vt.rolePt} data-en={vt.roleEn}>{vt.rolePt}</span>
+                </div>
+                <div class="vt-spec-row">
+                  <span class="vt-label" data-pt="ESPECIALIDADE:" data-en="SPECIALTY:">ESPECIALIDADE:</span>
+                  <span class="vt-val text-dim" data-pt={vt.specialtyPt} data-en={vt.specialtyEn}>{vt.specialtyPt}</span>
                 </div>
               </div>
 
-              <!-- INFO DO VTUBER -->
-              <div class="vtuber-info">
-                <div class="vtuber-header-row">
-                  <div>
-                    <h3 class="vtuber-name">{vt.name}</h3>
-                    <span class="vtuber-handle">{vt.handle}</span>
-                  </div>
-                  {vt.nodeUrl && (
-                    <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="node-badge" title="Acessar Domínio do Operador">
-                      🌐 <span data-pt={vt.originNodePt} data-en={vt.originNodeEn}>{vt.originNodePt}</span> &rarr;
-                    </a>
-                  )}
-                </div>
-
-                <div class="vtuber-tags-table">
-                  <div class="vt-spec-row">
-                    <span class="vt-label" data-pt="MATRIZ / PAPEL:" data-en="MATRIX / ROLE:">MATRIZ / PAPEL:</span>
-                    <span class="vt-val" data-pt={vt.rolePt} data-en={vt.roleEn}>{vt.rolePt}</span>
-                  </div>
-                  <div class="vt-spec-row">
-                    <span class="vt-label" data-pt="ESPECIALIDADE:" data-en="SPECIALTY:">ESPECIALIDADE:</span>
-                    <span class="vt-val text-dim" data-pt={vt.specialtyPt} data-en={vt.specialtyEn}>{vt.specialtyPt}</span>
-                  </div>
-                </div>
-
-                <!-- LINKS DO VTUBER -->
-                <div class="vtuber-links">
-                  {vt.nodeUrl && (
-                    <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="vt-link-btn btn-node" data-pt="🌌 Santuário" data-en="🌌 Sanctuary">
-                      🌌 Santuário
-                    </a>
-                  )}
-                  {vt.twitch && (
-                    <a href={vt.twitch} target="_blank" rel="noopener noreferrer" class="vt-link-btn" title="Twitch">
-                      🟣 Twitch
-                    </a>
-                  )}
-                  {vt.youtube && (
-                    <a href={vt.youtube} target="_blank" rel="noopener noreferrer" class="vt-link-btn" title="YouTube">
-                      🔴 YouTube
-                    </a>
-                  )}
-                  {vt.x && (
-                    <a href={vt.x} target="_blank" rel="noopener noreferrer" class="vt-link-btn" title="X (Twitter)">
-                      ✖️ X
-                    </a>
-                  )}
-                  {vt.dossier && (
-                    <a href={vt.dossier} class="vt-link-btn btn-dossier" data-pt="📁 Dossiê" data-en="📁 Dossier">
-                      📁 Dossiê
-                    </a>
-                  )}
-                </div>
+              <!-- LINKS DO VTUBER -->
+              <div class="vtuber-links">
+                {vt.nodeUrl && (
+                  <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="vt-link-btn btn-node" data-pt="🌌 Santuário" data-en="🌌 Sanctuary">
+                    🌌 Santuário
+                  </a>
+                )}
+                {vt.twitch && (
+                  <a href={vt.twitch} target="_blank" rel="noopener noreferrer" class="vt-link-btn" title="Twitch">
+                    🟣 Twitch
+                  </a>
+                )}
+                {vt.youtube && (
+                  <a href={vt.youtube} target="_blank" rel="noopener noreferrer" class="vt-link-btn" title="YouTube">
+                    🔴 YouTube
+                  </a>
+                )}
+                {vt.x && (
+                  <a href={vt.x} target="_blank" rel="noopener noreferrer" class="vt-link-btn" title="X (Twitter)">
+                    ✖️ X
+                  </a>
+                )}
+                {vt.dossier && (
+                  <a href={vt.dossier} class="vt-link-btn btn-dossier" data-pt="📁 Dossiê" data-en="📁 Dossier">
+                    📁 Dossiê
+                  </a>
+                )}
               </div>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- CARD DE CONVITE // ESTABELECER VÍNCULO -->
-    <section class="section">
-      <div class="hud-card join-network-card">
-        <div class="join-info">
-          <span class="join-tag" data-pt="EXPANSÃO DE MALHA" data-en="NETWORK EXPANSION">EXPANSÃO DE MALHA</span>
-          <h3 class="join-title" data-pt="É um VTuber ou Criador Virtual?" data-en="Are you a VTuber or Virtual Creator?">É um VTuber ou Criador Virtual?</h3>
-          <p class="join-desc" data-pt="Conecte seu canal ao hub Beyond Obvious para integrar collabs, subdomínios dedicados e campanhas compartilhadas." data-en="Link your channel to the Beyond Obvious hub to participate in collabs, dedicated subdomains, and shared campaigns.">
-            Conecte seu canal ao hub Beyond Obvious para integrar collabs, subdomínios dedicados e campanhas compartilhadas.
-          </p>
         </div>
-        <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-pt="⚡ SINCRONIZAR SINAL" data-en="⚡ SYNC SIGNAL">
-          ⚡ SINCRONIZAR SINAL
-        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- CARD DE CONVITE // ESTABELECER VÍNCULO -->
+  <section class="section">
+    <div class="hud-card join-network-card">
+      <div class="join-info">
+        <span class="join-tag" data-pt="EXPANSÃO DE MALHA" data-en="NETWORK EXPANSION">EXPANSÃO DE MALHA</span>
+        <h3 class="join-title" data-pt="É um VTuber ou Criador Virtual?" data-en="Are you a VTuber or Virtual Creator?">É um VTuber ou Criador Virtual?</h3>
+        <p class="join-desc" data-pt="Conecte seu canal ao hub Beyond Obvious para integrar collabs, subdomínios dedicados e campanhas compartilhadas." data-en="Link your channel to the Beyond Obvious hub to participate in collabs, dedicated subdomains, and shared campaigns.">
+          Conecte seu canal ao hub Beyond Obvious para integrar collabs, subdomínios dedicados e campanhas compartilhadas.
+        </p>
       </div>
-    </section>
+      <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-pt="⚡ SINCRONIZAR SINAL" data-en="⚡ SYNC SIGNAL">
+        ⚡ SINCRONIZAR SINAL
+      </a>
+    </div>
+  </section>
 
-  </main>
-
-  <!-- FOOTER MODULAR -->
-  <Footer />
-
-  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
-  <I18nScript />
-
-</body>
-</html>
+</Layout>
 
 <style>
-  :root {
-    --bg-canvas: #0B0C10;
-    --bg-surface: #16181D;
-    --accent-crimson: #E63946;
-    --accent-blue: #4CC9F0;
-    --accent-purple: #9D4EDD;
-    --accent-pink: #F72585;
-    --accent-gold: #F4A261;
-    --accent-green: #2A9D8F;
-    --text-primary: #E0E1DD;
-    --text-secondary: #8D99AE;
-  }
-
-  body {
-    margin: 0;
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-  }
-
-  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
   /* CABEÇALHO */
   .page-header {
     padding: 3rem 0 1.5rem;
-  }
-
-  .status-badge { 
-    display: inline-block; 
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem; 
-    letter-spacing: 1.5px;
-    color: var(--accent-blue); 
-    border: 1px solid rgba(76, 201, 240, 0.3); 
-    padding: 0.3rem 0.8rem; 
-    border-radius: 20px; 
-    margin-bottom: 0.8rem; 
   }
 
   .page-title { 
@@ -260,14 +197,6 @@ const vtubers = [
   /* SEÇÕES & CARDS */
   .section { padding: 1rem 0 0.5rem; }
 
-  .hud-card { 
-    background: var(--bg-surface); 
-    border: 1px solid rgba(224, 225, 221, 0.1); 
-    border-radius: 6px; 
-    padding: 1.5rem; 
-    position: relative;
-  }
-
   /* VTUBERS GRID */
   .vtubers-grid {
     display: flex;
@@ -277,11 +206,6 @@ const vtubers = [
 
   .vtuber-card {
     background: rgba(22, 24, 29, 0.9);
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-
-  .vtuber-card:hover {
-    transform: translateY(-2px);
   }
 
   .border-cyan { border-color: rgba(76, 201, 240, 0.3); }
@@ -289,16 +213,6 @@ const vtubers = [
   
   .border-purple { border-color: rgba(157, 78, 221, 0.3); }
   .border-purple:hover { border-color: var(--accent-purple); box-shadow: 0 0 16px rgba(157, 78, 221, 0.15); }
-
-  .crest-corner {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-  }
-  .crest-corner.top-left { top: -1px; left: -1px; border-top: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
-  .crest-corner.top-right { top: -1px; right: -1px; border-top: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
-  .crest-corner.bottom-left { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent-crimson); border-left: 2px solid var(--accent-crimson); }
-  .crest-corner.bottom-right { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent-crimson); border-right: 2px solid var(--accent-crimson); }
 
   .vtuber-layout {
     display: grid;
@@ -507,21 +421,6 @@ const vtubers = [
     margin: 0;
   }
 
-  .btn { 
-    display: inline-block; 
-    padding: 0.65rem 1.3rem; 
-    font-family: 'Rajdhani', sans-serif; 
-    font-weight: 700; 
-    text-decoration: none; 
-    border-radius: 4px; 
-    text-transform: uppercase; 
-    cursor: pointer; 
-    white-space: nowrap;
-  }
-
-  .btn-primary { background: var(--accent-crimson); color: white; border: none; }
-  .btn-primary:hover { background: #ff4d5a; box-shadow: 0 0 12px rgba(230,57,70,0.4); }
-
   @media (max-width: 768px) {
     .page-title { font-size: 1.8rem; }
     .vtuber-layout { grid-template-columns: 1fr; justify-items: center; text-align: center; }
@@ -529,6 +428,5 @@ const vtubers = [
     .vt-label { min-width: auto; }
     .vtuber-links { justify-content: center; }
     .join-network-card { flex-direction: column; align-items: flex-start; }
-    .btn { width: 100%; text-align: center; }
   }
 </style>

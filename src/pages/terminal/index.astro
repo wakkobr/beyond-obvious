@@ -2,9 +2,7 @@
 // src/pages/terminal/index.astro
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import I18nScript from '../../components/I18nScript.astro';
+import Layout from '../../layouts/Layout.astro';
 
 type TerminalPost = CollectionEntry<'terminal'>;
 
@@ -34,167 +32,106 @@ const uniqueCategories: string[] = Array.from(new Set<string>(rawCategories.filt
 const categories: string[] = ['TODOS', ...uniqueCategories];
 ---
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>TERMINAL DE MÍDIA // BEYOND OBVIOUS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-</head>
-<body>
+<Layout title="TERMINAL DE MÍDIA // BEYOND OBVIOUS" currentPage="terminal">
+  <!-- HEADER DO TERMINAL -->
+  <header class="terminal-header">
+    <div class="status-badge" data-pt="◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS" data-en="◈ CENTRAL ARCHIVE // MEDIA LOGS & ESSAYS">
+      ◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS
+    </div>
+    <h1 class="terminal-title">TERMINAL DE MÍDIA</h1>
+    <p class="terminal-sub" data-pt="Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos." data-en="Analyses, session logs, narrative essays, and mechanics breakdowns of fiction and games.">
+      Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos.
+    </p>
+    
+    <!-- FILTROS POR CATEGORIA DINÂMICOS -->
+    <div class="filter-bar">
+      {categories.map((cat: string, idx: number) => (
+        <button 
+          type="button" 
+          class={`filter-btn ${idx === 0 ? 'active' : ''}`} 
+          data-target={cat.toLowerCase().trim()}
+          data-pt={cat === 'TODOS' ? '[ TODOS ]' : cat}
+          data-en={cat === 'TODOS' ? '[ ALL ]' : cat}
+        >
+          {cat === 'TODOS' ? '[ TODOS ]' : cat}
+        </button>
+      ))}
+    </div>
+  </header>
 
-  <!-- HEADER MODULAR -->
-  <Header currentPage="terminal" />
-
-  <main class="container">
-    <!-- HEADER DO TERMINAL -->
-    <header class="terminal-header">
-      <div class="status-badge" data-pt="◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS" data-en="◈ CENTRAL ARCHIVE // MEDIA LOGS & ESSAYS">
-        ◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS
-      </div>
-      <h1 class="terminal-title">TERMINAL DE MÍDIA</h1>
-      <p class="terminal-sub" data-pt="Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos." data-en="Analyses, session logs, narrative essays, and mechanics breakdowns of fiction and games.">
-        Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos.
-      </p>
-      
-      <!-- FILTROS POR CATEGORIA DINÂMICOS -->
-      <div class="filter-bar">
-        {categories.map((cat: string, idx: number) => (
-          <button 
-            type="button" 
-            class={`filter-btn ${idx === 0 ? 'active' : ''}`} 
-            data-target={cat.toLowerCase().trim()}
-            data-pt={cat === 'TODOS' ? '[ TODOS ]' : cat}
-            data-en={cat === 'TODOS' ? '[ ALL ]' : cat}
+  <!-- LISTAGEM DE POSTS -->
+  <section class="posts-section">
+    <div class="posts-grid" id="posts-container">
+      {sortedPosts.length > 0 ? (
+        sortedPosts.map((post: ProcessedPost) => (
+          <article 
+            class="hud-card post-card" 
+            data-cat={String(post.data.category || '').toLowerCase().trim()}
           >
-            {cat === 'TODOS' ? '[ TODOS ]' : cat}
-          </button>
-        ))}
-      </div>
-    </header>
+            <div class="card-meta">
+              <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
+                {String(post.data.category || '').toUpperCase()}
+              </span>
+              {post.stars && (
+                <span class="star-rating">{post.stars}</span>
+              )}
+            </div>
+            
+            <h2 class="card-title">{post.data.title}</h2>
+            
+            <div class="post-date">
+              <code>◈ {post.formattedDate}</code>
+            </div>
 
-    <!-- LISTAGEM DE POSTS -->
-    <section class="posts-section">
-      <div class="posts-grid" id="posts-container">
-        {sortedPosts.length > 0 ? (
-          sortedPosts.map((post: ProcessedPost) => (
-            <article 
-              class="hud-card post-card" 
-              data-cat={String(post.data.category || '').toLowerCase().trim()}
-            >
-              <div class="card-meta">
-                <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
-                  {String(post.data.category || '').toUpperCase()}
-                </span>
-                {post.stars && (
-                  <span class="star-rating">{post.stars}</span>
-                )}
-              </div>
-              
-              <h2 class="card-title">{post.data.title}</h2>
-              
-              <div class="post-date">
-                <code>◈ {post.formattedDate}</code>
-              </div>
+            <p class="card-desc">
+              {post.data.summary}
+            </p>
+            
+            <div class="card-actions-terminal mt-3">
+              <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Acessar Registro Completo &rarr;" data-en="Access Full Log &rarr;">
+                Acessar Registro Completo &rarr;
+              </a>
+            </div>
+          </article>
+        ))
+      ) : (
+        <div class="hud-card empty-card">
+          <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
 
-              <p class="card-desc">
-                {post.data.summary}
-              </p>
-              
-              <div class="card-actions-terminal mt-3">
-                <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Acessar Registro Completo &rarr;" data-en="Access Full Log &rarr;">
-                  Acessar Registro Completo &rarr;
-                </a>
-              </div>
-            </article>
-          ))
-        ) : (
-          <div class="hud-card empty-card">
-            <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
-          </div>
-        )}
-      </div>
-    </section>
-  </main>
+<!-- SCRIPT DE FILTRAGEM -->
+<script is:inline>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.post-card');
 
-  <!-- FOOTER MODULAR -->
-  <Footer />
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
 
-  <!-- SCRIPT GLOBAL DE TRADUÇÃO -->
-  <I18nScript />
+      const target = (btn.getAttribute('data-target') || '').toLowerCase().trim();
 
-  <!-- SCRIPT DE FILTRAGEM -->
-  <script is:inline>
-    const buttons = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.post-card');
-
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        buttons.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const target = (btn.getAttribute('data-target') || '').toLowerCase().trim();
-
-        cards.forEach((card) => {
-          const itemCat = (card.getAttribute('data-cat') || '').toLowerCase().trim();
-          if (target === 'todos' || itemCat === target) {
-            card.classList.remove('is-hidden');
-          } else {
-            card.classList.add('is-hidden');
-          }
-        });
+      cards.forEach((card) => {
+        const itemCat = (card.getAttribute('data-cat') || '').toLowerCase().trim();
+        if (target === 'todos' || itemCat === target) {
+          card.classList.remove('is-hidden');
+        } else {
+          card.classList.add('is-hidden');
+        }
       });
     });
-  </script>
-
-</body>
-</html>
+  });
+</script>
 
 <style>
-  :root {
-    --bg-canvas: #0B0C10;
-    --bg-surface: #16181D;
-    --accent-crimson: #E63946;
-    --accent-blue: #4CC9F0;
-    --accent-purple: #9D4EDD;
-    --accent-pink: #F72585;
-    --accent-gold: #F4A261;
-    --accent-green: #2A9D8F;
-    --text-primary: #E0E1DD;
-    --text-secondary: #8D99AE;
-  }
-
-  body {
-    margin: 0;
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-  }
-
-  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
   .terminal-header {
     padding: 3rem 0 2rem;
     border-bottom: 1px solid rgba(224, 225, 221, 0.1);
     margin-bottom: 2.5rem;
-  }
-
-  .status-badge { 
-    display: inline-block; 
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem; 
-    letter-spacing: 1.5px;
-    color: var(--accent-blue); 
-    border: 1px solid rgba(76,201,240,0.3); 
-    padding: 0.3rem 0.8rem; 
-    border-radius: 20px; 
-    margin-bottom: 0.8rem; 
   }
 
   .terminal-title { 
@@ -259,18 +196,6 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
     display: none !important;
   }
 
-  .hud-card { 
-    background: var(--bg-surface); 
-    border: 1px solid rgba(224,225,221,0.1); 
-    border-radius: 6px; 
-    padding: 1.5rem; 
-    transition: border-color 0.2s ease, transform 0.2s ease;
-  }
-  .hud-card:hover { 
-    border-color: rgba(230,57,70,0.5); 
-    transform: translateY(-2px);
-  }
-
   .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.35rem; margin: 0.3rem 0 0.5rem; color: var(--text-primary); }
   .card-desc { color: var(--text-secondary); margin: 0 0 1rem; font-size: 0.95rem; line-height: 1.5; }
   .card-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.4rem; }
@@ -295,16 +220,12 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
   }
 
   .card-actions-terminal { display: flex; justify-content: flex-end; margin-top: auto; }
-  .btn-link { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: 'Rajdhani', sans-serif; }
-  .btn-link:hover { color: var(--accent-crimson); }
 
   .empty-card {
     grid-column: 1 / -1;
     text-align: center;
     padding: 3rem 1.5rem;
   }
-
-  .mt-3 { margin-top: 1rem; }
 
   @media (max-width: 768px) {
     .terminal-title { font-size: 2rem; }
