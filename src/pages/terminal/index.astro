@@ -3,6 +3,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { CATEGORIES, type CategoryId } from '../../data/grimorio';
 
 type TerminalPost = CollectionEntry<'terminal'>;
 
@@ -10,26 +11,45 @@ interface ProcessedPost extends TerminalPost {
   slug: string;
   stars: string;
   formattedDate: string;
+  categoryKey: CategoryId;
 }
 
 const posts = await getCollection('terminal');
 
 const sortedPosts: ProcessedPost[] = posts
   .sort((a: TerminalPost, b: TerminalPost) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-  .map((post: TerminalPost): ProcessedPost => ({
-    ...post,
-    slug: post.id.replace(/\.[^/.]+$/, ''),
-    stars: post.data.rating ? '★'.repeat(parseInt(post.data.rating, 10)) : '',
-    formattedDate: new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    }),
-  }));
+  .map((post: TerminalPost): ProcessedPost => {
+    const rawCat = String(post.data.category || '').toLowerCase().trim() as CategoryId;
+    const categoryKey: CategoryId = CATEGORIES[rawCat] ? rawCat : 'tech';
 
-const rawCategories: string[] = posts.map((p: TerminalPost) => String(p.data.category || '').toUpperCase().trim());
-const uniqueCategories: string[] = Array.from(new Set<string>(rawCategories.filter(Boolean)));
-const categories: string[] = ['TODOS', ...uniqueCategories];
+    return {
+      ...post,
+      slug: post.id.replace(/\.[^/.]+$/, ''),
+      stars: post.data.rating ? '★'.repeat(parseInt(post.data.rating, 10)) : '',
+      categoryKey,
+      formattedDate: new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }),
+    };
+  });
+
+// Dicionário de tradução para inglês das categorias do Terminal
+const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
+  ttrpg: { pt: 'TTRPG & WORLDBUILDING', en: 'TTRPG & WORLDBUILDING' },
+  gaming: { pt: 'GAMES & ESTRATÉGIA', en: 'GAMES & STRATEGY' },
+  boardgames: { pt: 'JOGOS DE TABULEIRO', en: 'BOARD GAMES' },
+  tech: { pt: 'DEV & DIGITAL ARCANUM', en: 'DEV & DIGITAL ARCANUM' },
+  stream: { pt: 'VTUBERS & TRANSMISSÃO', en: 'VTUBERS & BROADCAST' },
+  cinema: { pt: 'CINEMA, ANIME & SÉRIES', en: 'CINEMA, ANIME & SERIES' },
+  books: { pt: 'LEITURA & NARRATIVA', en: 'READING & NARRATIVE' },
+};
+
+// Filtra apenas as categorias que possuem pelo menos 1 post publicado
+const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((catKey) =>
+  sortedPosts.some((p) => p.categoryKey === catKey)
+);
 ---
 
 <Layout title="TERMINAL DE MÍDIA // BEYOND OBVIOUS" currentPage="terminal">
@@ -38,65 +58,99 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
     <div class="status-badge" data-pt="◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS" data-en="◈ CENTRAL ARCHIVE // MEDIA LOGS & ESSAYS">
       ◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS
     </div>
-    <h1 class="terminal-title">TERMINAL DE MÍDIA</h1>
+    <h1 class="terminal-title">// TERMINAL DE MÍDIA</h1>
     <p class="terminal-sub" data-pt="Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos." data-en="Analyses, session logs, narrative essays, and mechanics breakdowns of fiction and games.">
       Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos.
     </p>
-    
-    <!-- FILTROS POR CATEGORIA DINÂMICOS -->
-    <div class="filter-bar">
-      {categories.map((cat: string, idx: number) => (
-        <button 
-          type="button" 
-          class={`filter-btn ${idx === 0 ? 'active' : ''}`} 
-          data-target={cat.toLowerCase().trim()}
-          data-pt={cat === 'TODOS' ? '[ TODOS ]' : cat}
-          data-en={cat === 'TODOS' ? '[ ALL ]' : cat}
-        >
-          {cat === 'TODOS' ? '[ TODOS ]' : cat}
-        </button>
-      ))}
-    </div>
+
+    <!-- BARRA DE FILTROS ALINHADA AO GRIMÓRIO -->
+    <nav class="filter-bar" aria-label="Filtro de categorias do Terminal">
+      <button
+        type="button"
+        class="filter-btn active"
+        data-target="all"
+        data-pt={`[ TODOS (${sortedPosts.length}) ]`}
+        data-en={`[ ALL (${sortedPosts.length}) ]`}
+      >
+        <span class="btn-icon">◈</span>
+        <span class="filter-label">TODOS</span>
+        <span class="counter">({sortedPosts.length})</span>
+      </button>
+
+      {activeCategoryKeys.map((catKey) => {
+        const catInfo = CATEGORIES[catKey];
+        const count = sortedPosts.filter((p) => p.categoryKey === catKey).length;
+        const trans = CATEGORY_TRANSLATIONS[catKey] || { pt: catInfo.label, en: catInfo.label };
+        return (
+          <button
+            type="button"
+            class="filter-btn"
+            data-target={catKey}
+            data-pt={trans.pt}
+            data-en={trans.en}
+          >
+            <span class="btn-icon">{catInfo.icon}</span>
+            <span class="filter-label">{trans.pt}</span>
+            <span class="counter">({count})</span>
+          </button>
+        );
+      })}
+    </nav>
   </header>
 
   <!-- LISTAGEM DE POSTS -->
   <section class="posts-section">
     <div class="posts-grid" id="posts-container">
       {sortedPosts.length > 0 ? (
-        sortedPosts.map((post: ProcessedPost) => (
-          <article 
-            class="hud-card post-card" 
-            data-cat={String(post.data.category || '').toLowerCase().trim()}
-          >
-            <div class="card-meta">
-              <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
-                {String(post.data.category || '').toUpperCase()}
-              </span>
-              {post.stars && (
-                <span class="star-rating">{post.stars}</span>
-              )}
-            </div>
-            
-            <h2 class="card-title">{post.data.title}</h2>
-            
-            <div class="post-date">
-              <code>◈ {post.formattedDate}</code>
-            </div>
+        sortedPosts.map((post: ProcessedPost) => {
+          const catInfo = CATEGORIES[post.categoryKey];
+          const trans = CATEGORY_TRANSLATIONS[post.categoryKey] || { pt: catInfo.label, en: catInfo.label };
+          return (
+            <article
+              class="hud-card post-card"
+              data-cat={post.categoryKey}
+            >
+              <div class="crest-corner top-left"></div>
+              <div class="crest-corner top-right"></div>
+              <div class="crest-corner bottom-left"></div>
+              <div class="crest-corner bottom-right"></div>
 
-            <p class="card-desc">
-              {post.data.summary}
-            </p>
-            
-            <div class="card-actions-terminal mt-3">
-              <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Acessar Registro Completo &rarr;" data-en="Access Full Log &rarr;">
-                Acessar Registro Completo &rarr;
-              </a>
-            </div>
-          </article>
-        ))
+              <div class="card-meta">
+                <span
+                  class={`category-tag ${catInfo.badgeClass}`}
+                  data-pt={`${catInfo.icon} ${trans.pt}`}
+                  data-en={`${catInfo.icon} ${trans.en}`}
+                >
+                  {catInfo.icon} {trans.pt}
+                </span>
+                {post.stars && (
+                  <span class="star-rating">{post.stars}</span>
+                )}
+              </div>
+
+              <h2 class="card-title">{post.data.title}</h2>
+
+              <div class="post-date">
+                <code>◈ {post.formattedDate}</code>
+              </div>
+
+              <p class="card-desc">
+                {post.data.summary}
+              </p>
+
+              <div class="card-actions-terminal mt-3">
+                <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Acessar Registro Completo &rarr;" data-en="Access Full Log &rarr;">
+                  Acessar Registro Completo &rarr;
+                </a>
+              </div>
+            </article>
+          );
+        })
       ) : (
         <div class="hud-card empty-card">
-          <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
+          <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">
+            Nenhum registro encontrado no terminal.
+          </p>
         </div>
       )}
     </div>
@@ -113,11 +167,11 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
       buttons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
 
-      const target = (btn.getAttribute('data-target') || '').toLowerCase().trim();
+      const target = (btn.getAttribute('data-target') || 'all').toLowerCase().trim();
 
       cards.forEach((card) => {
         const itemCat = (card.getAttribute('data-cat') || '').toLowerCase().trim();
-        if (target === 'todos' || itemCat === target) {
+        if (target === 'all' || target === 'todos' || itemCat === target) {
           card.classList.remove('is-hidden');
         } else {
           card.classList.add('is-hidden');
@@ -134,92 +188,194 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
     margin-bottom: 2.5rem;
   }
 
-  .terminal-title { 
-    font-family: 'Orbitron', sans-serif; 
-    font-size: 2.6rem; 
-    margin: 0; 
-    color: var(--text-primary); 
-    letter-spacing: 2px; 
+  .status-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-blue, #4CC9F0);
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px solid rgba(76, 201, 240, 0.25);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
   }
 
-  .terminal-sub { 
-    color: var(--text-secondary); 
-    font-size: 1.1rem; 
-    margin: 0.6rem 0 1.5rem; 
+  .terminal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.6rem;
+    margin: 0;
+    color: var(--text-primary, #E0E1DD);
+    letter-spacing: 2px;
   }
 
+  .terminal-sub {
+    color: var(--text-secondary, #8D99AE);
+    font-size: 1.05rem;
+    margin: 0.6rem 0 1.5rem;
+    max-width: 800px;
+    line-height: 1.5;
+  }
+
+  /* BARRA DE FILTROS */
   .filter-bar {
     display: flex;
-    gap: 0.8rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
     margin-top: 1.5rem;
   }
 
   .filter-btn {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(22, 24, 29, 0.7);
     border: 1px solid rgba(224, 225, 221, 0.15);
-    color: var(--text-secondary);
+    color: var(--text-secondary, #8D99AE);
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
-    font-size: 0.9rem;
-    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 0.4rem 0.85rem;
     border-radius: 4px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     transition: all 0.2s ease;
   }
 
   .filter-btn:hover {
-    border-color: var(--accent-crimson);
-    color: var(--text-primary);
+    border-color: var(--accent-blue, #4CC9F0);
+    color: var(--text-primary, #E0E1DD);
+    background: rgba(76, 201, 240, 0.1);
   }
 
   .filter-btn.active {
-    background: var(--accent-crimson);
-    border-color: var(--accent-crimson);
+    background: var(--accent-crimson, #E63946);
+    border-color: var(--accent-crimson, #E63946);
     color: white;
     box-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
   }
 
-  .posts-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); 
-    gap: 1.5rem; 
+  .counter {
+    opacity: 0.7;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+  }
+
+  /* GRID DE POSTS */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
   }
 
   .post-card {
+    position: relative;
+    background: var(--bg-surface, #16181D);
+    border: 1px solid rgba(224, 225, 221, 0.1);
+    border-radius: 4px;
+    padding: 1.4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(76, 201, 240, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
   }
 
   .post-card.is-hidden {
     display: none !important;
   }
 
-  .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.35rem; margin: 0.3rem 0 0.5rem; color: var(--text-primary); }
-  .card-desc { color: var(--text-secondary); margin: 0 0 1rem; font-size: 0.95rem; line-height: 1.5; }
-  .card-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.4rem; }
-  
-  .category-tag { font-weight: 700; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; }
-  .cat-avian, .category-tag.cat-avian { color: #4CC9F0; }
-  .cat-rpg, .category-tag.cat-rpg { color: #9D4EDD; }
-  .cat-gaming, .category-tag.cat-gaming { color: #F72585; }
-  .cat-narrativas, .category-tag.cat-narrativas { color: #F4A261; }
-  .cat-nexus, .category-tag.cat-nexus { color: #2A9D8F; }
-  .cat-book, .category-tag.cat-book { color: #4CC9F0; }
-  .cat-cinema, .category-tag.cat-cinema { color: #F4A261; }
-  .cat-anime, .category-tag.cat-anime { color: #2A9D8F; }
+  .crest-corner {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-color: var(--accent-crimson, #E63946);
+    pointer-events: none;
+  }
 
-  .star-rating { color: #F4A261; letter-spacing: 2px; }
+  .top-left { top: 0; left: 0; border-top: 2px solid; border-left: 2px solid; }
+  .top-right { top: 0; right: 0; border-top: 2px solid; border-right: 2px solid; }
+  .bottom-left { bottom: 0; left: 0; border-bottom: 2px solid; border-left: 2px solid; }
+  .bottom-right { bottom: 0; right: 0; border-bottom: 2px solid; border-right: 2px solid; }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .category-tag {
+    font-weight: 700;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 0.78rem;
+  }
+
+  /* CORES DAS 7 CATEGORIAS UNIFICADAS */
+  .cat-ttrpg { color: var(--accent-purple, #9D4EDD); }
+  .cat-gaming { color: var(--accent-crimson, #E63946); }
+  .cat-boardgames { color: var(--accent-gold, #F4A261); }
+  .cat-tech { color: var(--accent-green, #2A9D8F); }
+  .cat-stream { color: var(--accent-blue, #4CC9F0); }
+  .cat-cinema { color: var(--accent-pink, #F72585); }
+  .cat-books { color: var(--text-primary, #E0E1DD); }
+
+  .star-rating {
+    color: var(--accent-gold, #F4A261);
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+  }
+
+  .card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    margin: 0.2rem 0 0.5rem;
+    color: var(--text-primary, #E0E1DD);
+    line-height: 1.3;
+  }
 
   .post-date {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #8D99AE);
     margin-bottom: 0.8rem;
   }
 
-  .card-actions-terminal { display: flex; justify-content: flex-end; margin-top: auto; }
+  .card-desc {
+    color: var(--text-secondary, #8D99AE);
+    margin: 0 0 1.2rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .card-actions-terminal {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    border-top: 1px solid rgba(224, 225, 221, 0.08);
+    padding-top: 0.8rem;
+  }
+
+  .btn-link {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--accent-blue, #4CC9F0);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-link:hover {
+    color: var(--accent-crimson, #E63946);
+    transform: translateX(3px);
+  }
 
   .empty-card {
     grid-column: 1 / -1;
@@ -229,5 +385,6 @@ const categories: string[] = ['TODOS', ...uniqueCategories];
 
   @media (max-width: 768px) {
     .terminal-title { font-size: 2rem; }
+    .posts-grid { grid-template-columns: 1fr; }
   }
 </style>

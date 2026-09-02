@@ -1,7 +1,7 @@
 ---
 title: "Crônicas de Mesa: Conduzindo Mundos Reativos no RPG"
 summary: "Diretrizes e técnicas narrativas para fazer com que as decisões dos jogadores causem impacto permanente no cenário."
-category: "rpg"
+category: ttrpg
 publishDate: 2026-08-12
 rating: "5"
 ---

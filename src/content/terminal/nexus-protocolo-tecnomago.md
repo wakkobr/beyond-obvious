@@ -1,7 +1,7 @@
 ---
 title: "Protocolo Nexus: A Origem do Hub Tecnomágico"
 summary: "Notas de frequência sobre a estação Beyond Obvious e a persona de transmissão do Tecnomago."
-category: "nexus"
+category: tech
 publishDate: 2026-08-16
 rating: "5"
 ---

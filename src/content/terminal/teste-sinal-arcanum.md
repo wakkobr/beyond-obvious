@@ -1,7 +1,7 @@
 ---
 title: "Transmissão Inicial: Protocolo Arcanum Ativo"
 publishDate: "2026-08-29"
-category: "ttrpg"
+category: stream
 rating: "5"
 summary: "Primeiro registro transmitido através da malha arcana do Nexus. Validação de metadados, imagens de capa e rotas do Terminal."
 coverImage: "/og-image.png"
