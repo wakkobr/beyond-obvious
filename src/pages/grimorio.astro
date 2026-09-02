@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import { CATEGORIES, GRIMORIO_ITEMS } from '../data/grimorio';
 
 const categoriesList = Object.values(CATEGORIES);
+const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
 ---
 
 <Layout
@@ -37,9 +38,15 @@ const categoriesList = Object.values(CATEGORIES);
       </div>
 
       <nav class="filter-bar" aria-label="Filtros por categoria">
-        <button class="filter-btn active" data-filter="all">
+        <!-- BOTÃO DESTAQUES ATIVO POR PADRÃO -->
+        <button class="filter-btn featured-filter active" data-filter="featured">
+          <span class="btn-icon">★</span> DESTAQUES <span class="counter">({featuredCount})</span>
+        </button>
+
+        <button class="filter-btn" data-filter="all">
           <span class="btn-icon">◈</span> TODOS <span class="counter">({GRIMORIO_ITEMS.length})</span>
         </button>
+
         {categoriesList.map((cat) => {
           const count = GRIMORIO_ITEMS.filter((item) => item.category === cat.id).length;
           return (
@@ -51,11 +58,11 @@ const categoriesList = Object.values(CATEGORIES);
       </nav>
 
       <div class="results-meta">
-        <span id="results-count">Exibindo {GRIMORIO_ITEMS.length} de {GRIMORIO_ITEMS.length} registros</span>
+        <span id="results-count">Exibindo {featuredCount} destaques de {GRIMORIO_ITEMS.length} registros</span>
       </div>
     </section>
 
-    <!-- GRID DE CARDS DO GRIMÓRIO -->
+    <!-- GRID DE CARDS -->
     <section class="links-grid" id="links-container">
       {GRIMORIO_ITEMS.map((item) => {
         const catInfo = CATEGORIES[item.category];
@@ -63,9 +70,11 @@ const categoriesList = Object.values(CATEGORIES);
           <article
             class="grimorio-card"
             data-category={item.category}
+            data-featured={item.isFeatured ? "true" : "false"}
             data-title={item.title.toLowerCase()}
             data-desc={item.description.toLowerCase()}
             data-badge={item.badge ? item.badge.toLowerCase() : ''}
+            style={item.isFeatured ? "display: flex;" : "display: none;"}
           >
             <div class="crest-corner top-left"></div>
             <div class="crest-corner top-right"></div>
@@ -115,7 +124,7 @@ const categoriesList = Object.values(CATEGORIES);
   const resultsCount = document.getElementById('results-count');
   const totalItems = cards.length;
 
-  let activeCategory = 'all';
+  let activeCategory = 'featured';
   let searchTerm = '';
 
   function applyFilters() {
@@ -123,11 +132,25 @@ const categoriesList = Object.values(CATEGORIES);
 
     cards.forEach((card) => {
       const cardCat = card.getAttribute('data-category') || '';
+      const isCardFeatured = card.getAttribute('data-featured') === 'true';
       const cardTitle = card.getAttribute('data-title') || '';
       const cardDesc = card.getAttribute('data-desc') || '';
       const cardBadge = card.getAttribute('data-badge') || '';
 
-      const matchesCat = activeCategory === 'all' || cardCat === activeCategory;
+      // Se estiver pesquisando por texto, ignora o filtro de destaque e pesquisa em tudo
+      let matchesCat = false;
+      if (searchTerm) {
+        matchesCat = activeCategory === 'all' || activeCategory === 'featured' || cardCat === activeCategory;
+      } else {
+        if (activeCategory === 'featured') {
+          matchesCat = isCardFeatured;
+        } else if (activeCategory === 'all') {
+          matchesCat = true;
+        } else {
+          matchesCat = cardCat === activeCategory;
+        }
+      }
+
       const matchesSearch =
         !searchTerm ||
         cardTitle.includes(searchTerm) ||
@@ -143,7 +166,11 @@ const categoriesList = Object.values(CATEGORIES);
     });
 
     if (resultsCount) {
-      resultsCount.textContent = `Exibindo ${visibleCount} de ${totalItems} registros`;
+      if (activeCategory === 'featured' && !searchTerm) {
+        resultsCount.textContent = `Exibindo ${visibleCount} destaques de ${totalItems} registros`;
+      } else {
+        resultsCount.textContent = `Exibindo ${visibleCount} de ${totalItems} registros`;
+      }
     }
 
     if (noResults) {
@@ -155,7 +182,7 @@ const categoriesList = Object.values(CATEGORIES);
     btn.addEventListener('click', () => {
       filterBtns.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      activeCategory = btn.getAttribute('data-filter') || 'all';
+      activeCategory = btn.getAttribute('data-filter') || 'featured';
       applyFilters();
     });
   });
@@ -291,6 +318,13 @@ const categoriesList = Object.values(CATEGORIES);
     border-color: var(--accent-crimson, #E63946);
     color: #fff;
     box-shadow: 0 0 8px rgba(230, 57, 70, 0.35);
+  }
+
+  .filter-btn.featured-filter.active {
+    background: var(--accent-gold, #F4A261);
+    border-color: var(--accent-gold, #F4A261);
+    color: #111;
+    box-shadow: 0 0 8px rgba(244, 162, 97, 0.35);
   }
 
   .counter {
