@@ -5,22 +5,39 @@ import { CATEGORIES, GRIMORIO_ITEMS } from '../data/grimorio';
 
 const categoriesList = Object.values(CATEGORIES);
 const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
+
+const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
+  ttrpg: { pt: 'TTRPG & WORLDBUILDING', en: 'TTRPG & WORLDBUILDING' },
+  gaming: { pt: 'GAMES & ESTRATÉGIA', en: 'GAMES & STRATEGY' },
+  boardgames: { pt: 'JOGOS DE TABULEIRO', en: 'BOARD GAMES' },
+  tech: { pt: 'DEV & DIGITAL ARCANUM', en: 'DEV & DIGITAL ARCANUM' },
+  stream: { pt: 'VTUBERS & TRANSMISSÃO', en: 'VTUBERS & BROADCAST' },
+  cinema: { pt: 'CINEMA, ANIME & SÉRIES', en: 'CINEMA, ANIME & SERIES' },
+  books: { pt: 'LEITURA & NARRATIVA', en: 'READING & NARRATIVE' },
+};
 ---
 
 <Layout
   title="GRIMÓRIO // REPERTÓRIO DE HIPERLINKS - BEYOND OBVIOUS"
-  description="Compêndio de frequências, ferramentas e artefatos catalogados pelo Operador @w4kkomancer_."
   currentPage="grimorio"
 >
   <div class="grimorio-container">
-    <!-- CABEÇALHO -->
+    <!-- CABEÇALHO DO GRIMÓRIO -->
     <header class="grimorio-header">
-      <div class="status-tag">
+      <div
+        class="status-tag"
+        data-pt="SYS_ARCHIVE // TOMO ARCANO ATIVO"
+        data-en="SYS_ARCHIVE // ACTIVE ARCANUM TOME"
+      >
         <span class="pulse-dot"></span>
-        <span>SYS_ARCHIVE // TOMO ARCANO ATIVO</span>
+        <span class="status-tag-text">SYS_ARCHIVE // TOMO ARCANO ATIVO</span>
       </div>
-      <h1 class="page-title">// GRIMÓRIO</h1>
-      <p class="page-subtitle">
+      <h1 class="page-title" data-pt="// GRIMÓRIO" data-en="// GRIMOIRE">// GRIMÓRIO</h1>
+      <p
+        class="page-subtitle"
+        data-pt="Compêndio de ferramentas, artefatos, repositórios e frequências homologadas pelo Operador."
+        data-en="Compendium of tools, artifacts, repositories, and frequencies approved by the Operator."
+      >
         Compêndio de ferramentas, artefatos, repositórios e frequências homologadas pelo Operador.
       </p>
     </header>
@@ -33,25 +50,51 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
           type="text"
           id="search-input"
           placeholder="Consultar grimório por nome, tecnologia, palavra-chave..."
+          data-placeholder-pt="Consultar grimório por nome, tecnologia, palavra-chave..."
+          data-placeholder-en="Search grimoire by name, technology, keyword..."
           autocomplete="off"
         />
       </div>
 
       <nav class="filter-bar" aria-label="Filtros por categoria">
-        <!-- BOTÃO DESTAQUES ATIVO POR PADRÃO -->
-        <button class="filter-btn featured-filter active" data-filter="featured">
-          <span class="btn-icon">★</span> DESTAQUES <span class="counter">({featuredCount})</span>
+        <!-- BOTÃO DESTAQUES -->
+        <button
+          class="filter-btn featured-filter active"
+          data-filter="featured"
+          data-pt="★ DESTAQUES"
+          data-en="★ FEATURED"
+        >
+          <span class="btn-icon">★</span>
+          <span class="filter-label">DESTAQUES</span>
+          <span class="counter">({featuredCount})</span>
         </button>
 
-        <button class="filter-btn" data-filter="all">
-          <span class="btn-icon">◈</span> TODOS <span class="counter">({GRIMORIO_ITEMS.length})</span>
+        <!-- BOTÃO TODOS -->
+        <button
+          class="filter-btn"
+          data-filter="all"
+          data-pt="◈ TODOS"
+          data-en="◈ ALL"
+        >
+          <span class="btn-icon">◈</span>
+          <span class="filter-label">TODOS</span>
+          <span class="counter">({GRIMORIO_ITEMS.length})</span>
         </button>
 
+        <!-- CATEGORIAS DINÂMICAS -->
         {categoriesList.map((cat) => {
           const count = GRIMORIO_ITEMS.filter((item) => item.category === cat.id).length;
+          const trans = CATEGORY_TRANSLATIONS[cat.id] || { pt: cat.label, en: cat.label };
           return (
-            <button class="filter-btn" data-filter={cat.id}>
-              <span class="btn-icon">{cat.icon}</span> {cat.label} <span class="counter">({count})</span>
+            <button
+              class="filter-btn"
+              data-filter={cat.id}
+              data-pt={trans.pt}
+              data-en={trans.en}
+            >
+              <span class="btn-icon">{cat.icon}</span>
+              <span class="filter-label">{trans.pt}</span>
+              <span class="counter">({count})</span>
             </button>
           );
         })}
@@ -62,10 +105,11 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
       </div>
     </section>
 
-    <!-- GRID DE CARDS -->
+    <!-- GRID DE CARDS DO GRIMÓRIO -->
     <section class="links-grid" id="links-container">
       {GRIMORIO_ITEMS.map((item) => {
         const catInfo = CATEGORIES[item.category];
+        const trans = CATEGORY_TRANSLATIONS[item.category] || { pt: catInfo.label, en: catInfo.label };
         return (
           <article
             class="grimorio-card"
@@ -82,11 +126,23 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
             <div class="crest-corner bottom-right"></div>
 
             <div class="card-meta">
-              <span class={`category-tag ${catInfo.badgeClass}`}>
-                {catInfo.icon} {catInfo.label}
+              <span
+                class={`category-tag ${catInfo.badgeClass}`}
+                data-pt={`${catInfo.icon} ${trans.pt}`}
+                data-en={`${catInfo.icon} ${trans.en}`}
+              >
+                {catInfo.icon} {trans.pt}
               </span>
               {item.badge && <span class="sub-badge">{item.badge}</span>}
-              {item.isFeatured && <span class="featured-badge">★ DESTAQUE</span>}
+              {item.isFeatured && (
+                <span
+                  class="featured-badge"
+                  data-pt="★ DESTAQUE"
+                  data-en="★ FEATURED"
+                >
+                  ★ DESTAQUE
+                </span>
+              )}
             </div>
 
             <h2 class="item-title">
@@ -110,8 +166,20 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
 
     <!-- ESTADO VAZIO -->
     <div id="no-results" class="no-results hidden">
-      <p class="error-code">404 // ARTEFATO NÃO ENCONTRADO</p>
-      <p>Nenhum registro correspondente à consulta no Grimório.</p>
+      <p
+        class="error-code"
+        data-pt="404 // ARTEFATO NÃO ENCONTRADO"
+        data-en="404 // ARTIFACT NOT FOUND"
+      >
+        404 // ARTEFATO NÃO ENCONTRADO
+      </p>
+      <p
+        class="error-desc"
+        data-pt="Nenhum registro correspondente à consulta no Grimório."
+        data-en="No matching records found for the queried frequency in the Grimoire."
+      >
+        Nenhum registro correspondente à consulta no Grimório.
+      </p>
     </div>
   </div>
 </Layout>
@@ -122,10 +190,43 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
   const cards = document.querySelectorAll<HTMLElement>('.grimorio-card');
   const noResults = document.getElementById('no-results');
   const resultsCount = document.getElementById('results-count');
+  const langToggleBtn = document.getElementById('lang-toggle');
   const totalItems = cards.length;
 
   let activeCategory = 'featured';
   let searchTerm = '';
+
+  function getCurrentLang(): 'pt' | 'en' {
+    return langToggleBtn?.textContent?.trim().toUpperCase() === 'PT' ? 'en' : 'pt';
+  }
+
+  function updateResultsCounter(visibleCount: number) {
+    if (!resultsCount) return;
+    const lang = getCurrentLang();
+
+    if (lang === 'en') {
+      if (activeCategory === 'featured' && !searchTerm) {
+        resultsCount.textContent = `Showing ${visibleCount} featured items of ${totalItems} records`;
+      } else {
+        resultsCount.textContent = `Showing ${visibleCount} of ${totalItems} records`;
+      }
+    } else {
+      if (activeCategory === 'featured' && !searchTerm) {
+        resultsCount.textContent = `Exibindo ${visibleCount} destaques de ${totalItems} registros`;
+      } else {
+        resultsCount.textContent = `Exibindo ${visibleCount} de ${totalItems} registros`;
+      }
+    }
+  }
+
+  function updateInputPlaceholder() {
+    if (!searchInput) return;
+    const lang = getCurrentLang();
+    const ph = lang === 'en'
+      ? searchInput.getAttribute('data-placeholder-en')
+      : searchInput.getAttribute('data-placeholder-pt');
+    if (ph) searchInput.placeholder = ph;
+  }
 
   function applyFilters() {
     let visibleCount = 0;
@@ -137,7 +238,6 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
       const cardDesc = card.getAttribute('data-desc') || '';
       const cardBadge = card.getAttribute('data-badge') || '';
 
-      // Se estiver pesquisando por texto, ignora o filtro de destaque e pesquisa em tudo
       let matchesCat = false;
       if (searchTerm) {
         matchesCat = activeCategory === 'all' || activeCategory === 'featured' || cardCat === activeCategory;
@@ -165,13 +265,7 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
       }
     });
 
-    if (resultsCount) {
-      if (activeCategory === 'featured' && !searchTerm) {
-        resultsCount.textContent = `Exibindo ${visibleCount} destaques de ${totalItems} registros`;
-      } else {
-        resultsCount.textContent = `Exibindo ${visibleCount} de ${totalItems} registros`;
-      }
-    }
+    updateResultsCounter(visibleCount);
 
     if (noResults) {
       noResults.classList.toggle('hidden', visibleCount > 0);
@@ -190,6 +284,14 @@ const featuredCount = GRIMORIO_ITEMS.filter((item) => item.isFeatured).length;
   searchInput?.addEventListener('input', (e) => {
     searchTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
     applyFilters();
+  });
+
+  // Atualiza os contadores dinâmicos e o placeholder quando o idioma for alternado no Header
+  langToggleBtn?.addEventListener('click', () => {
+    setTimeout(() => {
+      applyFilters();
+      updateInputPlaceholder();
+    }, 50);
   });
 </script>
 
