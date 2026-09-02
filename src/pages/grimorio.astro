@@ -1,7 +1,7 @@
 ---
 // src/pages/grimorio.astro
 import Layout from '../layouts/Layout.astro';
-import { CATEGORIES, GRIMORIO_ITEMS, type CategoryId } from '../data/grimorio';
+import { CATEGORIES, GRIMORIO_ITEMS } from '../data/grimorio';
 
 const categoriesList = Object.values(CATEGORIES);
 ---
@@ -12,7 +12,7 @@ const categoriesList = Object.values(CATEGORIES);
   currentPage="grimorio"
 >
   <div class="grimorio-container">
-    <!-- CABEÇALHO DA SEÇÃO -->
+    <!-- CABEÇALHO -->
     <header class="grimorio-header">
       <div class="status-tag">
         <span class="pulse-dot"></span>
@@ -20,18 +20,18 @@ const categoriesList = Object.values(CATEGORIES);
       </div>
       <h1 class="page-title">// GRIMÓRIO</h1>
       <p class="page-subtitle">
-        Compêndio de artefatos, hiperlinks e ferramentas homologadas pelo Operador para desbravar a malha arcano-digital.
+        Compêndio de ferramentas, artefatos, repositórios e frequências homologadas pelo Operador.
       </p>
     </header>
 
-    <!-- BARRA DE CONTROLE: PESQUISA E FILTROS -->
+    <!-- PAINEL DE CONTROLE: PESQUISA E FILTROS -->
     <section class="control-panel">
       <div class="search-wrapper">
         <span class="search-icon">🔍</span>
         <input
           type="text"
           id="search-input"
-          placeholder="Consultar grimório por nome, palavra-chave ou resumo..."
+          placeholder="Consultar grimório por nome, tecnologia, palavra-chave..."
           autocomplete="off"
         />
       </div>
@@ -49,9 +49,13 @@ const categoriesList = Object.values(CATEGORIES);
           );
         })}
       </nav>
+
+      <div class="results-meta">
+        <span id="results-count">Exibindo {GRIMORIO_ITEMS.length} de {GRIMORIO_ITEMS.length} registros</span>
+      </div>
     </section>
 
-    <!-- GRID DE ITENS DO GRIMÓRIO -->
+    <!-- GRID DE CARDS DO GRIMÓRIO -->
     <section class="links-grid" id="links-container">
       {GRIMORIO_ITEMS.map((item) => {
         const catInfo = CATEGORIES[item.category];
@@ -61,8 +65,8 @@ const categoriesList = Object.values(CATEGORIES);
             data-category={item.category}
             data-title={item.title.toLowerCase()}
             data-desc={item.description.toLowerCase()}
+            data-badge={item.badge ? item.badge.toLowerCase() : ''}
           >
-            <div class="card-glow"></div>
             <div class="crest-corner top-left"></div>
             <div class="crest-corner top-right"></div>
             <div class="crest-corner bottom-left"></div>
@@ -78,7 +82,8 @@ const categoriesList = Object.values(CATEGORIES);
 
             <h2 class="item-title">
               <a href={item.url} target="_blank" rel="noopener noreferrer">
-                {item.title} <span class="arrow-glyph">&nearr;</span>
+                <span>{item.title}</span>
+                <span class="arrow-glyph">&nearr;</span>
               </a>
             </h2>
 
@@ -94,20 +99,21 @@ const categoriesList = Object.values(CATEGORIES);
       })}
     </section>
 
-    <!-- FEEDBACK DE NENHUM RESULTADO -->
+    <!-- ESTADO VAZIO -->
     <div id="no-results" class="no-results hidden">
       <p class="error-code">404 // ARTEFATO NÃO ENCONTRADO</p>
-      <p>Nenhum registro correspondente à frequência consultada no Grimório.</p>
+      <p>Nenhum registro correspondente à consulta no Grimório.</p>
     </div>
   </div>
 </Layout>
 
 <script>
-  // SCRIPT DE BUSCA E FILTROS DINÂMICOS
   const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
   const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
   const cards = document.querySelectorAll<HTMLElement>('.grimorio-card');
   const noResults = document.getElementById('no-results');
+  const resultsCount = document.getElementById('results-count');
+  const totalItems = cards.length;
 
   let activeCategory = 'all';
   let searchTerm = '';
@@ -119,9 +125,14 @@ const categoriesList = Object.values(CATEGORIES);
       const cardCat = card.getAttribute('data-category') || '';
       const cardTitle = card.getAttribute('data-title') || '';
       const cardDesc = card.getAttribute('data-desc') || '';
+      const cardBadge = card.getAttribute('data-badge') || '';
 
       const matchesCat = activeCategory === 'all' || cardCat === activeCategory;
-      const matchesSearch = !searchTerm || cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm);
+      const matchesSearch =
+        !searchTerm ||
+        cardTitle.includes(searchTerm) ||
+        cardDesc.includes(searchTerm) ||
+        cardBadge.includes(searchTerm);
 
       if (matchesCat && matchesSearch) {
         card.style.display = 'flex';
@@ -130,6 +141,10 @@ const categoriesList = Object.values(CATEGORIES);
         card.style.display = 'none';
       }
     });
+
+    if (resultsCount) {
+      resultsCount.textContent = `Exibindo ${visibleCount} de ${totalItems} registros`;
+    }
 
     if (noResults) {
       noResults.classList.toggle('hidden', visibleCount > 0);
@@ -168,7 +183,7 @@ const categoriesList = Object.values(CATEGORIES);
     gap: 0.5rem;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
-    color: var(--accent-blue);
+    color: var(--accent-blue, #4CC9F0);
     background: rgba(76, 201, 240, 0.08);
     border: 1px solid rgba(76, 201, 240, 0.25);
     padding: 0.2rem 0.5rem;
@@ -179,21 +194,21 @@ const categoriesList = Object.values(CATEGORIES);
   .pulse-dot {
     width: 5px;
     height: 5px;
-    background-color: var(--accent-blue);
+    background-color: var(--accent-blue, #4CC9F0);
     border-radius: 50%;
-    box-shadow: 0 0 6px var(--accent-blue);
+    box-shadow: 0 0 6px var(--accent-blue, #4CC9F0);
   }
 
   .page-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 2.1rem;
-    color: var(--text-primary);
+    color: var(--text-primary, #E0E1DD);
     margin: 0 0 0.4rem;
     letter-spacing: 1.5px;
   }
 
   .page-subtitle {
-    color: var(--text-secondary);
+    color: var(--text-secondary, #8D99AE);
     font-size: 0.95rem;
     max-width: 700px;
     line-height: 1.5;
@@ -202,10 +217,10 @@ const categoriesList = Object.values(CATEGORIES);
 
   /* BARRA DE CONTROLE */
   .control-panel {
-    margin-bottom: 2rem;
+    margin-bottom: 1.8rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.9rem;
   }
 
   .search-wrapper {
@@ -228,7 +243,7 @@ const categoriesList = Object.values(CATEGORIES);
     background: rgba(11, 12, 16, 0.85);
     border: 1px solid rgba(224, 225, 221, 0.15);
     border-radius: 4px;
-    color: var(--text-primary);
+    color: var(--text-primary, #E0E1DD);
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.95rem;
     font-weight: 500;
@@ -237,7 +252,7 @@ const categoriesList = Object.values(CATEGORIES);
 
   #search-input:focus {
     outline: none;
-    border-color: var(--accent-blue);
+    border-color: var(--accent-blue, #4CC9F0);
     box-shadow: 0 0 10px rgba(76, 201, 240, 0.25);
   }
 
@@ -251,7 +266,7 @@ const categoriesList = Object.values(CATEGORIES);
   .filter-btn {
     background: rgba(22, 24, 29, 0.7);
     border: 1px solid rgba(224, 225, 221, 0.1);
-    color: var(--text-secondary);
+    color: var(--text-secondary, #8D99AE);
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.8rem;
     font-weight: 700;
@@ -266,14 +281,14 @@ const categoriesList = Object.values(CATEGORIES);
   }
 
   .filter-btn:hover {
-    border-color: var(--accent-blue);
-    color: var(--text-primary);
+    border-color: var(--accent-blue, #4CC9F0);
+    color: var(--text-primary, #E0E1DD);
     background: rgba(76, 201, 240, 0.1);
   }
 
   .filter-btn.active {
-    background: var(--accent-crimson);
-    border-color: var(--accent-crimson);
+    background: var(--accent-crimson, #E63946);
+    border-color: var(--accent-crimson, #E63946);
     color: #fff;
     box-shadow: 0 0 8px rgba(230, 57, 70, 0.35);
   }
@@ -284,10 +299,17 @@ const categoriesList = Object.values(CATEGORIES);
     font-size: 0.7rem;
   }
 
-  /* GRID COMPACTO DE CARDS */
+  .results-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary, #8D99AE);
+    padding-left: 0.2rem;
+  }
+
+  /* GRID DE CARDS */
   .links-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1rem;
   }
 
@@ -300,7 +322,7 @@ const categoriesList = Object.values(CATEGORIES);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 155px;
+    min-height: 150px;
     transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
@@ -314,7 +336,7 @@ const categoriesList = Object.values(CATEGORIES);
     position: absolute;
     width: 6px;
     height: 6px;
-    border-color: var(--accent-crimson);
+    border-color: var(--accent-crimson, #E63946);
     pointer-events: none;
   }
 
@@ -353,7 +375,7 @@ const categoriesList = Object.values(CATEGORIES);
     font-size: 0.65rem;
     padding: 0.1rem 0.35rem;
     border-radius: 2px;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #8D99AE);
   }
 
   .featured-badge {
@@ -371,7 +393,7 @@ const categoriesList = Object.values(CATEGORIES);
   }
 
   .item-title a {
-    color: var(--text-primary);
+    color: var(--text-primary, #E0E1DD);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -380,22 +402,22 @@ const categoriesList = Object.values(CATEGORIES);
   }
 
   .arrow-glyph {
-    color: var(--accent-blue);
+    color: var(--accent-blue, #4CC9F0);
     font-size: 0.95rem;
     transition: transform 0.2s ease;
   }
 
   .item-title a:hover {
-    color: var(--accent-blue);
+    color: var(--accent-blue, #4CC9F0);
   }
 
   .item-title a:hover .arrow-glyph {
     transform: translate(2px, -2px);
-    color: var(--accent-crimson);
+    color: var(--accent-crimson, #E63946);
   }
 
   .item-desc {
-    color: var(--text-secondary);
+    color: var(--text-secondary, #8D99AE);
     font-size: 0.85rem;
     line-height: 1.4;
     margin: 0 0 0.8rem;
@@ -423,20 +445,20 @@ const categoriesList = Object.values(CATEGORIES);
   }
 
   .link-url:hover {
-    color: var(--accent-blue);
+    color: var(--accent-blue, #4CC9F0);
     text-decoration: underline;
   }
 
   .no-results {
     text-align: center;
-    padding: 3rem 1rem;
-    color: var(--text-secondary);
+    padding: 3.5rem 1rem;
+    color: var(--text-secondary, #8D99AE);
   }
 
   .no-results .error-code {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
-    color: var(--accent-crimson);
+    color: var(--accent-crimson, #E63946);
     margin-bottom: 0.4rem;
   }
 
