@@ -26,6 +26,7 @@ const { currentPage = "" } = Astro.props;
     <div id="nav-menu" class="nav-links">
       <a href="/#stream" class={currentPage === "streams" ? "active" : ""} data-pt="Transmissões" data-en="Streams">Transmissões</a>
       <a href="/terminal" class={currentPage === "terminal" ? "active" : ""} data-pt="Terminal" data-en="Terminal">Terminal</a>
+      <a href="/grimorio" class={currentPage === "grimorio" ? "active" : ""} data-pt="Grimório" data-en="Grimoire">Grimório</a>
       <a href="/vtubers" class={currentPage === "vtubers" ? "active" : ""} data-pt="VTubers" data-en="VTubers">VTubers</a>
       <a href="/dossier" class={currentPage === "dossier" ? "active" : ""} data-pt="Dossiê" data-en="Dossier">Dossiê</a>
       <a href="/about" class={currentPage === "about" ? "active" : ""} data-pt="Sobre" data-en="About">Sobre</a>
@@ -79,7 +80,7 @@ const { currentPage = "" } = Astro.props;
   }
   
   .nav-brand { display: flex; align-items: center; text-decoration: none; }
-  .nav-links { display: flex; gap: 1.4rem; align-items: center; }
+  .nav-links { display: flex; gap: 1.2rem; align-items: center; }
 
   .nav-links a { 
     color: var(--text-secondary, #8D99AE); 

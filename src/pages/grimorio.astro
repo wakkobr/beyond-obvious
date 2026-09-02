@@ -1,0 +1,443 @@
+---
+// src/pages/grimorio.astro
+import Layout from '../layouts/Layout.astro';
+import { CATEGORIES, GRIMORIO_ITEMS, type CategoryId } from '../data/grimorio';
+
+const categoriesList = Object.values(CATEGORIES);
+---
+
+<Layout
+  title="GRIMÓRIO // REPERTÓRIO DE HIPERLINKS - BEYOND OBVIOUS"
+  description="Compêndio de frequências, ferramentas e artefatos catalogados pelo Operador @w4kkomancer_."
+  currentPage="grimorio"
+>
+  <div class="grimorio-container">
+    <!-- CABEÇALHO DA SEÇÃO -->
+    <header class="grimorio-header">
+      <div class="status-tag">
+        <span class="pulse-dot"></span>
+        <span>SYS_ARCHIVE // TOMO ARCANO ATIVO</span>
+      </div>
+      <h1 class="page-title">// GRIMÓRIO</h1>
+      <p class="page-subtitle">
+        Compêndio de artefatos, hiperlinks e ferramentas homologadas pelo Operador para desbravar a malha arcano-digital.
+      </p>
+    </header>
+
+    <!-- BARRA DE CONTROLE: PESQUISA E FILTROS -->
+    <section class="control-panel">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Consultar grimório por nome, palavra-chave ou resumo..."
+          autocomplete="off"
+        />
+      </div>
+
+      <nav class="filter-bar" aria-label="Filtros por categoria">
+        <button class="filter-btn active" data-filter="all">
+          <span class="btn-icon">◈</span> TODOS <span class="counter">({GRIMORIO_ITEMS.length})</span>
+        </button>
+        {categoriesList.map((cat) => {
+          const count = GRIMORIO_ITEMS.filter((item) => item.category === cat.id).length;
+          return (
+            <button class="filter-btn" data-filter={cat.id}>
+              <span class="btn-icon">{cat.icon}</span> {cat.label} <span class="counter">({count})</span>
+            </button>
+          );
+        })}
+      </nav>
+    </section>
+
+    <!-- GRID DE ITENS DO GRIMÓRIO -->
+    <section class="links-grid" id="links-container">
+      {GRIMORIO_ITEMS.map((item) => {
+        const catInfo = CATEGORIES[item.category];
+        return (
+          <article
+            class="grimorio-card"
+            data-category={item.category}
+            data-title={item.title.toLowerCase()}
+            data-desc={item.description.toLowerCase()}
+          >
+            <div class="card-glow"></div>
+            <div class="crest-corner top-left"></div>
+            <div class="crest-corner top-right"></div>
+            <div class="crest-corner bottom-left"></div>
+            <div class="crest-corner bottom-right"></div>
+
+            <div class="card-meta">
+              <span class={`category-tag ${catInfo.badgeClass}`}>
+                {catInfo.icon} {catInfo.label}
+              </span>
+              {item.badge && <span class="sub-badge">{item.badge}</span>}
+              {item.isFeatured && <span class="featured-badge">★ DESTAQUE</span>}
+            </div>
+
+            <h2 class="item-title">
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                {item.title} <span class="arrow-glyph">&nearr;</span>
+              </a>
+            </h2>
+
+            <p class="item-desc">{item.description}</p>
+
+            <footer class="card-footer">
+              <a href={item.url} target="_blank" rel="noopener noreferrer" class="link-url">
+                {item.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+              </a>
+            </footer>
+          </article>
+        );
+      })}
+    </section>
+
+    <!-- FEEDBACK DE NENHUM RESULTADO -->
+    <div id="no-results" class="no-results hidden">
+      <p class="error-code">404 // ARTEFATO NÃO ENCONTRADO</p>
+      <p>Nenhum registro correspondente à frequência consultada no Grimório.</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // SCRIPT DE BUSCA E FILTROS DINÂMICOS
+  const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.grimorio-card');
+  const noResults = document.getElementById('no-results');
+
+  let activeCategory = 'all';
+  let searchTerm = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const cardCat = card.getAttribute('data-category') || '';
+      const cardTitle = card.getAttribute('data-title') || '';
+      const cardDesc = card.getAttribute('data-desc') || '';
+
+      const matchesCat = activeCategory === 'all' || cardCat === activeCategory;
+      const matchesSearch = !searchTerm || cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm);
+
+      if (matchesCat && matchesSearch) {
+        card.style.display = 'flex';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (noResults) {
+      noResults.classList.toggle('hidden', visibleCount > 0);
+    }
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.getAttribute('data-filter') || 'all';
+      applyFilters();
+    });
+  });
+
+  searchInput?.addEventListener('input', (e) => {
+    searchTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    applyFilters();
+  });
+</script>
+
+<style>
+  .grimorio-container {
+    padding: 2rem 0 4rem;
+  }
+
+  .grimorio-header {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
+    padding-bottom: 1.5rem;
+  }
+
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px solid rgba(76, 201, 240, 0.3);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-blue);
+  }
+
+  .page-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem;
+    letter-spacing: 2px;
+  }
+
+  .page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 720px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* BARRA DE CONTROLE */
+  .control-panel {
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    opacity: 0.6;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 2.8rem;
+    background: rgba(11, 12, 16, 0.85);
+    border: 1px solid rgba(224, 225, 221, 0.15);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  #search-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 12px rgba(76, 201, 240, 0.3);
+  }
+
+  /* FILTROS */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .filter-btn {
+    background: rgba(22, 24, 29, 0.7);
+    border: 1px solid rgba(224, 225, 221, 0.12);
+    color: var(--text-secondary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    background: rgba(76, 201, 240, 0.1);
+  }
+
+  .filter-btn.active {
+    background: var(--accent-crimson);
+    border-color: var(--accent-crimson);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
+  }
+
+  .counter {
+    opacity: 0.7;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+  }
+
+  /* GRID DE CARDS */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .grimorio-card {
+    background: var(--bg-surface, #16181D);
+    border: 1px solid rgba(224, 225, 221, 0.12);
+    border-radius: 6px;
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .grimorio-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(76, 201, 240, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .crest-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: var(--accent-crimson);
+    pointer-events: none;
+  }
+
+  .top-left { top: 0; left: 0; border-top: 2px solid; border-left: 2px solid; }
+  .top-right { top: 0; right: 0; border-top: 2px solid; border-right: 2px solid; }
+  .bottom-left { bottom: 0; left: 0; border-bottom: 2px solid; border-left: 2px solid; }
+  .bottom-right { bottom: 0; right: 0; border-bottom: 2px solid; border-right: 2px solid; }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .category-tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+  }
+
+  .cat-ttrpg { color: var(--accent-purple, #9D4EDD); }
+  .cat-gaming { color: var(--accent-crimson, #E63946); }
+  .cat-boardgames { color: var(--accent-gold, #F4A261); }
+  .cat-tech { color: var(--accent-green, #2A9D8F); }
+  .cat-stream { color: var(--accent-blue, #4CC9F0); }
+  .cat-cinema { color: var(--accent-pink, #F72585); }
+  .cat-books { color: var(--text-primary, #E0E1DD); }
+
+  .sub-badge {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    color: var(--text-secondary);
+  }
+
+  .featured-badge {
+    color: var(--accent-gold, #F4A261);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .item-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .item-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s ease;
+  }
+
+  .arrow-glyph {
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .item-title a:hover {
+    color: var(--accent-blue);
+  }
+
+  .item-title a:hover .arrow-glyph {
+    transform: translate(2px, -2px);
+    color: var(--accent-crimson);
+  }
+
+  .item-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 1.2rem;
+    flex-grow: 1;
+  }
+
+  .card-footer {
+    border-top: 1px solid rgba(224, 225, 221, 0.08);
+    padding-top: 0.8rem;
+  }
+
+  .link-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: rgba(76, 201, 240, 0.7);
+    text-decoration: none;
+    word-break: break-all;
+    transition: color 0.2s ease;
+  }
+
+  .link-url:hover {
+    color: var(--accent-blue);
+    text-decoration: underline;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-secondary);
+  }
+
+  .no-results .error-code {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: var(--accent-crimson);
+    margin-bottom: 0.5rem;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 768px) {
+    .page-title { font-size: 2rem; }
+    .links-grid { grid-template-columns: 1fr; }
+  }
+</style>
