@@ -5,23 +5,31 @@ import type { CollectionEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Logo from '../components/Logo.astro';
 import TwitchStatus from '../components/TwitchStatus.astro';
+import { CATEGORIES, type CategoryId } from '../data/grimorio';
 
 type TerminalPost = CollectionEntry<'terminal'>;
 
 interface ProcessedPost extends TerminalPost {
   slug: string;
   stars: string;
+  categoryKey: CategoryId;
 }
 
 const posts = await getCollection('terminal');
 
 const sortedPosts: ProcessedPost[] = posts
   .sort((a: TerminalPost, b: TerminalPost) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-  .map((post: TerminalPost): ProcessedPost => ({
-    ...post,
-    slug: post.id.replace(/\.[^/.]+$/, ''),
-    stars: post.data.rating ? '★'.repeat(parseInt(post.data.rating, 10)) : '',
-  }));
+  .map((post: TerminalPost): ProcessedPost => {
+    const rawCat = String(post.data.category || '').toLowerCase().trim() as CategoryId;
+    const categoryKey: CategoryId = CATEGORIES[rawCat] ? rawCat : 'tech';
+
+    return {
+      ...post,
+      slug: post.id.replace(/\.[^/.]+$/, ''),
+      stars: post.data.rating ? '★'.repeat(parseInt(post.data.rating, 10)) : '',
+      categoryKey,
+    };
+  });
 ---
 
 <Layout title="BEYOND OBVIOUS // @w4kkomancer_" currentPage="home">
@@ -86,30 +94,33 @@ const sortedPosts: ProcessedPost[] = posts
     </div>
 
     <div class="posts-grid">
-      {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => (
-        <div class="hud-card">
-          <div class="card-meta">
-            <span class={`category-tag cat-${String(post.data.category || '').toLowerCase().trim()}`}>
-              {String(post.data.category || '').toUpperCase()}
-            </span>
-            {post.stars && (
-              <span class="star-rating">
-                {post.stars}
+      {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => {
+        const catInfo = CATEGORIES[post.categoryKey];
+        return (
+          <div class="hud-card">
+            <div class="card-meta">
+              <span class={`category-tag ${catInfo.badgeClass}`}>
+                {catInfo.icon} {post.categoryKey.toUpperCase()}
               </span>
-            )}
+              {post.stars && (
+                <span class="star-rating">
+                  {post.stars}
+                </span>
+              )}
+            </div>
+            <h3 class="card-title">{post.data.title}</h3>
+            <p class="card-desc">
+              {post.data.summary}
+            </p>
+            
+            <div class="card-actions-terminal mt-3">
+              <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Ler Registro Completo &rarr;" data-en="Read Full Log &rarr;">
+                Ler Registro Completo &rarr;
+              </a>
+            </div>
           </div>
-          <h3 class="card-title">{post.data.title}</h3>
-          <p class="card-desc">
-            {post.data.summary}
-          </p>
-          
-          <div class="card-actions-terminal mt-3">
-            <a href={`/terminal/${post.slug}`} class="btn-link" data-pt="Ler Registro Completo &rarr;" data-en="Read Full Log &rarr;">
-              Ler Registro Completo &rarr;
-            </a>
-          </div>
-        </div>
-      )) : (
+        );
+      }) : (
         <div class="hud-card">
           <p class="card-desc" data-pt="Nenhum registro encontrado no terminal." data-en="No records found in terminal.">Nenhum registro encontrado no terminal.</p>
         </div>
@@ -117,16 +128,16 @@ const sortedPosts: ProcessedPost[] = posts
     </div>
   </section>
 
-  <!-- 03 // REDE DE VTUBERS & OPERADORES -->
-  <section id="vtubers" class="section">
+  <!-- 03 // REDE DE AVATARES & OPERADORES -->
+  <section id="avatares" class="section">
     <div class="section-title-wrapper">
-      <h2 class="section-title">03 // <span data-pt="OPERADORES // REDE DE VTUBERS" data-en="OPERATORS // VTUBER NETWORK">OPERADORES // REDE DE VTUBERS</span></h2>
-      <a href="/vtubers" class="view-all-link" data-pt="Acessar Diretório &rarr;" data-en="Access Directory &rarr;">Acessar Diretório &rarr;</a>
+      <h2 class="section-title">03 // <span data-pt="OPERADORES // REDE DE AVATARES" data-en="OPERATORS // AVATAR NETWORK">OPERADORES // REDE DE AVATARES</span></h2>
+      <a href="/avatares" class="view-all-link" data-pt="Acessar Diretório &rarr;" data-en="Access Directory &rarr;">Acessar Diretório &rarr;</a>
     </div>
 
     <div class="hud-card vtuber-hub-preview">
-      <p class="card-desc mb-4" data-pt="O Beyond Obvious é um hub de retransmissão e acolhimento para avatares virtuais e VTubers independentes conectados à malha arcano-digital." data-en="Beyond Obvious is a relay and convergence node for virtual avatars and independent VTubers synced to the arcane-digital matrix.">
-        O Beyond Obvious é um hub de retransmissão e acolhimento para avatares virtuais e VTubers independentes conectados à malha arcano-digital.
+      <p class="card-desc mb-4" data-pt="O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e operadores independentes conectados à malha arcano-digital." data-en="Beyond Obvious operates as a signal relay and convergence node for virtual avatars and independent operators synced to the arcane-digital matrix.">
+        O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e operadores independentes conectados à malha arcano-digital.
       </p>
 
       <div class="operators-quick-grid">
@@ -143,7 +154,7 @@ const sortedPosts: ProcessedPost[] = posts
           <span class="quick-icon">🌙</span>
           <div class="quick-info">
             <span class="quick-name">DeniLunae</span>
-            <span class="quick-role" data-pt="Santuário Moonhaven • Guardiã Lunar" data-en="Moonhaven Sanctuary • Lunar Guardian">Santuário Moonhaven • Guardiã Lunar</span>
+            <span class="quick-role" data-pt="Nexus de Vínculo: Moonhaven • Guardiã Lunar" data-en="Bond Nexus: Moonhaven • Lunar Guardian">Nexus de Vínculo: Moonhaven • Guardiã Lunar</span>
           </div>
           <span class="quick-arrow">&rarr;</span>
         </a>
@@ -457,20 +468,30 @@ const sortedPosts: ProcessedPost[] = posts
     margin-bottom: 0.5rem; 
   }
   
-  .category-tag { font-weight: 700; }
-  .cat-avian { color: #4CC9F0; }
-  .cat-rpg { color: #9D4EDD; }
-  .cat-gaming { color: #F72585; }
-  .cat-narrativas { color: #F4A261; }
-  .cat-nexus { color: #2A9D8F; }
-  .star-rating { color: #F4A261; }
+  .category-tag { 
+    font-weight: 700;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 0.78rem;
+  }
+
+  /* CORES DAS 7 CATEGORIAS UNIFICADAS */
+  .cat-ttrpg { color: var(--accent-purple, #9D4EDD); }
+  .cat-gaming { color: var(--accent-crimson, #E63946); }
+  .cat-boardgames { color: var(--accent-gold, #F4A261); }
+  .cat-tech { color: var(--accent-green, #2A9D8F); }
+  .cat-stream { color: var(--accent-blue, #4CC9F0); }
+  .cat-cinema { color: var(--accent-pink, #F72585); }
+  .cat-books { color: var(--text-primary, #E0E1DD); }
+
+  .star-rating { color: var(--accent-gold, #F4A261); letter-spacing: 2px; }
 
   .card-actions-terminal { display: flex; justify-content: flex-end; }
   .tags-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
   .tag { background: rgba(0,0,0,0.4); border: 1px solid rgba(224,225,221,0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
-  /* PREVIEW DA REDE DE VTUBERS */
+  /* PREVIEW DA REDE DE AVATARES */
   .operators-quick-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
