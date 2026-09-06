@@ -3,6 +3,7 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { CATEGORIES, type CategoryId } from '../../data/grimorio';
 
 export async function getStaticPaths() {
   const posts = await getCollection('terminal');
@@ -12,66 +13,59 @@ export async function getStaticPaths() {
   }));
 }
 
-interface Props {
-  entry: CollectionEntry<'terminal'>;
-}
-
-const { entry } = Astro.props;
+// Tipagem explícita da prop recebida
+const { entry } = Astro.props as { entry: CollectionEntry<'terminal'> };
 const { Content } = await render(entry);
 
+const rawCat = String(entry.data.category || '').toLowerCase().trim() as CategoryId;
+const categoryKey: CategoryId = CATEGORIES[rawCat] ? rawCat : 'tech';
+const catInfo = CATEGORIES[categoryKey];
+
 const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating, 10)) : '';
+const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('pt-BR', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
 ---
 
 <Layout
   title={`${entry.data.title} // TERMINAL - BEYOND OBVIOUS`}
   description={entry.data.summary || "Registro arquivado no Terminal Central do Além do Óbvio."}
-  image={entry.data.coverImage || "/og-image.png"}
   currentPage="terminal"
   type="article"
 >
-  <!-- LINK DE RETORNO -->
   <div class="back-nav">
     <a href="/terminal" class="back-link" data-pt="&larr; RETORNAR AO TERMINAL" data-en="&larr; RETURN TO TERMINAL">
       &larr; RETORNAR AO TERMINAL
     </a>
   </div>
 
-  <!-- ARTIGO DO TERMINAL -->
   <article class="hud-card post-article">
     <div class="crest-corner top-left"></div>
     <div class="crest-corner top-right"></div>
     <div class="crest-corner bottom-left"></div>
     <div class="crest-corner bottom-right"></div>
 
-    <!-- CABEÇALHO DO POST -->
     <header class="article-header">
       <div class="article-meta">
-        <span class={`category-tag cat-${String(entry.data.category || '').toLowerCase().trim()}`}>
-          {String(entry.data.category || '').toUpperCase()}
+        <span class={`category-tag ${catInfo.badgeClass}`}>
+          {catInfo.icon} {catInfo.label}
         </span>
         {starDisplay && <span class="star-rating">{starDisplay}</span>}
-        <span class="article-date">{new Date(entry.data.publishDate).toLocaleDateString('pt-BR')}</span>
+        <span class="article-date"><code>◈ {formattedDate}</code></span>
       </div>
       <h1 class="article-title">{entry.data.title}</h1>
       {entry.data.summary && <p class="article-summary">{entry.data.summary}</p>}
     </header>
 
-    <!-- IMAGEM DE CAPA (SE HOUVER) -->
-    {entry.data.coverImage && (
-      <div class="cover-frame">
-        <img src={entry.data.coverImage} alt={entry.data.title} class="cover-img" />
-      </div>
-    )}
-
-    <!-- CONTEÚDO MARKDOWN RENDERIZADO -->
     <div class="markdown-body">
       <Content />
     </div>
 
-    <!-- LINK EXTERNO OPCIONAL -->
     {entry.data.externalLink && (
       <div class="external-box">
-        <a href={entry.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn btn-outline-blue" data-pt="🌐 ACESSAR REGISTRO COMPLETO // WORLD ANVIL &rarr;" data-en="🌐 ACCESS FULL RECORD // WORLD ANVIL &rarr;">
+        <a href={entry.data.externalLink} target="_blank" rel="noopener noreferrer" class="btn btn-outline" data-pt="🌐 ACESSAR REGISTRO COMPLETO // WORLD ANVIL &rarr;" data-en="🌐 ACCESS FULL RECORD // WORLD ANVIL &rarr;">
           🌐 ACESSAR REGISTRO COMPLETO // WORLD ANVIL &rarr;
         </a>
       </div>
@@ -119,14 +113,17 @@ const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating,
     flex-wrap: wrap;
   }
 
-  .category-tag { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
-  .category-tag.cat-gaming { color: var(--accent-pink); }
-  .category-tag.cat-ttrpg { color: var(--accent-purple); }
-  .category-tag.cat-book { color: var(--accent-blue); }
-  .category-tag.cat-cinema { color: var(--accent-gold); }
-  .category-tag.cat-anime { color: var(--accent-green); }
+  .category-tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
 
-  .star-rating { color: var(--accent-gold); letter-spacing: 2px; }
+  .star-rating {
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+  }
 
   .article-date {
     font-family: 'JetBrains Mono', monospace;
@@ -152,22 +149,7 @@ const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating,
     font-style: italic;
   }
 
-  .cover-frame {
-    width: 100%;
-    max-height: 380px;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(224, 225, 221, 0.1);
-  }
-
-  .cover-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* ESTILOS DO CONTEÚDO MARKDOWN */
+  /* CONTEÚDO MARKDOWN */
   .markdown-body {
     color: var(--text-primary);
     font-size: 1.05rem;
@@ -234,18 +216,6 @@ const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating,
     padding-top: 1.5rem;
     border-top: 1px solid rgba(224, 225, 221, 0.1);
     text-align: center;
-  }
-
-  .btn-outline-blue {
-    background: transparent;
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
-  }
-
-  .btn-outline-blue:hover {
-    background: rgba(76, 201, 240, 0.2);
-    box-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
-    color: #fff;
   }
 
   @media (max-width: 768px) {

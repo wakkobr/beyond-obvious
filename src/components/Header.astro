@@ -11,7 +11,7 @@ const { currentPage = "" } = Astro.props;
 
 <nav class="nav-bar">
   <div class="nav-container">
-    <a href="/" class="nav-brand">
+    <a href="/" class="nav-brand" aria-label="Beyond Obvious Home">
       <NavLogo />
     </a>
 
@@ -27,11 +27,11 @@ const { currentPage = "" } = Astro.props;
       <a href="/#stream" class={currentPage === "streams" ? "active" : ""} data-pt="Transmissões" data-en="Streams">Transmissões</a>
       <a href="/terminal" class={currentPage === "terminal" ? "active" : ""} data-pt="Terminal" data-en="Terminal">Terminal</a>
       <a href="/grimorio" class={currentPage === "grimorio" ? "active" : ""} data-pt="Grimório" data-en="Grimoire">Grimório</a>
-      <a href="/avatares" class={currentPage === "avatares" ? "active" : ""}  data-pt="Avatares" data-en="Avatars">Avatares</a>
+      <a href="/avatares" class={currentPage === "avatares" || currentPage === "vtubers" ? "active" : ""} data-pt="Avatares" data-en="Avatars">Avatares</a>
       <a href="/dossier" class={currentPage === "dossier" ? "active" : ""} data-pt="Dossiê" data-en="Dossier">Dossiê</a>
       <a href="/about" class={currentPage === "about" ? "active" : ""} data-pt="Sobre" data-en="About">Sobre</a>
       <a href="/#signal" class={currentPage === "signal" ? "active" : ""} data-pt="Sinal" data-en="Signal">Sinal</a>
-      <button id="lang-toggle" class="lang-btn">EN</button>
+      <button id="lang-toggle" class="lang-btn" aria-label="Alternar idioma">EN</button>
     </div>
   </div>
 </nav>
@@ -110,6 +110,7 @@ const { currentPage = "" } = Astro.props;
 
   .lang-btn:hover { 
     background: rgba(76, 201, 240, 0.15); 
+    color: #fff;
     box-shadow: 0 0 8px rgba(76, 201, 240, 0.4); 
   }
 

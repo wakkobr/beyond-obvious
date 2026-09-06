@@ -5,13 +5,16 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="DOSSIÊ // @w4kkomancer_ - BEYOND OBVIOUS" currentPage="dossier">
   
-  <!-- CABEÇALHO DO DOSSIÊ -->
-  <header class="dossier-header">
+  <!-- CABEÇALHO DO DOSSIÊ (PADRÃO HUD UNIFICADO) -->
+  <header class="page-header">
     <div class="status-badge" data-pt="◈ ARQUIVO CLASSIFICADO // CLEARANCE LEVEL: RESTRITO // COD-00" data-en="◈ CLASSIFIED FILE // CLEARANCE LEVEL: RESTRICTED // COD-00">
       ◈ ARQUIVO CLASSIFICADO // CLEARANCE LEVEL: RESTRITO // COD-00
     </div>
-    <h1 class="dossier-title">// DOSSIÊ</h1>
-    <p class="dossier-sub">REGISTRO: #NEXUS-001 • <span data-pt="ARQUÉTIPO: DECKMANTE & NARRADOR DE FRONTEIRA" data-en="ARCHETYPE: FRONTIER DECKMANCER & STORYTELLER">ARQUÉTIPO: DECKMANTE & NARRADOR DE FRONTEIRA</span></p>
+    <h1 class="page-title">// DOSSIÊ</h1>
+    <p class="page-sub">
+      REGISTRO: #NEXUS-001 • 
+      <span class="text-dim" data-pt="Arquétipo: Deckmante & Narrador de Fronteira" data-en="Archetype: Frontier Deckmancer & Storyteller">Arquétipo: Deckmante & Narrador de Fronteira</span>
+    </p>
   </header>
 
   <!-- FICHA TÉCNICA BIOMÉTRICA (HUD) -->
@@ -259,67 +262,6 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-  /* TAG DE ENTIDADE OPERADOR */
-  .operator-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    color: var(--accent-blue, #4CC9F0);
-    background: rgba(76, 201, 240, 0.08);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    padding: 0.05rem 0.4rem;
-    border-radius: 3px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    vertical-align: baseline;
-    text-shadow: 0 0 6px rgba(76, 201, 240, 0.25);
-  }
-
-  .operator-tag.text-crimson {
-    color: var(--accent-crimson, #E63946);
-    background: rgba(230, 57, 70, 0.08);
-    border-color: rgba(230, 57, 70, 0.3);
-    text-shadow: 0 0 6px rgba(230, 57, 70, 0.25);
-  }
-
-  .operator-tag:hover {
-    color: #FFFFFF !important;
-    background: rgba(76, 201, 240, 0.25);
-    border-color: var(--accent-blue, #4CC9F0);
-    box-shadow: 0 0 12px rgba(76, 201, 240, 0.5);
-    transform: translateY(-1px);
-  }
-
-  .operator-tag.text-crimson:hover {
-    background: rgba(230, 57, 70, 0.25);
-    border-color: var(--accent-crimson, #E63946);
-    box-shadow: 0 0 12px rgba(230, 57, 70, 0.5);
-  }
-
-  /* CABEÇALHO DO DOSSIÊ */
-  .dossier-header {
-    padding: 3rem 0 1.5rem;
-  }
-
-  .dossier-title { 
-    font-family: 'Orbitron', sans-serif; 
-    font-size: 2.3rem; 
-    margin: 0; 
-    color: var(--text-primary); 
-    letter-spacing: 2px; 
-    line-height: 1.1; 
-  }
-
-  .dossier-sub { 
-    color: var(--accent-blue); 
-    font-family: 'Rajdhani', sans-serif; 
-    font-size: 1.1rem; 
-    font-weight: 700; 
-    margin: 0.4rem 0 0; 
-    letter-spacing: 1px; 
-  }
-
   /* SEÇÕES & CARDS */
   .section { padding: 1.5rem 0 0.5rem; }
 
@@ -655,7 +597,6 @@ import Layout from '../layouts/Layout.astro';
   }
 
   @media (max-width: 768px) {
-    .dossier-title { font-size: 1.8rem; }
     .spec-grid { grid-template-columns: 1fr; }
     .companion-id-layout { grid-template-columns: 1fr; justify-items: center; text-align: left; }
     .avatar-col { margin-bottom: 0.5rem; }

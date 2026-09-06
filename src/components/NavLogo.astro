@@ -46,11 +46,12 @@ const { className = "" } = Astro.props;
   }
 
   .text-beyond {
-    color: #E0E1DD;
+    color: var(--text-primary, #E0E1DD);
   }
 
   .text-obvious {
-    color: #E63946;
+    color: var(--accent-crimson, #E63946);
+    transition: text-shadow 0.2s ease;
   }
 
   .hud-subline {
@@ -62,11 +63,11 @@ const { className = "" } = Astro.props;
   }
 
   .hud-status {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: 0.65rem;
-    letter-spacing: 2px;
-    color: #4CC9F0;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    color: var(--accent-blue, #4CC9F0);
     padding: 0 6px;
     white-space: nowrap;
     transition: text-shadow 0.2s ease;
@@ -74,14 +75,15 @@ const { className = "" } = Astro.props;
 
   .hud-marker-left {
     height: 2px;
-    width: 18px;
-    background-color: #E63946;
+    width: 16px;
+    background-color: var(--accent-crimson, #E63946);
   }
 
   .hud-marker-right {
     height: 2px;
     flex-grow: 1;
-    background: linear-gradient(90deg, rgba(76, 201, 240, 0.3), #4CC9F0);
+    background: linear-gradient(90deg, rgba(76, 201, 240, 0.3), var(--accent-blue, #4CC9F0));
+    transition: box-shadow 0.2s ease;
   }
 
   .nav-logo-hud:hover .text-obvious {
@@ -93,6 +95,6 @@ const { className = "" } = Astro.props;
   }
   
   .nav-logo-hud:hover .hud-marker-right {
-    box-shadow: 0 0 8px #4CC9F0;
+    box-shadow: 0 0 8px var(--accent-blue, #4CC9F0);
   }
 </style>

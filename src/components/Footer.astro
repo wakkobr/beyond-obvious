@@ -3,7 +3,14 @@
 ---
 
 <footer class="footer">
-  <p>© 2026 BEYOND OBVIOUS • @w4kkomancer_</p>
+  <div class="footer-content">
+    <p class="footer-copy">
+      &copy; 2026 BEYOND OBVIOUS ◈ <span class="operator-tag">@w4kkomancer_</span>
+    </p>
+    <p class="footer-status" data-pt="SISTEMA // MALHA ARCIBERNÉTICA ATIVA" data-en="SYSTEM // ACTIVE CYBER-ARCANE MATRIX">
+      SISTEMA // MALHA ARCIBERNÉTICA ATIVA
+    </p>
+  </div>
 </footer>
 
 <style>
@@ -11,8 +18,29 @@
     text-align: center; 
     padding: 3rem 0; 
     color: var(--text-secondary, #8D99AE); 
-    font-size: 0.85rem; 
-    border-top: 1px solid rgba(224, 225, 221, 0.05); 
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; 
+    border-top: 1px solid rgba(224, 225, 221, 0.08); 
     margin-top: 4rem; 
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .footer-copy {
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-status {
+    margin: 0;
+    font-size: 0.7rem;
+    color: var(--accent-blue, #4CC9F0);
+    opacity: 0.7;
+    letter-spacing: 1px;
   }
 </style>

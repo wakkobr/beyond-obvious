@@ -8,18 +8,25 @@
     let currentLang = localStorage.getItem('siteLang') || 'pt';
 
     const applyLanguage = () => {
+      document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+
       if (toggleBtn) {
         toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
       }
-      document.querySelectorAll('[data-pt]').forEach(el => {
-        const target = el as HTMLElement;
-        target.innerHTML = currentLang === 'pt' ? target.dataset.pt! : target.dataset.en!;
+
+      document.querySelectorAll<HTMLElement>('[data-pt][data-en]').forEach((el) => {
+        const text = currentLang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+        if (text) {
+          el.innerHTML = text;
+        }
       });
+
+      // Dispara evento global para componentes reativos (ex: Grimório / Terminal)
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: currentLang } }));
     };
 
-    if (currentLang === 'en') {
-      applyLanguage();
-    }
+    // Aplica o idioma salvo assim que carregar
+    applyLanguage();
 
     toggleBtn?.addEventListener('click', () => {
       currentLang = currentLang === 'pt' ? 'en' : 'pt';
@@ -28,5 +35,7 @@
     });
   };
 
+  // Suporte a carregamento inicial e navegação SPA do Astro
   document.addEventListener('DOMContentLoaded', setupLanguageToggle);
+  document.addEventListener('astro:page-load', setupLanguageToggle);
 </script>

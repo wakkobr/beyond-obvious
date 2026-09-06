@@ -22,23 +22,19 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
   currentPage="grimorio"
 >
   <div class="grimorio-container">
-    <!-- CABEÇALHO DO GRIMÓRIO -->
-    <header class="grimorio-header">
+    <!-- CABEÇALHO DO GRIMÓRIO (PADRÃO HUD UNIFICADO) -->
+    <header class="page-header">
       <div
-        class="status-tag"
-        data-pt="SYS_ARCHIVE // TOMO ARCANO ATIVO"
-        data-en="SYS_ARCHIVE // ACTIVE ARCANUM TOME"
+        class="status-badge"
+        data-pt="◈ SYS_ARCHIVE // TOMO ARCANO ATIVO"
+        data-en="◈ SYS_ARCHIVE // ACTIVE ARCANUM TOME"
       >
-        <span class="pulse-dot"></span>
-        <span class="status-tag-text">SYS_ARCHIVE // TOMO ARCANO ATIVO</span>
+        ◈ SYS_ARCHIVE // TOMO ARCANO ATIVO
       </div>
       <h1 class="page-title" data-pt="// GRIMÓRIO" data-en="// GRIMOIRE">// GRIMÓRIO</h1>
-      <p
-        class="page-subtitle"
-        data-pt="Compêndio de ferramentas, artefatos, repositórios e frequências homologadas pelo Operador."
-        data-en="Compendium of tools, artifacts, repositories, and frequencies approved by the Operator."
-      >
-        Compêndio de ferramentas, artefatos, repositórios e frequências homologadas pelo Operador.
+      <p class="page-sub">
+        <span data-pt="COMPÊNDIO DE HIPERLINKS" data-en="HYPERLINK COMPENDIUM">COMPÊNDIO DE HIPERLINKS</span> • 
+        <span class="text-dim" data-pt="Frequências, ferramentas e artefatos homologados" data-en="Approved frequencies, tools, and artifacts">Frequências, ferramentas e artefatos homologados</span>
       </p>
     </header>
 
@@ -112,7 +108,7 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
         const trans = CATEGORY_TRANSLATIONS[item.category] || { pt: catInfo.label, en: catInfo.label };
         return (
           <article
-            class="grimorio-card"
+            class="grimorio-card hud-card"
             data-category={item.category}
             data-featured={item.isFeatured ? "true" : "false"}
             data-title={item.title.toLowerCase()}
@@ -297,51 +293,7 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
 
 <style>
   .grimorio-container {
-    padding: 1.5rem 0 3.5rem;
-  }
-
-  .grimorio-header {
-    margin-bottom: 1.8rem;
-    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
-    padding-bottom: 1.2rem;
-  }
-
-  .status-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--accent-blue, #4CC9F0);
-    background: rgba(76, 201, 240, 0.08);
-    border: 1px solid rgba(76, 201, 240, 0.25);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    margin-bottom: 0.8rem;
-  }
-
-  .pulse-dot {
-    width: 5px;
-    height: 5px;
-    background-color: var(--accent-blue, #4CC9F0);
-    border-radius: 50%;
-    box-shadow: 0 0 6px var(--accent-blue, #4CC9F0);
-  }
-
-  .page-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.1rem;
-    color: var(--text-primary, #E0E1DD);
-    margin: 0 0 0.4rem;
-    letter-spacing: 1.5px;
-  }
-
-  .page-subtitle {
-    color: var(--text-secondary, #8D99AE);
-    font-size: 0.95rem;
-    max-width: 700px;
-    line-height: 1.5;
-    margin: 0;
+    padding-bottom: 2rem;
   }
 
   /* BARRA DE CONTROLE */
@@ -385,56 +337,6 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
     box-shadow: 0 0 10px rgba(76, 201, 240, 0.25);
   }
 
-  /* FILTROS */
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .filter-btn {
-    background: rgba(22, 24, 29, 0.7);
-    border: 1px solid rgba(224, 225, 221, 0.1);
-    color: var(--text-secondary, #8D99AE);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 0.35rem 0.7rem;
-    border-radius: 3px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    transition: all 0.2s ease;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--accent-blue, #4CC9F0);
-    color: var(--text-primary, #E0E1DD);
-    background: rgba(76, 201, 240, 0.1);
-  }
-
-  .filter-btn.active {
-    background: var(--accent-crimson, #E63946);
-    border-color: var(--accent-crimson, #E63946);
-    color: #fff;
-    box-shadow: 0 0 8px rgba(230, 57, 70, 0.35);
-  }
-
-  .filter-btn.featured-filter.active {
-    background: var(--accent-gold, #F4A261);
-    border-color: var(--accent-gold, #F4A261);
-    color: #111;
-    box-shadow: 0 0 8px rgba(244, 162, 97, 0.35);
-  }
-
-  .counter {
-    opacity: 0.7;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-  }
-
   .results-meta {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
@@ -450,16 +352,11 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
   }
 
   .grimorio-card {
-    background: var(--bg-surface, #16181D);
-    border: 1px solid rgba(224, 225, 221, 0.1);
-    border-radius: 4px;
     padding: 1rem 1.1rem;
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 150px;
-    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .grimorio-card:hover {
@@ -467,19 +364,6 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
     border-color: rgba(76, 201, 240, 0.4);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
   }
-
-  .crest-corner {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-color: var(--accent-crimson, #E63946);
-    pointer-events: none;
-  }
-
-  .top-left { top: 0; left: 0; border-top: 2px solid; border-left: 2px solid; }
-  .top-right { top: 0; right: 0; border-top: 2px solid; border-right: 2px solid; }
-  .bottom-left { bottom: 0; left: 0; border-bottom: 2px solid; border-left: 2px solid; }
-  .bottom-right { bottom: 0; right: 0; border-bottom: 2px solid; border-right: 2px solid; }
 
   .card-meta {
     display: flex;
@@ -495,14 +379,6 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
     font-size: 0.72rem;
     letter-spacing: 0.4px;
   }
-
-  .cat-ttrpg { color: var(--accent-purple, #9D4EDD); }
-  .cat-gaming { color: var(--accent-crimson, #E63946); }
-  .cat-boardgames { color: var(--accent-gold, #F4A261); }
-  .cat-tech { color: var(--accent-green, #2A9D8F); }
-  .cat-stream { color: var(--accent-blue, #4CC9F0); }
-  .cat-cinema { color: var(--accent-pink, #F72585); }
-  .cat-books { color: var(--text-primary, #E0E1DD); }
 
   .sub-badge {
     background: rgba(255, 255, 255, 0.05);
@@ -603,7 +479,6 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
   }
 
   @media (max-width: 768px) {
-    .page-title { font-size: 1.8rem; }
     .links-grid { grid-template-columns: 1fr; }
   }
 </style>

@@ -53,18 +53,19 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
 ---
 
 <Layout title="TERMINAL DE MÍDIA // BEYOND OBVIOUS" currentPage="terminal">
-  <!-- HEADER DO TERMINAL -->
-  <header class="terminal-header">
+  <!-- HEADER DO TERMINAL (PADRÃO HUD UNIFICADO) -->
+  <header class="page-header">
     <div class="status-badge" data-pt="◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS" data-en="◈ CENTRAL ARCHIVE // MEDIA LOGS & ESSAYS">
       ◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS
     </div>
-    <h1 class="terminal-title">// TERMINAL DE MÍDIA</h1>
-    <p class="terminal-sub" data-pt="Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos." data-en="Analyses, session logs, narrative essays, and mechanics breakdowns of fiction and games.">
-      Análises, registros de sessões, ensaios narrativos e desconstrução de mecânicas de ficção e jogos.
+    <h1 class="page-title">// TERMINAL DE MÍDIA</h1>
+    <p class="page-sub">
+      <span data-pt="ANÁLISES & ENSAIOS NARRATIVOS" data-en="ANALYSES & NARRATIVE ESSAYS">ANÁLISES & ENSAIOS NARRATIVOS</span> • 
+      <span class="text-dim" data-pt="Desconstrução de mecânicas, ficção e crônicas" data-en="Mechanics breakdowns, fiction, and chronicles">Desconstrução de mecânicas, ficção e crônicas</span>
     </p>
 
     <!-- BARRA DE FILTROS ALINHADA AO GRIMÓRIO -->
-    <nav class="filter-bar" aria-label="Filtro de categorias do Terminal">
+    <nav class="filter-bar mt-3" aria-label="Filtro de categorias do Terminal">
       <button
         type="button"
         class="filter-btn active"
@@ -182,85 +183,6 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
 </script>
 
 <style>
-  .terminal-header {
-    padding: 3rem 0 2rem;
-    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
-    margin-bottom: 2.5rem;
-  }
-
-  .status-badge {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent-blue, #4CC9F0);
-    background: rgba(76, 201, 240, 0.08);
-    border: 1px solid rgba(76, 201, 240, 0.25);
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    margin-bottom: 0.8rem;
-    letter-spacing: 1px;
-  }
-
-  .terminal-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.6rem;
-    margin: 0;
-    color: var(--text-primary, #E0E1DD);
-    letter-spacing: 2px;
-  }
-
-  .terminal-sub {
-    color: var(--text-secondary, #8D99AE);
-    font-size: 1.05rem;
-    margin: 0.6rem 0 1.5rem;
-    max-width: 800px;
-    line-height: 1.5;
-  }
-
-  /* BARRA DE FILTROS */
-  .filter-bar {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-  }
-
-  .filter-btn {
-    background: rgba(22, 24, 29, 0.7);
-    border: 1px solid rgba(224, 225, 221, 0.15);
-    color: var(--text-secondary, #8D99AE);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-    padding: 0.4rem 0.85rem;
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: all 0.2s ease;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--accent-blue, #4CC9F0);
-    color: var(--text-primary, #E0E1DD);
-    background: rgba(76, 201, 240, 0.1);
-  }
-
-  .filter-btn.active {
-    background: var(--accent-crimson, #E63946);
-    border-color: var(--accent-crimson, #E63946);
-    color: white;
-    box-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
-  }
-
-  .counter {
-    opacity: 0.7;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-  }
-
   /* GRID DE POSTS */
   .posts-grid {
     display: grid;
@@ -269,15 +191,9 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
   }
 
   .post-card {
-    position: relative;
-    background: var(--bg-surface, #16181D);
-    border: 1px solid rgba(224, 225, 221, 0.1);
-    border-radius: 4px;
-    padding: 1.4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .post-card:hover {
@@ -289,19 +205,6 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
   .post-card.is-hidden {
     display: none !important;
   }
-
-  .crest-corner {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-color: var(--accent-crimson, #E63946);
-    pointer-events: none;
-  }
-
-  .top-left { top: 0; left: 0; border-top: 2px solid; border-left: 2px solid; }
-  .top-right { top: 0; right: 0; border-top: 2px solid; border-right: 2px solid; }
-  .bottom-left { bottom: 0; left: 0; border-bottom: 2px solid; border-left: 2px solid; }
-  .bottom-right { bottom: 0; right: 0; border-bottom: 2px solid; border-right: 2px solid; }
 
   .card-meta {
     display: flex;
@@ -317,15 +220,6 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
     letter-spacing: 0.5px;
     font-size: 0.78rem;
   }
-
-  /* CORES DAS 7 CATEGORIAS UNIFICADAS */
-  .cat-ttrpg { color: var(--accent-purple, #9D4EDD); }
-  .cat-gaming { color: var(--accent-crimson, #E63946); }
-  .cat-boardgames { color: var(--accent-gold, #F4A261); }
-  .cat-tech { color: var(--accent-green, #2A9D8F); }
-  .cat-stream { color: var(--accent-blue, #4CC9F0); }
-  .cat-cinema { color: var(--accent-pink, #F72585); }
-  .cat-books { color: var(--text-primary, #E0E1DD); }
 
   .star-rating {
     color: var(--accent-gold, #F4A261);
@@ -363,20 +257,6 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
     padding-top: 0.8rem;
   }
 
-  .btn-link {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--accent-blue, #4CC9F0);
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .btn-link:hover {
-    color: var(--accent-crimson, #E63946);
-    transform: translateX(3px);
-  }
-
   .empty-card {
     grid-column: 1 / -1;
     text-align: center;
@@ -384,7 +264,6 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
   }
 
   @media (max-width: 768px) {
-    .terminal-title { font-size: 2rem; }
     .posts-grid { grid-template-columns: 1fr; }
   }
 </style>
