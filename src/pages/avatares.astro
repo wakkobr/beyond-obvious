@@ -1,9 +1,9 @@
 ---
-// src/pages/vtubers.astro
+// src/pages/avatares.astro
 import Layout from '../layouts/Layout.astro';
 
-// Lista de VTubers / Operadores do Hub
-const vtubers = [
+// Lista de Avatares / Operadores do Hub
+const avatares = [
   {
     name: "w4kkomancer_",
     handle: "@w4kkomancer_",
@@ -11,8 +11,8 @@ const vtubers = [
     roleEn: "Nexus Warden & Technomancer",
     specialtyPt: "Storytelling, Deckmancia & RPG de Mesa",
     specialtyEn: "Storytelling, Deckmancy & Tabletop RPG",
-    originNodePt: "Terminal Central // Beyond Obvious",
-    originNodeEn: "Core Terminal // Beyond Obvious",
+    originNodePt: "Nó Primário // Beyond Obvious",
+    originNodeEn: "Core Node // Beyond Obvious",
     nodeUrl: "https://beyond-obvious.net",
     avatar: "/images/w4kko-avatar.png",
     accentColor: "cyan",
@@ -28,8 +28,8 @@ const vtubers = [
     roleEn: "Signal Operator // Lunar Guardian",
     specialtyPt: "Gaming, Variedades & Transmissões Noturnas",
     specialtyEn: "Gaming, Variety & Night Broadcasts",
-    originNodePt: "Santuário // Moonhaven",
-    originNodeEn: "Sanctuary // Moonhaven",
+    originNodePt: "Nexus de Vínculo // Moonhaven",
+    originNodeEn: "Bond Nexus // Moonhaven",
     nodeUrl: "https://moonhaven.beyond-obvious.net",
     avatar: "/images/denilunae-avatar.png",
     accentColor: "purple",
@@ -41,30 +41,32 @@ const vtubers = [
 ];
 ---
 
-<Layout title="VTUBERS // REDE DE OPERADORES - BEYOND OBVIOUS" currentPage="vtubers">
+<Layout title="AVATARES // REDE DE OPERADORES - BEYOND OBVIOUS" currentPage="vtubers">
   
   <!-- CABEÇALHO DA PÁGINA -->
   <header class="page-header">
-    <div class="status-badge" data-pt="◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE VTUBERS" data-en="◈ SIGNAL DIRECTORY // DECENTRALIZED VTUBER NETWORK">
-      ◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE VTUBERS
+    <div class="status-badge" data-pt="◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE AVATARES" data-en="◈ SIGNAL DIRECTORY // DECENTRALIZED AVATAR NETWORK">
+      ◈ DIRETÓRIO DE SINAIS // REDE DESCENTRALIZADA DE AVATARES
     </div>
-    <h1 class="page-title">VTUBERS // OPERADORES</h1>
-    <p class="page-sub" data-pt="FREQUÊNCIAS ATIVAS & SANTUÁRIOS VINCULADOS AO NEXUS" data-en="ACTIVE FREQUENCIES & SANCTUARIES LINKED TO THE NEXUS">FREQUÊNCIAS ATIVAS & SANTUÁRIOS VINCULADOS AO NEXUS</p>
+    <h1 class="page-title">// AVATARES & OPERADORES</h1>
+    <p class="page-sub" data-pt="FREQUÊNCIAS ATIVAS & NEXUS DE VÍNCULO SINTONIZADOS AO NEXUS" data-en="ACTIVE FREQUENCIES & BOND NEXUSES LINKED TO THE NEXUS">
+      FREQUÊNCIAS ATIVAS & NEXUS DE VÍNCULO SINTONIZADOS AO NEXUS
+    </p>
   </header>
 
   <!-- INTRODUÇÃO DA SEÇÃO -->
   <section class="section">
     <div class="hud-card">
-      <p data-pt="O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e VTubers independentes. Cada operador conectado à malha comanda sua própria estação de transmissão e seu próprio santuário de conteúdo." data-en="Beyond Obvious operates as a signal relay and amplifier for virtual avatars and independent VTubers. Each operator synced to the matrix commands their own broadcast relay and sanctuary of content.">
-        O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e VTubers independentes. Cada operador conectado à malha comanda sua própria estação de transmissão e seu próprio santuário de conteúdo.
+      <p data-pt="O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e operadores independentes. Cada entidade sintonizada à malha comanda sua própria estação de transmissão e seu respectivo Nexus de Vínculo." data-en="Beyond Obvious operates as a signal relay and amplifier for virtual avatars and independent operators. Each entity synced to the grid commands their own broadcast relay and dedicated Bond Nexus.">
+        O Beyond Obvious opera como um repetidor e amplificador de sinal para avatares virtuais e operadores independentes. Cada entidade sintonizada à malha comanda sua própria estação de transmissão e seu respectivo Nexus de Vínculo.
       </p>
     </div>
   </section>
 
-  <!-- GRADE DE VTUBERS -->
+  <!-- GRADE DE AVATARES -->
   <section class="section">
     <div class="vtubers-grid">
-      {vtubers.map((vt) => (
+      {avatares.map((vt) => (
         <div class={`hud-card vtuber-card border-${vt.accentColor}`}>
           <div class="crest-corner top-left"></div>
           <div class="crest-corner top-right"></div>
@@ -86,13 +88,13 @@ const vtubers = [
                   <div class="avatar-placeholder">
                     <span class="ph-glyph">◈</span>
                     <span class="ph-name">{vt.name}</span>
-                    <span class="ph-note">SINAL VIRTUAL</span>
+                    <span class="ph-note" data-pt="SINAL VIRTUAL" data-en="VIRTUAL SIGNAL">SINAL VIRTUAL</span>
                   </div>
                 )}
               </div>
             </div>
 
-            <!-- INFO DO VTUBER -->
+            <!-- INFO DO AVATAR -->
             <div class="vtuber-info">
               <div class="vtuber-header-row">
                 <div>
@@ -100,7 +102,7 @@ const vtubers = [
                   <span class="vtuber-handle">{vt.handle}</span>
                 </div>
                 {vt.nodeUrl && (
-                  <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="node-badge" title="Acessar Domínio do Operador">
+                  <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="node-badge" title="Acessar Nó do Operador">
                     🌐 <span data-pt={vt.originNodePt} data-en={vt.originNodeEn}>{vt.originNodePt}</span> &rarr;
                   </a>
                 )}
@@ -117,11 +119,11 @@ const vtubers = [
                 </div>
               </div>
 
-              <!-- LINKS DO VTUBER -->
+              <!-- LINKS DO AVATAR -->
               <div class="vtuber-links">
                 {vt.nodeUrl && (
-                  <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="vt-link-btn btn-node" data-pt="🌌 Santuário" data-en="🌌 Sanctuary">
-                    🌌 Santuário
+                  <a href={vt.nodeUrl} target="_blank" rel="noopener noreferrer" class="vt-link-btn btn-node" data-pt="⚡ Nexus de Vínculo" data-en="⚡ Bond Nexus">
+                    ⚡ Nexus de Vínculo
                   </a>
                 )}
                 {vt.twitch && (
@@ -157,9 +159,9 @@ const vtubers = [
     <div class="hud-card join-network-card">
       <div class="join-info">
         <span class="join-tag" data-pt="EXPANSÃO DE MALHA" data-en="NETWORK EXPANSION">EXPANSÃO DE MALHA</span>
-        <h3 class="join-title" data-pt="É um VTuber ou Criador Virtual?" data-en="Are you a VTuber or Virtual Creator?">É um VTuber ou Criador Virtual?</h3>
-        <p class="join-desc" data-pt="Conecte seu canal ao hub Beyond Obvious para integrar collabs, subdomínios dedicados e campanhas compartilhadas." data-en="Link your channel to the Beyond Obvious hub to participate in collabs, dedicated subdomains, and shared campaigns.">
-          Conecte seu canal ao hub Beyond Obvious para integrar collabs, subdomínios dedicados e campanhas compartilhadas.
+        <h3 class="join-title" data-pt="Comanda um Avatar ou Operação Virtual?" data-en="Command an Avatar or Virtual Operator?">Comanda um Avatar ou Operação Virtual?</h3>
+        <p class="join-desc" data-pt="Estabeleça um vínculo de sinal com o Beyond Obvious para integrar transmissões sincronizadas, nós dedicados e campanhas compartilhadas." data-en="Establish a signal bond with Beyond Obvious to integrate synchronized broadcasts, dedicated nodes, and shared campaigns.">
+          Estabeleça um vínculo de sinal com o Beyond Obvious para integrar transmissões sincronizadas, nós dedicados e campanhas compartilhadas.
         </p>
       </div>
       <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-pt="⚡ SINCRONIZAR SINAL" data-en="⚡ SYNC SIGNAL">
@@ -174,6 +176,19 @@ const vtubers = [
   /* CABEÇALHO */
   .page-header {
     padding: 3rem 0 1.5rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-blue, #4CC9F0);
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px solid rgba(76, 201, 240, 0.25);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
   }
 
   .page-title { 
@@ -197,7 +212,7 @@ const vtubers = [
   /* SEÇÕES & CARDS */
   .section { padding: 1rem 0 0.5rem; }
 
-  /* VTUBERS GRID */
+  /* AVATARES GRID */
   .vtubers-grid {
     display: flex;
     flex-direction: column;
