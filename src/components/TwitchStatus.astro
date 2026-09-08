@@ -70,7 +70,7 @@ const { channelName = "w4kkomancer_" } = Astro.props;
         card.classList.remove('is-offline');
 
         statusText?.setAttribute('data-pt', `AO VIVO // ${data}`);
-        statusText?.setAttribute('data-en', `LIVE // ${data}`);
+        statusText?.setAttribute('data-en`, `LIVE // ${data}`);
         streamTitle?.setAttribute('data-pt', 'TRANSMISSÃO EM ANDAMENTO');
         streamTitle?.setAttribute('data-en', 'TRANSMISSION IN PROGRESS');
         streamGame?.setAttribute('data-pt', 'O Nexus está aberto. Conecte-se ao sinal agora.');
@@ -97,7 +97,6 @@ const { channelName = "w4kkomancer_" } = Astro.props;
       const initialLang = localStorage.getItem('siteLang') || 'pt';
       renderLocalizedTexts(initialLang);
 
-      // Atualiza na hora se o usuário alternar o idioma pelo Header
       window.addEventListener('languageChanged', (e) => {
         renderLocalizedTexts(e.detail.lang);
       });
@@ -187,21 +186,28 @@ const { channelName = "w4kkomancer_" } = Astro.props;
     gap: 1.5rem;
   }
 
+  /* FORÇANDO A FONTE RAJDHANI NO TÍTULO */
   .widget-title {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.3rem;
     margin: 0 0 0.3rem;
     color: var(--text-primary, #E0E1DD);
     letter-spacing: 1px;
+    font-weight: 700;
   }
 
+  /* FORÇANDO A FONTE RAJDHANI E PESO CORRETO NA DESCRIÇÃO */
   .widget-desc {
+    font-family: 'Rajdhani', sans-serif;
     color: var(--text-secondary, #8D99AE);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    font-weight: 600;
     margin: 0;
     line-height: 1.4;
+    letter-spacing: 0.5px;
   }
 
+  /* FORÇANDO A FONTE RAJDHANI NO BOTÃO */
   .btn-twitch {
     display: inline-flex;
     align-items: center;
@@ -217,6 +223,7 @@ const { channelName = "w4kkomancer_" } = Astro.props;
     border: 1px solid rgba(145, 70, 255, 0.4);
     color: var(--text-primary, #E0E1DD);
     transition: all 0.2s ease;
+    letter-spacing: 1px;
   }
 
   .btn-twitch:hover {
