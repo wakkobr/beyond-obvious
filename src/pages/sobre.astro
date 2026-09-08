@@ -1,5 +1,5 @@
 ---
-// src/pages/about.astro
+// src/pages/sobre.astro
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -153,66 +153,35 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- 05 // REGISTRO DE OPERADORES EXTERNOS -->
+  <!-- 05 // REGISTRO DE OPERADORES EXTERNOS (ESTILO CARTAZ DE PROCURADO / CLASSIFICADO) -->
   <section class="section">
     <h2 class="section-title">05 // <span data-pt="REGISTRO DE OPERADORES EXTERNOS" data-en="EXTERNAL OPERATORS REGISTRY">REGISTRO DE OPERADORES EXTERNOS</span></h2>
     
-    <div class="operators-grid-cards">
+    <div class="wanted-posters-grid">
       
-      <!-- OPERADOR: DENILUNAE -->
-      <div class="hud-card operator-id-square border-purple">
+      <!-- DENILUNAE (CARTAZ) -->
+      <div class="hud-card wanted-poster border-purple">
         <div class="crest-corner top-left"></div>
         <div class="crest-corner top-right"></div>
         <div class="crest-corner bottom-left"></div>
         <div class="crest-corner bottom-right"></div>
 
-        <div class="op-square-layout">
-          <div class="op-avatar-frame">
-            <div class="avatar-placeholder">
-              <span class="ph-icon">🌙</span>
-              <span class="ph-text">AVATAR<br>FRAME</span>
-              <span class="ph-dim">140x140 px</span>
-            </div>
-            <!-- Quando tiver a foto, substitua o bloco acima por:
-            <img src="/images/denilunae.png" alt="DeniLunae" class="companion-img" /> -->
+        <div class="poster-layout">
+          <div class="poster-photo-frame">
+            <img src="/images/denilunae-avatar.png" alt="DeniLunae" class="poster-img" />
+            <div class="poster-stamp text-purple">SINAL ATIVO</div>
           </div>
-
-          <div class="op-data-col">
-            <div class="companion-title-bar">
-              <div>
-                <h3 class="companion-unit-name text-purple">DeniLunae</h3>
-                <span class="companion-sigla" data-pt="NÓDULO: CONSTELAÇÃO DE VIRGEM" data-en="NODE: CONSTELLATION OF VIRGO">NÓDULO: CONSTELAÇÃO DE VIRGEM</span>
-              </div>
-              <span class="frequency-chip text-purple">FREQ: #9D4EDD</span>
-            </div>
-
-            <div class="companion-specs-table">
-              <div class="spec-row">
-                <span class="spec-key" data-pt="ORIGEM:" data-en="ORIGIN:">ORIGEM:</span>
-                <span class="spec-val" data-pt="Nebulosas de Virgem (Poeira Cósmica & Plasma Frio)" data-en="Virgo Nebulae (Cosmic Dust & Cold Plasma)">Nebulosas de Virgem (Poeira Cósmica & Plasma Frio)</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-key" data-pt="NATUREZA:" data-en="NATURE:">NATUREZA:</span>
-                <span class="spec-val" data-pt="Guardiã Primordial dos Registros Celestiais" data-en="Primordial Guardian of Celestial Records">Guardiã Primordial dos Registros Celestiais</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-key" data-pt="REFÚGIO LOCAL:" data-en="LOCAL REFUGE:">REFÚGIO LOCAL:</span>
-                <span class="spec-val" data-pt="Moonhaven (Subdomínio)" data-en="Moonhaven (Subdomain)">Moonhaven (Subdomínio)</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-key" data-pt="MAGIA / ENERGIA:" data-en="MAGIC / ENERGY:">MAGIA / ENERGIA:</span>
-                <span class="spec-val text-purple" data-pt="Astrignis (Fogo astral, ciano e violeta)" data-en="Astrignis (Astral fire, cyan & violet)">Astrignis (Fogo astral, ciano e violeta)</span>
-              </div>
-            </div>
-
-            <div class="op-dossier-link-wrap">
-              <a href="https://moonhaven.beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="btn-link text-purple" data-pt="Acessar Dossiê Completo: Moonhaven &rarr;" data-en="Access Full Dossier: Moonhaven &rarr;">
-                Acessar Dossiê Completo: Moonhaven &rarr;
+          <div class="poster-content">
+            <span class="poster-id-label">NÓDULO // MOONHAVEN</span>
+            <h3 class="poster-name text-purple">DeniLunae</h3>
+            <p class="poster-role" data-pt="Guardiã Primordial dos Registros Celestiais" data-en="Primordial Guardian of Celestial Records">Guardiã Primordial dos Registros Celestiais</p>
+            <div class="poster-footer">
+              <a href="https://moonhaven.beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="btn-link text-purple" data-pt="Acessar Frequência &rarr;" data-en="Access Frequency &rarr;">
+                Acessar Frequência &rarr;
               </a>
             </div>
           </div>
         </div>
-
       </div>
 
     </div>
@@ -328,154 +297,97 @@ import Layout from '../layouts/Layout.astro';
     top: 2px;
   }
 
-  /* FORMATO QUADRADO PARA OPERADORES EXTERNOS */
-  .operators-grid-cards {
-    display: flex;
-    flex-direction: column;
+  /* ESTILO CARTAZ (WANTED / CLASSIFIED POSTER) PARA OPERADORES EXTERNOS */
+  .wanted-posters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 360px));
     gap: 1.5rem;
   }
 
-  .operator-id-square {
+  .wanted-poster {
     background: rgba(22, 24, 29, 0.95);
+    display: flex;
+    flex-direction: column;
   }
 
-  .border-purple { border-color: rgba(157, 78, 221, 0.3); }
-  .border-purple:hover { border-color: #9D4EDD; box-shadow: 0 0 16px rgba(157, 78, 221, 0.2); }
-
-  .op-square-layout {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 1.8rem;
+  .poster-layout {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 1rem;
   }
 
-  .op-avatar-frame {
-    width: 160px;
-    height: 160px;
+  .poster-photo-frame {
+    width: 140px;
+    height: 140px;
     background: rgba(11, 12, 16, 0.9);
     border: 2px solid rgba(157, 78, 221, 0.4);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 4px;
     position: relative;
     overflow: hidden;
     box-shadow: inset 0 0 15px rgba(157, 78, 221, 0.2);
   }
 
-  .companion-img {
+  .poster-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .avatar-placeholder {
+  .poster-stamp {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(11, 12, 16, 0.85);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 0;
+    border-top: 1px solid currentColor;
+    letter-spacing: 1px;
+  }
+
+  .poster-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 1rem;
-    gap: 4px;
+    gap: 0.3rem;
   }
 
-  .ph-icon { font-size: 2rem; }
-  .ph-text {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    color: var(--text-primary);
-    line-height: 1.2;
-  }
-  .ph-dim {
-    font-size: 0.65rem;
-    color: var(--text-secondary);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .op-data-col {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .companion-title-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid rgba(224, 225, 221, 0.1);
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .companion-unit-name {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.3rem;
-    margin: 0;
-    letter-spacing: 2px;
-  }
-
-  .companion-sigla {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    font-weight: 700;
-    letter-spacing: 1px;
-    display: block;
-    margin-top: 2px;
-  }
-
-  .frequency-chip {
+  .poster-id-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    font-weight: 700;
-    border: 1px solid currentColor;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-
-  .companion-specs-table {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background: rgba(0, 0, 0, 0.25);
-    padding: 0.5rem 0.8rem;
-    border-radius: 4px;
-    border: 1px solid rgba(224, 225, 221, 0.05);
-    margin-bottom: 0.8rem;
-  }
-
-  .spec-row {
-    display: flex;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.85rem;
-    gap: 8px;
-  }
-
-  .spec-key {
-    font-weight: 700;
     color: var(--text-secondary);
-    min-width: 120px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
 
-  .spec-val {
+  .poster-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    margin: 0;
+    letter-spacing: 1.5px;
+  }
+
+  .poster-role {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0 0 0.5rem 0;
     font-weight: 600;
-    color: var(--text-primary);
   }
 
-  .op-dossier-link-wrap {
+  .poster-footer {
+    border-top: 1px solid rgba(224, 225, 221, 0.1);
+    width: 100%;
+    padding-top: 0.6rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
+
+  .border-purple { border-color: rgba(157, 78, 221, 0.3); }
+  .border-purple:hover { border-color: #9D4EDD; box-shadow: 0 0 16px rgba(157, 78, 221, 0.2); }
 
   .text-purple { color: #9D4EDD; }
-
-  @media (max-width: 768px) {
-    .op-square-layout { grid-template-columns: 1fr; justify-items: center; text-align: left; }
-    .op-avatar-frame { margin-bottom: 0.5rem; }
-    .spec-row { flex-direction: column; gap: 2px; }
-    .spec-key { min-width: auto; }
-    .op-dossier-link-wrap { justify-content: flex-start; }
-  }
 </style>
