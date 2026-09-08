@@ -76,7 +76,8 @@ const sortedPosts: ProcessedPost[] = posts
     </div>
 
     <div class="hud-card">
-      <p class="mb-4" data-pt="Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, card strategies, and live tabletop RPG sessions.">
+      <!-- CORREÇÃO DA FONTE APLICADA AQUI COM A CLASSE .stream-lead -->
+      <p class="stream-lead mb-4" data-pt="Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo." data-en="Narrative-driven adventures, high-stakes choices, card strategies, and live tabletop RPG sessions.">
         Aventuras narrativas, escolhas de peso, estratégias de cartas e sessões de RPG de mesa ao vivo.
       </p>
       <div class="tags-grid">
@@ -424,6 +425,16 @@ const sortedPosts: ProcessedPost[] = posts
 
   .stream-status-wrapper {
     margin-bottom: 1.5rem;
+  }
+
+  /* ESTILIZAÇÃO CORRIGIDA PARA O TEXTO DA STREAM */
+  .stream-lead {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-secondary, #8D99AE);
+    letter-spacing: 0.5px;
+    margin: 0;
   }
 
   .section { 
