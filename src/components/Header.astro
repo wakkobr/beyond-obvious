@@ -22,14 +22,15 @@ const { currentPage = "" } = Astro.props;
       <span class="bar"></span>
     </button>
 
-    <!-- LINKS DE NAVEGAÇÃO -->
+    <!-- LINKS DE NAVEGAÇÃO REORGANIZADOS -->
     <div id="nav-menu" class="nav-links">
       <a href="/#stream" class={currentPage === "streams" ? "active" : ""} data-pt="Transmissões" data-en="Streams">Transmissões</a>
-      <a href="/terminal" class={currentPage === "terminal" ? "active" : ""} data-pt="Terminal" data-en="Terminal">Terminal</a>
-      <a href="/grimorio" class={currentPage === "grimorio" ? "active" : ""} data-pt="Grimório" data-en="Grimoire">Grimório</a>
-      <a href="/avatares" class={currentPage === "avatares" || currentPage === "vtubers" ? "active" : ""} data-pt="Avatares" data-en="Avatars">Avatares</a>
       <a href="/dossier" class={currentPage === "dossier" ? "active" : ""} data-pt="Dossiê" data-en="Dossier">Dossiê</a>
-      <a href="/about" class={currentPage === "about" ? "active" : ""} data-pt="Sobre" data-en="About">Sobre</a>
+      <a href="/sobre" class={currentPage === "sobre" || currentPage === "about" ? "active" : ""} data-pt="Sobre" data-en="About">Sobre</a>
+      <a href="/avatares" class={currentPage === "avatares" || currentPage === "vtubers" ? "active" : ""} data-pt="Avatares" data-en="Avatars">Avatares</a>
+      <a href="/terminal" class={currentPage === "terminal" ? "active" : ""} data-pt="Terminal" data-en="Terminal">Terminal</a>
+      <a href="/glossario" class={currentPage === "glossario" ? "active" : ""} data-pt="Glossário" data-en="Glossary">Glossário</a>
+      <a href="/grimorio" class={currentPage === "grimorio" ? "active" : ""} data-pt="Grimório" data-en="Grimoire">Grimório</a>
       <a href="/#signal" class={currentPage === "signal" ? "active" : ""} data-pt="Sinal" data-en="Signal">Sinal</a>
       <button id="lang-toggle" class="lang-btn" aria-label="Alternar idioma">EN</button>
     </div>
