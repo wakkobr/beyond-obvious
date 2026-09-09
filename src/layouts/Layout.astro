@@ -27,7 +27,7 @@ const ogImageURL = new URL(image, siteUrl);
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" id="html-root">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,7 +48,7 @@ const ogImageURL = new URL(image, siteUrl);
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:site_name" content="BEYOND OBVIOUS" />
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale" id="og-locale" content="pt_BR" />
 
     <!-- Twitter / X / Bluesky Preview Cards -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -70,7 +70,7 @@ const ogImageURL = new URL(image, siteUrl);
     </main>
     <Footer />
 
-    <!-- Alternância de idioma com persistência e evento reativo -->
+    <!-- Alternância de idioma blindada contra falhas de seletores e nós mistos -->
     <I18nScript />
   </body>
 </html>

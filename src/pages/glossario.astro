@@ -7,12 +7,14 @@ import Layout from '../layouts/Layout.astro';
   
   <!-- CABEÇALHO DA PÁGINA (PADRÃO HUD UNIFICADO) -->
   <header class="page-header">
-    <div class="status-badge" data-pt="◈ BASE DE DADOS // DIRETÓRIO DE TERMOS" data-en="◈ DATABASE // TERMS DIRECTORY">
-      ◈ BASE DE DADOS // DIRETÓRIO DE TERMOS
+    <div class="status-badge">
+      <span data-pt="◈ BASE DE DADOS // DIRETÓRIO DE TERMOS" data-en="◈ DATABASE // TERMS DIRECTORY">◈ BASE DE DADOS // DIRETÓRIO DE TERMOS</span>
     </div>
-    <h1 class="page-title">// GLOSSÁRIO DO NEXUS</h1>
+    <h1 class="page-title">
+      // <span data-pt="GLOSSÁRIO DO NEXUS" data-en="NEXUS GLOSSARY">GLOSSÁRIO DO NEXUS</span>
+    </h1>
     <p class="page-sub">
-      REGISTRO: #NEXUS-GLOSS-01 • 
+      <span class="reg-label" data-pt="REGISTRO:" data-en="RECORD:">REGISTRO:</span> #NEXUS-GLOSS-01 • 
       <span class="text-dim" data-pt="Dicionário tático para decodificar a malha e os lores" data-en="Tactical dictionary to decode the mesh and lores">Dicionário tático para decodificar a malha e os lores</span>
     </p>
   </header>

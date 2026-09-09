@@ -2,40 +2,88 @@
 // src/components/I18nScript.astro
 ---
 
-<script>
-  const setupLanguageToggle = () => {
-    const toggleBtn = document.getElementById('lang-toggle');
-    let currentLang = localStorage.getItem('siteLang') || 'pt';
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = 'beyond_obvious_lang';
 
-    const applyLanguage = () => {
-      document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+    function getInitialLang() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === 'en' || saved === 'pt') return saved;
+      return navigator.language.startsWith('en') ? 'en' : 'pt';
+    }
 
-      if (toggleBtn) {
-        toggleBtn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
-      }
+    function applyLanguage(lang) {
+      const isEn = lang === 'en';
 
-      document.querySelectorAll<HTMLElement>('[data-pt][data-en]').forEach((el) => {
-        const text = currentLang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
-        if (text) {
-          el.innerHTML = text;
+      // Atualiza raiz HTML e OpenGraph
+      const htmlRoot = document.getElementById('html-root') || document.documentElement;
+      htmlRoot.setAttribute('lang', isEn ? 'en' : 'pt-BR');
+
+      const ogLocale = document.getElementById('og-locale');
+      if (ogLocale) ogLocale.setAttribute('content', isEn ? 'en_US' : 'pt_BR');
+
+      // Varredura universal de elementos com data-pt / data-en
+      const translatableElements = document.querySelectorAll('[data-pt]');
+      translatableElements.forEach((el) => {
+        const textPt = el.getAttribute('data-pt');
+        const textEn = el.getAttribute('data-en');
+        const targetText = isEn ? (textEn || textPt) : textPt;
+
+        if (!targetText) return;
+
+        // Se o elemento não possui nós filhos complexos (apenas texto), substitui direto
+        if (el.children.length === 0) {
+          el.textContent = targetText;
+        } else {
+          // Se tiver ícones ou tags filhas, substitui o primeiro nó de texto legível
+          let textNodeFound = false;
+          el.childNodes.forEach((child) => {
+            if (child.nodeType === Node.TEXT_NODE && child.textContent.trim().length > 0 && !textNodeFound) {
+              child.textContent = targetText;
+              textNodeFound = true;
+            }
+          });
+
+          // Fallback caso não ache nó de texto isolado
+          if (!textNodeFound) {
+            el.textContent = targetText;
+          }
+        }
+
+        // Traduz title/tooltip se existirem atributos dedicados
+        const titlePt = el.getAttribute('data-title-pt');
+        const titleEn = el.getAttribute('data-title-en');
+        if (titlePt) {
+          el.setAttribute('title', isEn ? (titleEn || titlePt) : titlePt);
         }
       });
 
-      // Dispara evento global para componentes reativos (ex: Grimório / Terminal)
-      window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: currentLang } }));
-    };
+      // Atualiza botões seletores de idioma (se houver classe .lang-toggle ou similar)
+      document.querySelectorAll('[data-lang-btn]').forEach((btn) => {
+        const btnLang = btn.getAttribute('data-lang-btn');
+        btn.classList.toggle('active', btnLang === lang);
+      });
 
-    // Aplica o idioma salvo assim que carregar
-    applyLanguage();
+      localStorage.setItem(STORAGE_KEY, lang);
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    }
 
-    toggleBtn?.addEventListener('click', () => {
-      currentLang = currentLang === 'pt' ? 'en' : 'pt';
-      localStorage.setItem('siteLang', currentLang);
-      applyLanguage();
+    // Inicialização ao carregar o DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentLang = getInitialLang();
+      applyLanguage(currentLang);
+
+      // Listener global para cliques em botões de troca de idioma
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-switch-lang]');
+        if (target) {
+          const newLang = target.getAttribute('data-switch-lang');
+          if (newLang) applyLanguage(newLang);
+        }
+      });
     });
-  };
 
-  // Suporte a carregamento inicial e navegação SPA do Astro
-  document.addEventListener('DOMContentLoaded', setupLanguageToggle);
-  document.addEventListener('astro:page-load', setupLanguageToggle);
+    // Exposição no escopo global para chamadas diretas via inline JS se necessário
+    window.__beyondObviousSwitchLang = applyLanguage;
+  })();
 </script>
