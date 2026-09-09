@@ -241,7 +241,7 @@ const sortedPosts: ProcessedPost[] = posts
         </a>
       </div>
 
-      <!-- WIDGET DISCORD COM ÍCONE EM IMAGEM -->
+      <!-- WIDGET DISCORD COM ÍCONE EM IMAGEM + MINI PAINEL DE PATENTES -->
       <div class="discord-widget-container" id="discord-widget">
         <div class="discord-hud-card">
           <div class="crest-corner top-left"></div>
@@ -273,6 +273,20 @@ const sortedPosts: ProcessedPost[] = posts
             <a id="discord-invite-btn" href="https://discord.gg/cd2ErkERd" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
               ⚡ ESTABELECER CONEXÃO
             </a>
+          </div>
+
+          <!-- MINI PAINEL DE HIERARQUIA & PATENTES DO NÓ -->
+          <div class="discord-ranks-preview">
+            <div class="ranks-header">
+              <span class="ranks-title" data-pt="◈ ESTRUTURA DE COMANDO // PATENTES DO NÓ" data-en="◈ COMMAND STRUCTURE // NODE RANKS">◈ ESTRUTURA DE COMANDO // PATENTES DO NÓ</span>
+              <a href="/dossier#patentes" class="ranks-link" data-pt="Ver Diretrizes no Dossiê &rarr;" data-en="View Rules in Dossier &rarr;">Ver Diretrizes no Dossiê &rarr;</a>
+            </div>
+            <div class="ranks-chips">
+              <span class="rank-chip rank-guardian" title="Líder / w4kkomancer_">🔮 Guardião</span>
+              <span class="rank-chip rank-arcanist" title="Moderação & Segurança">🛡️ Arcanistas</span>
+              <span class="rank-chip rank-caster" title="Apoiadores & Inscritos">⚡ Conjuradores</span>
+              <span class="rank-chip rank-adept" title="Chat & Visitantes">📜 Adeptos</span>
+            </div>
           </div>
         </div>
       </div>
@@ -583,6 +597,7 @@ const sortedPosts: ProcessedPost[] = posts
   .signal-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; }
   .signal-handle { font-size: 0.75rem; color: var(--text-secondary); }
 
+  /* WIDGET DISCORD HUD */
   .discord-widget-container { margin-top: 1.5rem; }
   .discord-hud-card {
     position: relative;
@@ -666,6 +681,71 @@ const sortedPosts: ProcessedPost[] = posts
   .online-count { color: var(--accent-blue); font-weight: 700; }
   .btn-discord-join { font-size: 0.85rem; padding: 0.6rem 1.2rem; }
 
+  /* MINI PAINEL DE PATENTES NO CARD DO DISCORD */
+  .discord-ranks-preview {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(224, 225, 221, 0.15);
+  }
+
+  .ranks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.7rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ranks-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: 1.2px;
+  }
+
+  .ranks-link {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-crimson);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .ranks-link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .ranks-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .rank-chip {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(224, 225, 221, 0.1);
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+  }
+
+  .rank-chip:hover {
+    transform: translateY(-1px);
+  }
+
+  .rank-guardian { border-color: rgba(157, 78, 221, 0.4); color: #B57BED; }
+  .rank-arcanist { border-color: rgba(76, 201, 240, 0.4); color: var(--accent-blue); }
+  .rank-caster { border-color: rgba(230, 57, 70, 0.4); color: var(--accent-crimson); }
+  .rank-adept { border-color: rgba(42, 157, 143, 0.4); color: #2A9D8F; }
+
   @media (max-width: 768px) {
     .hero-split { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; padding: 2rem 0; }
     .hero-crest-frame { margin: 0 auto; }
@@ -674,5 +754,6 @@ const sortedPosts: ProcessedPost[] = posts
     .hero-title { font-size: 2rem; }
     .discord-hud-body { flex-direction: column; align-items: flex-start; }
     .btn-discord-join { width: 100%; text-align: center; }
+    .ranks-header { flex-direction: column; align-items: flex-start; }
   }
 </style>
