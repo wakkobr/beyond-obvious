@@ -61,12 +61,12 @@ const sortedPosts: ProcessedPost[] = posts
       </p>
 
       <a href="/dossier" class="dossier-hero-link" data-pt="[ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]" data-en="[ 📁 ACCESS OPERATOR DOSSIER // CLASSIFIED ]">
-        [ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFICADO ]
+        [ 📁 ACESSAR DOSSIÊ DO OPERADOR // CLASSIFIED ]
       </a>
 
       <div class="hero-actions">
         <a href="#stream" class="btn btn-primary" data-pt="⚡ ACESSAR TRANSMISSÃO" data-en="⚡ ENTER STREAM">⚡ ACESSAR TRANSMISSÃO</a>
-        <a href="/terminal" class="btn btn-outline" data-pt="📜 EXPLORAR TERMINAL" data-en="📜 EXPLORE TERMINAL">📜 EXPLORAR TERMINAL</a>
+        <a href="/terminal" class="btn btn-outline" data-pt="📜 EXPLORAR TERMINAL" data-en="📜 EXPLORE TERMINAL">📜 EXPLORE TERMINAL</a>
       </div>
     </div>
   </section>
@@ -241,7 +241,7 @@ const sortedPosts: ProcessedPost[] = posts
         </a>
       </div>
 
-      <!-- WIDGET DISCORD (LINK FIXO GARANTIDO) -->
+      <!-- WIDGET DISCORD COM CONTADOR ONLINE -->
       <div class="discord-widget-container" id="discord-widget">
         <div class="discord-hud-card">
           <div class="crest-corner top-left"></div>
@@ -263,14 +263,14 @@ const sortedPosts: ProcessedPost[] = posts
                 <span class="discord-icon-inner">BO</span>
               </div>
               <div>
-                <h3 class="discord-name">BEYOND OBVIOUS</h3>
+                <h3 id="discord-server-name" class="discord-name">BEYOND OBVIOUS</h3>
                 <p class="discord-presence">
-                  <span class="online-count">LINK ATIVO</span> <span data-pt="canal de comunicação" data-en="communication channel">canal de comunicação</span>
+                  <span class="online-count" id="discord-online-count">--</span> <span data-pt="agentes conectados agora" data-en="agents connected right now">agentes conectados agora</span>
                 </p>
               </div>
             </div>
 
-            <a href="https://discord.gg/cd2ErkERd" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
+            <a id="discord-invite-btn" href="https://discord.gg/cd2ErkERd" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
               ⚡ ESTABELECER CONEXÃO
             </a>
           </div>
@@ -281,7 +281,7 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 </Layout>
 
-<!-- SCRIPT NATIVO DE SCROLL EXATO -->
+<!-- SCRIPT NATIVO DE SCROLL E API DO DISCORD -->
 <script>
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
@@ -303,6 +303,37 @@ const sortedPosts: ProcessedPost[] = posts
       }
     });
   });
+
+  async function fetchDiscordWidget() {
+    const serverId = '1545471219648962740';
+    const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Falha ao carregar API do Discord');
+      
+      const data = await response.json();
+
+      const nameEl = document.getElementById('discord-server-name');
+      if (nameEl && data.name) nameEl.innerText = data.name.toUpperCase();
+      
+      const countEl = document.getElementById('discord-online-count');
+      if (countEl) {
+        countEl.innerText = String(data.presence_count ?? (data.members ? data.members.length : 0));
+      }
+      
+      const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement | null;
+      if (inviteBtn && data.instant_invite) {
+        inviteBtn.href = data.instant_invite;
+      }
+    } catch (err) {
+      console.warn('Erro Discord Widget:', err);
+      const countEl = document.getElementById('discord-online-count');
+      if (countEl) countEl.innerText = '0';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', fetchDiscordWidget);
 </script>
 
 <style>
