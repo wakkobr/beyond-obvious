@@ -21,8 +21,25 @@ const rawCat = String(entry.data.category || '').toLowerCase().trim() as Categor
 const categoryKey: CategoryId = CATEGORIES[rawCat] ? rawCat : 'tech';
 const catInfo = CATEGORIES[categoryKey];
 
+const categoryLabelsEn: Record<string, string> = {
+  tech: "Tech & Systems",
+  games: "Games",
+  rpg: "Tabletop RPG",
+  cinema: "Cinema & TV",
+  books: "Books & Literature",
+  meta: "Meta & Lore",
+};
+const labelEn = categoryLabelsEn[categoryKey] || catInfo.label;
+
 const starDisplay = entry.data.rating ? '★'.repeat(parseInt(entry.data.rating, 10)) : '';
-const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('pt-BR', {
+
+const dateObj = new Date(entry.data.publishDate);
+const formattedDatePt = dateObj.toLocaleDateString('pt-BR', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+const formattedDateEn = dateObj.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
@@ -50,10 +67,12 @@ const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('pt-BR
     <header class="article-header">
       <div class="article-meta">
         <span class={`category-tag ${catInfo.badgeClass}`}>
-          {catInfo.icon} {catInfo.label}
+          {catInfo.icon} <span data-pt={catInfo.label} data-en={labelEn}>{catInfo.label}</span>
         </span>
         {starDisplay && <span class="star-rating">{starDisplay}</span>}
-        <span class="article-date"><code>◈ {formattedDate}</code></span>
+        <span class="article-date">
+          <code data-pt={`◈ ${formattedDatePt}`} data-en={`◈ ${formattedDateEn}`}>◈ {formattedDatePt}</code>
+        </span>
       </div>
       <h1 class="article-title">{entry.data.title}</h1>
       {entry.data.summary && <p class="article-summary">{entry.data.summary}</p>}
@@ -149,7 +168,6 @@ const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('pt-BR
     font-style: italic;
   }
 
-  /* CONTEÚDO MARKDOWN */
   .markdown-body {
     color: var(--text-primary);
     font-size: 1.05rem;
