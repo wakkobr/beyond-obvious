@@ -30,6 +30,15 @@ const sortedPosts: ProcessedPost[] = posts
       categoryKey,
     };
   });
+
+const categoryLabelsEn: Record<string, string> = {
+  tech: "TECH & SYSTEMS",
+  games: "GAMES & STRATEGY",
+  rpg: "TABLETOP RPG",
+  cinema: "CINEMA & TV",
+  books: "BOOKS & LITERATURE",
+  meta: "META & LORE",
+};
 ---
 
 <Layout title="BEYOND OBVIOUS // @w4kkomancer_" currentPage="home">
@@ -103,6 +112,8 @@ const sortedPosts: ProcessedPost[] = posts
     <div class="posts-grid">
       {sortedPosts.length > 0 ? sortedPosts.map((post: ProcessedPost) => {
         const catInfo = CATEGORIES[post.categoryKey];
+        const labelPt = post.categoryKey.toUpperCase();
+        const labelEn = categoryLabelsEn[post.categoryKey] || labelPt;
         return (
           <div class="hud-card">
             <div class="crest-corner top-left"></div>
@@ -112,7 +123,7 @@ const sortedPosts: ProcessedPost[] = posts
 
             <div class="card-meta">
               <span class={`category-tag ${catInfo.badgeClass}`}>
-                {catInfo.icon} {post.categoryKey.toUpperCase()}
+                {catInfo.icon} <span data-pt={labelPt} data-en={labelEn}>{labelPt}</span>
               </span>
               {post.stars && (
                 <span class="star-rating">
@@ -254,7 +265,7 @@ const sortedPosts: ProcessedPost[] = posts
               <span class="pulse-dot"></span>
               <span data-pt="FREQ // DISCORD ONLINE" data-en="FREQ // DISCORD ONLINE">FREQ // DISCORD ONLINE</span>
             </div>
-            <span class="discord-loc">LOC: NEXUS // SERV-1545</span>
+            <span class="discord-loc" data-pt="LOC: NEXUS // SERV-1545" data-en="LOC: NEXUS // SERV-1545">LOC: NEXUS // SERV-1545</span>
           </div>
 
           <div class="discord-hud-body">
@@ -282,10 +293,10 @@ const sortedPosts: ProcessedPost[] = posts
               <a href="/dossier#patentes" class="ranks-link" data-pt="Ver Diretrizes no Dossiê &rarr;" data-en="View Rules in Dossier &rarr;">Ver Diretrizes no Dossiê &rarr;</a>
             </div>
             <div class="ranks-chips">
-              <span class="rank-chip rank-guardian" title="Líder / w4kkomancer_">🔮 Guardião</span>
-              <span class="rank-chip rank-arcanist" title="Moderação & Segurança">🛡️ Arcanistas</span>
-              <span class="rank-chip rank-caster" title="Apoiadores & Inscritos">⚡ Conjuradores</span>
-              <span class="rank-chip rank-adept" title="Chat & Visitantes">📜 Adeptos</span>
+              <span class="rank-chip rank-guardian" data-pt="🔮 Guardião" data-en="🔮 Warden">🔮 Guardião</span>
+              <span class="rank-chip rank-arcanist" data-pt="🛡️ Arcanistas" data-en="🛡️ Arcanists">🛡️ Arcanistas</span>
+              <span class="rank-chip rank-caster" data-pt="⚡ Conjuradores" data-en="⚡ Casters">⚡ Conjuradores</span>
+              <span class="rank-chip rank-adept" data-pt="📜 Adeptos" data-en="📜 Adepts">📜 Adeptos</span>
             </div>
           </div>
         </div>
