@@ -241,7 +241,7 @@ const sortedPosts: ProcessedPost[] = posts
         </a>
       </div>
 
-      <!-- WIDGET DISCORD -->
+      <!-- WIDGET DISCORD (LINK FIXO GARANTIDO) -->
       <div class="discord-widget-container" id="discord-widget">
         <div class="discord-hud-card">
           <div class="crest-corner top-left"></div>
@@ -263,14 +263,14 @@ const sortedPosts: ProcessedPost[] = posts
                 <span class="discord-icon-inner">BO</span>
               </div>
               <div>
-                <h3 id="discord-server-name" class="discord-name">BEYOND OBVIOUS</h3>
+                <h3 class="discord-name">BEYOND OBVIOUS</h3>
                 <p class="discord-presence">
-                  <span class="online-count" id="discord-online-count">--</span> <span data-pt="agentes conectados agora" data-en="agents connected right now">agentes conectados agora</span>
+                  <span class="online-count">LINK ATIVO</span> <span data-pt="canal de comunicação" data-en="communication channel">canal de comunicação</span>
                 </p>
               </div>
             </div>
 
-            <a id="discord-invite-btn" href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
+            <a href="https://discord.gg/cd2ErkERd" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-discord-join" data-pt="⚡ ESTABELECER CONEXÃO" data-en="⚡ ESTABLISH LINK">
               ⚡ ESTABELECER CONEXÃO
             </a>
           </div>
@@ -281,9 +281,8 @@ const sortedPosts: ProcessedPost[] = posts
   </section>
 </Layout>
 
-<!-- SCRIPT NATIVO DE SCROLL EXATO E DISCORD -->
+<!-- SCRIPT NATIVO DE SCROLL EXATO -->
 <script>
-  // Alinhamento exato via JS com tipagem TypeScript
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
       const href = anchor.getAttribute('href');
@@ -304,37 +303,6 @@ const sortedPosts: ProcessedPost[] = posts
       }
     });
   });
-
-  async function fetchDiscordWidget() {
-    const serverId = '1545471219648962740';
-    const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
-
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error('Falha ao carregar API do Discord');
-      
-      const data = await response.json();
-
-      const nameEl = document.getElementById('discord-server-name');
-      if (nameEl && data.name) nameEl.innerText = data.name.toUpperCase();
-      
-      const countEl = document.getElementById('discord-online-count');
-      if (countEl) {
-        countEl.innerText = String(data.presence_count ?? (data.members ? data.members.length : 0));
-      }
-      
-      const inviteBtn = document.getElementById('discord-invite-btn') as HTMLAnchorElement | null;
-      if (inviteBtn && data.instant_invite) {
-        inviteBtn.href = data.instant_invite;
-      }
-    } catch (err) {
-      console.warn('Erro Discord Widget:', err);
-      const countEl = document.getElementById('discord-online-count');
-      if (countEl) countEl.innerText = '0';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', fetchDiscordWidget);
 </script>
 
 <style>
@@ -379,7 +347,6 @@ const sortedPosts: ProcessedPost[] = posts
     line-height: 1.1; 
   }
 
-  /* ESTILIZAÇÃO DO SUBTÍTULO DO HERO CORRIGIDA E UNIFICADA */
   .hero-sub { 
     font-family: 'Rajdhani', sans-serif; 
     font-size: 1.2rem; 
@@ -445,7 +412,6 @@ const sortedPosts: ProcessedPost[] = posts
     margin-bottom: 1.5rem;
   }
 
-  /* ESTILIZAÇÃO PADRÃO PARA OS TEXTOS DE INTRODUÇÃO DAS SEÇÕES */
   .section-lead {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.05rem;
@@ -523,7 +489,6 @@ const sortedPosts: ProcessedPost[] = posts
   .tag { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(224, 225, 221, 0.1); font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 4px; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
-  /* PREVIEW DA REDE DE AVATARES */
   .operators-quick-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -559,7 +524,6 @@ const sortedPosts: ProcessedPost[] = posts
   .quick-role { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: var(--text-secondary); }
   .quick-arrow { color: var(--text-secondary); font-weight: 700; }
 
-  /* GRADE UNIFICADA DE SINAIS */
   .signal-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -588,7 +552,6 @@ const sortedPosts: ProcessedPost[] = posts
   .signal-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; }
   .signal-handle { font-size: 0.75rem; color: var(--text-secondary); }
 
-  /* WIDGET DISCORD HUD */
   .discord-widget-container { margin-top: 1.5rem; }
   .discord-hud-card {
     position: relative;
