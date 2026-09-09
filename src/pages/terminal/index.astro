@@ -10,7 +10,8 @@ type TerminalPost = CollectionEntry<'terminal'>;
 interface ProcessedPost extends TerminalPost {
   slug: string;
   stars: string;
-  formattedDate: string;
+  formattedDatePt: string;
+  formattedDateEn: string;
   categoryKey: CategoryId;
 }
 
@@ -21,13 +22,19 @@ const sortedPosts: ProcessedPost[] = posts
   .map((post: TerminalPost): ProcessedPost => {
     const rawCat = String(post.data.category || '').toLowerCase().trim() as CategoryId;
     const categoryKey: CategoryId = CATEGORIES[rawCat] ? rawCat : 'tech';
+    const dateObj = new Date(post.data.publishDate);
 
     return {
       ...post,
       slug: post.id.replace(/\.[^/.]+$/, ''),
       stars: post.data.rating ? '★'.repeat(parseInt(post.data.rating, 10)) : '',
       categoryKey,
-      formattedDate: new Date(post.data.publishDate).toLocaleDateString('pt-BR', {
+      formattedDatePt: dateObj.toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }),
+      formattedDateEn: dateObj.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -58,7 +65,7 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
     <div class="status-badge" data-pt="◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS" data-en="◈ CENTRAL ARCHIVE // MEDIA LOGS & ESSAYS">
       ◈ ARQUIVO CENTRAL // REGISTROS DE MÍDIA & ENSAIOS
     </div>
-    <h1 class="page-title">// TERMINAL DE MÍDIA</h1>
+    <h1 class="page-title" data-pt="// TERMINAL DE MÍDIA" data-en="// MEDIA TERMINAL">// TERMINAL DE MÍDIA</h1>
     <p class="page-sub">
       <span data-pt="ANÁLISES & ENSAIOS NARRATIVOS" data-en="ANALYSES & NARRATIVE ESSAYS">ANÁLISES & ENSAIOS NARRATIVOS</span> • 
       <span class="text-dim" data-pt="Desconstrução de mecânicas, ficção e crônicas" data-en="Mechanics breakdowns, fiction, and chronicles">Desconstrução de mecânicas, ficção e crônicas</span>
@@ -74,7 +81,7 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
         data-en={`[ ALL (${sortedPosts.length}) ]`}
       >
         <span class="btn-icon">◈</span>
-        <span class="filter-label">TODOS</span>
+        <span class="filter-label" data-pt="TODOS" data-en="ALL">TODOS</span>
         <span class="counter">({sortedPosts.length})</span>
       </button>
 
@@ -91,7 +98,7 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
             data-en={trans.en}
           >
             <span class="btn-icon">{catInfo.icon}</span>
-            <span class="filter-label">{trans.pt}</span>
+            <span class="filter-label" data-pt={trans.pt} data-en={trans.en}>{trans.pt}</span>
             <span class="counter">({count})</span>
           </button>
         );
@@ -132,7 +139,7 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
               <h2 class="card-title">{post.data.title}</h2>
 
               <div class="post-date">
-                <code>◈ {post.formattedDate}</code>
+                <code data-pt={`◈ ${post.formattedDatePt}`} data-en={`◈ ${post.formattedDateEn}`}>◈ {post.formattedDatePt}</code>
               </div>
 
               <p class="card-desc">
