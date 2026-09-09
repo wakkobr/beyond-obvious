@@ -41,18 +41,49 @@ const { currentPage = "" } = Astro.props;
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const navMenu = document.getElementById('nav-menu');
   const navLinks = navMenu?.querySelectorAll('a');
+  const langBtn = document.getElementById('lang-toggle');
 
+  // Menu Mobile
   toggleBtn?.addEventListener('click', () => {
     navMenu?.classList.toggle('is-open');
     toggleBtn?.classList.toggle('is-active');
   });
 
-  // Fecha o menu ao clicar em qualquer link
   navLinks?.forEach(link => {
     link.addEventListener('click', () => {
       navMenu?.classList.remove('is-open');
       toggleBtn?.classList.remove('is-active');
     });
+  });
+
+  // Atualização do texto do botão com base no idioma atual
+  function updateButtonLabel(lang: string) {
+    if (langBtn) {
+      // Se está em PT, oferece o botão para ir para EN, e vice-versa
+      langBtn.textContent = lang === 'en' ? 'PT' : 'EN';
+    }
+  }
+
+  // Alternância de idioma ao clicar
+  langBtn?.addEventListener('click', () => {
+    const currentLang = localStorage.getItem('beyond_obvious_lang') || 'pt';
+    const nextLang = currentLang === 'pt' ? 'en' : 'pt';
+    
+    // @ts-ignore
+    if (typeof window.__beyondObviousSwitchLang === 'function') {
+      // @ts-ignore
+      window.__beyondObviousSwitchLang(nextLang);
+    }
+  });
+
+  // Sincroniza o label ao carregar a página e ao receber o evento
+  window.addEventListener('languageChanged', (e: any) => {
+    updateButtonLabel(e.detail.lang);
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = localStorage.getItem('beyond_obvious_lang') || 'pt';
+    updateButtonLabel(currentLang);
   });
 </script>
 
