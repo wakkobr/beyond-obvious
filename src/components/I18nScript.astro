@@ -9,7 +9,7 @@
     function getInitialLang() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved === 'en' || saved === 'pt') return saved;
-      return navigator.language.startsWith('en') ? 'en' : 'pt';
+      return 'pt'; // Abre sempre em Português na primeira visita
     }
 
     function applyLanguage(lang) {
