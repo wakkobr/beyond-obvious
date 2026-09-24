@@ -125,11 +125,14 @@ const categoryLabelsEn: Record<string, string> = {
               <span class={`category-tag ${catInfo.badgeClass}`}>
                 {catInfo.icon} <span data-pt={labelPt} data-en={labelEn}>{labelPt}</span>
               </span>
-              {post.stars && (
-                <span class="star-rating">
-                  {post.stars}
-                </span>
-              )}
+              <div class="meta-right">
+                <span class="lang-tag">PT-BR</span>
+                {post.stars && (
+                  <span class="star-rating">
+                    {post.stars}
+                  </span>
+                )}
+              </div>
             </div>
             <h3 class="card-title">{post.data.title}</h3>
             <p class="card-desc">
@@ -173,11 +176,11 @@ const categoryLabelsEn: Record<string, string> = {
           <span class="quick-arrow">&rarr;</span>
         </a>
 
-        <a href="https://lunaehaven.beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="operator-quick-card border-purple">
+        <a href="https://moonhaven.beyond-obvious.net" target="_blank" rel="noopener noreferrer" class="operator-quick-card border-purple">
           <span class="quick-icon">🌙</span>
           <div class="quick-info">
             <span class="quick-name">DeniLunae</span>
-            <span class="quick-role" data-pt="Nexus de Vínculo: Lunaehaven • Guardiã Lunar" data-en="Bond Nexus: Lunaehaven • Lunar Guardian">Nexus de Vínculo: Lunaehaven • Guardiã Lunar</span>
+            <span class="quick-role" data-pt="Nexus de Vínculo: Moonhaven • Guardiã Lunar" data-en="Bond Nexus: Moonhaven • Lunar Guardian">Nexus de Vínculo: Moonhaven • Guardiã Lunar</span>
           </div>
           <span class="quick-arrow">&rarr;</span>
         </a>
@@ -527,6 +530,7 @@ const categoryLabelsEn: Record<string, string> = {
   .card-meta { 
     display: flex; 
     justify-content: space-between; 
+    align-items: center;
     font-size: 0.8rem; 
     margin-bottom: 0.5rem; 
   }
@@ -536,6 +540,24 @@ const categoryLabelsEn: Record<string, string> = {
     font-family: 'Rajdhani', sans-serif;
     letter-spacing: 0.5px;
     font-size: 0.78rem;
+  }
+
+  .meta-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .lang-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px solid rgba(76, 201, 240, 0.25);
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
   }
 
   .star-rating { color: var(--accent-gold, #F4A261); letter-spacing: 2px; }
