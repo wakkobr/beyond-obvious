@@ -69,6 +69,7 @@ const formattedDateEn = dateObj.toLocaleDateString('en-US', {
         <span class={`category-tag ${catInfo.badgeClass}`}>
           {catInfo.icon} <span data-pt={catInfo.label} data-en={labelEn}>{catInfo.label}</span>
         </span>
+        <span class="lang-tag">PT-BR</span>
         {starDisplay && <span class="star-rating">{starDisplay}</span>}
         <span class="article-date">
           <code data-pt={`◈ ${formattedDatePt}`} data-en={`◈ ${formattedDateEn}`}>◈ {formattedDatePt}</code>
@@ -77,6 +78,17 @@ const formattedDateEn = dateObj.toLocaleDateString('en-US', {
       <h1 class="article-title">{entry.data.title}</h1>
       {entry.data.summary && <p class="article-summary">{entry.data.summary}</p>}
     </header>
+
+    <!-- AVISO DE FREQUÊNCIA NATIVA (EXIBIDO APENAS EM MODO INGLÊS) -->
+    <div class="hud-lang-notice" id="lang-notice">
+      <span class="notice-icon">📡</span>
+      <div class="notice-text">
+        <strong data-pt="REGISTRO NA FREQUÊNCIA ORIGINAL" data-en="ORIGINAL FREQUENCY ARCHIVE">REGISTRO NA FREQUÊNCIA ORIGINAL</strong>
+        <p data-pt="Este documento foi capturado e compilado em seu idioma nativo (Português - Brasil)." data-en="This record was captured and compiled in its native broadcast dialect (Portuguese - Brazil).">
+          Este documento foi capturado e compilado em seu idioma nativo (Português - Brasil).
+        </p>
+      </div>
+    </div>
 
     <div class="markdown-body">
       <Content />
@@ -139,6 +151,18 @@ const formattedDateEn = dateObj.toLocaleDateString('en-US', {
     letter-spacing: 1px;
   }
 
+  .lang-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px solid rgba(76, 201, 240, 0.25);
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+  }
+
   .star-rating {
     color: var(--accent-gold);
     letter-spacing: 2px;
@@ -168,6 +192,46 @@ const formattedDateEn = dateObj.toLocaleDateString('en-US', {
     font-style: italic;
   }
 
+  /* AVISO HUD DE IDIOMA ORIGINAL */
+  .hud-lang-notice {
+    display: none;
+    align-items: flex-start;
+    gap: 0.9rem;
+    background: rgba(11, 12, 16, 0.7);
+    border: 1px dashed rgba(76, 201, 240, 0.35);
+    border-left: 3px solid var(--accent-blue);
+    padding: 0.9rem 1.2rem;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 2rem;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  :global(html[lang="en"]) .hud-lang-notice {
+    display: flex;
+  }
+
+  .notice-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .notice-text strong {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .notice-text p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* CONTEÚDO MARKDOWN */
   .markdown-body {
     color: var(--text-primary);
     font-size: 1.05rem;
