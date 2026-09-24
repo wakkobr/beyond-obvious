@@ -15,6 +15,21 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
   cinema: { pt: 'CINEMA, ANIME & SÉRIES', en: 'CINEMA, ANIME & SERIES' },
   books: { pt: 'LEITURA & NARRATIVA', en: 'READING & NARRATIVE' },
 };
+
+// Dicionário para subcategorias/badges mais comuns do Grimório
+const BADGE_TRANSLATIONS: Record<string, string> = {
+  'gerador': 'Generator',
+  'mapas': 'Maps',
+  'vtt': 'VTT',
+  'regras': 'Rules',
+  'utilitário': 'Utility',
+  'ferramenta': 'Tool',
+  'compêndio': 'Compendium',
+  'tokens': 'Tokens',
+  'sons': 'Audio / SFX',
+  'ia': 'AI',
+  'dev': 'Dev',
+};
 ---
 
 <Layout
@@ -61,7 +76,7 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
           data-en="★ FEATURED"
         >
           <span class="btn-icon">★</span>
-          <span class="filter-label">DESTAQUES</span>
+          <span class="filter-label" data-pt="DESTAQUES" data-en="FEATURED">DESTAQUES</span>
           <span class="counter">({featuredCount})</span>
         </button>
 
@@ -73,7 +88,7 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
           data-en="◈ ALL"
         >
           <span class="btn-icon">◈</span>
-          <span class="filter-label">TODOS</span>
+          <span class="filter-label" data-pt="TODOS" data-en="ALL">TODOS</span>
           <span class="counter">({GRIMORIO_ITEMS.length})</span>
         </button>
 
@@ -89,7 +104,7 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
               data-en={trans.en}
             >
               <span class="btn-icon">{cat.icon}</span>
-              <span class="filter-label">{trans.pt}</span>
+              <span class="filter-label" data-pt={trans.pt} data-en={trans.en}>{trans.pt}</span>
               <span class="counter">({count})</span>
             </button>
           );
@@ -106,6 +121,11 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
       {GRIMORIO_ITEMS.map((item) => {
         const catInfo = CATEGORIES[item.category];
         const trans = CATEGORY_TRANSLATIONS[item.category] || { pt: catInfo.label, en: catInfo.label };
+        const badgeLower = item.badge ? item.badge.toLowerCase().trim() : '';
+        const badgeEn = item.badgeEn || BADGE_TRANSLATIONS[badgeLower] || item.badge || '';
+        const descEn = item.descriptionEn || item.description;
+        const titleEn = item.titleEn || item.title;
+
         return (
           <article
             class="grimorio-card hud-card"
@@ -129,7 +149,13 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
               >
                 {catInfo.icon} {trans.pt}
               </span>
-              {item.badge && <span class="sub-badge">{item.badge}</span>}
+
+              {item.badge && (
+                <span class="sub-badge" data-pt={item.badge} data-en={badgeEn}>
+                  {item.badge}
+                </span>
+              )}
+
               {item.isFeatured && (
                 <span
                   class="featured-badge"
@@ -143,12 +169,14 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
 
             <h2 class="item-title">
               <a href={item.url} target="_blank" rel="noopener noreferrer">
-                <span>{item.title}</span>
+                <span data-pt={item.title} data-en={titleEn}>{item.title}</span>
                 <span class="arrow-glyph">&nearr;</span>
               </a>
             </h2>
 
-            <p class="item-desc">{item.description}</p>
+            <p class="item-desc" data-pt={item.description} data-en={descEn}>
+              {item.description}
+            </p>
 
             <footer class="card-footer">
               <a href={item.url} target="_blank" rel="noopener noreferrer" class="link-url">
@@ -186,14 +214,15 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
   const cards = document.querySelectorAll<HTMLElement>('.grimorio-card');
   const noResults = document.getElementById('no-results');
   const resultsCount = document.getElementById('results-count');
-  const langToggleBtn = document.getElementById('lang-toggle');
   const totalItems = cards.length;
 
   let activeCategory = 'featured';
   let searchTerm = '';
 
   function getCurrentLang(): 'pt' | 'en' {
-    return langToggleBtn?.textContent?.trim().toUpperCase() === 'PT' ? 'en' : 'pt';
+    const saved = localStorage.getItem('beyond_obvious_lang');
+    if (saved === 'en' || saved === 'pt') return saved;
+    return navigator.language.startsWith('en') ? 'en' : 'pt';
   }
 
   function updateResultsCounter(visibleCount: number) {
@@ -282,12 +311,16 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
     applyFilters();
   });
 
-  // Atualiza os contadores dinâmicos e o placeholder quando o idioma for alternado no Header
-  langToggleBtn?.addEventListener('click', () => {
-    setTimeout(() => {
-      applyFilters();
-      updateInputPlaceholder();
-    }, 50);
+  // Reage ao evento global disparado pelo I18nScript
+  window.addEventListener('languageChanged', () => {
+    applyFilters();
+    updateInputPlaceholder();
+  });
+
+  // Inicializa o contador e placeholder corretos no primeiro carregamento
+  document.addEventListener('DOMContentLoaded', () => {
+    updateInputPlaceholder();
+    applyFilters();
   });
 </script>
 

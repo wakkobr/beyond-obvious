@@ -18,10 +18,13 @@ export interface CategoryInfo {
 
 export interface GrimorioItem {
   title: string;
+  titleEn?: string; // Opcional
   url: string;
   category: CategoryId;
   description: string;
+  descriptionEn?: string; // Opcional
   badge?: string;
+  badgeEn?: string; // Opcional (para subcategorias como "Mapas", "VTT", etc.)
   isFeatured?: boolean;
 }
 
