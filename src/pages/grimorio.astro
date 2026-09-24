@@ -16,7 +16,7 @@ const CATEGORY_TRANSLATIONS: Record<string, { pt: string; en: string }> = {
   books: { pt: 'LEITURA & NARRATIVA', en: 'READING & NARRATIVE' },
 };
 
-// Dicionário para subcategorias/badges mais comuns do Grimório
+// Dicionário de badges/subcategorias comuns
 const BADGE_TRANSLATIONS: Record<string, string> = {
   'gerador': 'Generator',
   'mapas': 'Maps',
@@ -123,8 +123,8 @@ const BADGE_TRANSLATIONS: Record<string, string> = {
         const trans = CATEGORY_TRANSLATIONS[item.category] || { pt: catInfo.label, en: catInfo.label };
         const badgeLower = item.badge ? item.badge.toLowerCase().trim() : '';
         const badgeEn = item.badgeEn || BADGE_TRANSLATIONS[badgeLower] || item.badge || '';
-        const descEn = item.descriptionEn || item.description;
         const titleEn = item.titleEn || item.title;
+        const hasDescEn = Boolean(item.descriptionEn);
 
         return (
           <article
@@ -174,7 +174,12 @@ const BADGE_TRANSLATIONS: Record<string, string> = {
               </a>
             </h2>
 
-            <p class="item-desc" data-pt={item.description} data-en={descEn}>
+            <!-- Descrição: Se não houver tradução em inglês, recebe a classe no-en-desc para ser oculta em EN -->
+            <p
+              class={`item-desc ${!hasDescEn ? 'no-en-desc' : ''}`}
+              data-pt={item.description}
+              data-en={item.descriptionEn || ''}
+            >
               {item.description}
             </p>
 
@@ -472,9 +477,15 @@ const BADGE_TRANSLATIONS: Record<string, string> = {
     overflow: hidden;
   }
 
+  /* Oculta em EN quando não houver descriptionEn */
+  :global(html[lang="en"]) .item-desc.no-en-desc {
+    display: none;
+  }
+
   .card-footer {
     border-top: 1px solid rgba(224, 225, 221, 0.06);
     padding-top: 0.5rem;
+    margin-top: auto;
   }
 
   .link-url {
