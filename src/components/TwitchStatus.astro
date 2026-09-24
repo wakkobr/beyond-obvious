@@ -16,7 +16,7 @@ const { channelName = "w4kkomancer_" } = Astro.props;
   <div class="widget-header">
     <div class="signal-indicator" id="signal-badge">
       <span class="pulse-dot"></span>
-      <span class="status-label" id="status-text" data-pt="SINTONIZANDO SINAL..." data-en="TUNING SIGNAL...">SINTONIZANDO SINAL...</span>
+      <span class="status-label" id="status-text" data-pt="FREQUÊNCIA // STANDBY" data-en="FREQUENCY // STANDBY">FREQUÊNCIA // STANDBY</span>
     </div>
     <span class="channel-tag">◈ TWITCH.TV/{channelName.toUpperCase()}</span>
   </div>
@@ -24,7 +24,7 @@ const { channelName = "w4kkomancer_" } = Astro.props;
   <div class="widget-body">
     <div class="status-info">
       <h3 class="widget-title" id="stream-title" data-pt="SISTEMA EM ESPERA" data-en="SYSTEM ON STANDBY">SISTEMA EM ESPERA</h3>
-      <p class="widget-desc" id="stream-game" data-pt="Transmissões de RPG, Narrativas & Gameplay Tecnomágica." data-en="RPG, Narrative Adventures & Technomantic Gameplay.">Transmissões de RPG, Narrativas & Gameplay Tecnomágica.</p>
+      <p class="widget-desc" id="stream-game" data-pt="Próxima live em breve. Siga o canal para notificações." data-en="Next live soon. Follow the channel for alerts.">Próxima live em breve. Siga o canal para notificações.</p>
     </div>
 
     <div class="widget-actions">
@@ -52,12 +52,26 @@ const { channelName = "w4kkomancer_" } = Astro.props;
     const streamGame = document.getElementById('stream-game');
     const btnText = document.getElementById('btn-text');
 
-    const renderLocalizedTexts = (lang) => {
-      if (statusText) statusText.innerHTML = lang === 'pt' ? statusText.getAttribute('data-pt') : statusText.getAttribute('data-en');
-      if (streamTitle) streamTitle.innerHTML = lang === 'pt' ? streamTitle.getAttribute('data-pt') : streamTitle.getAttribute('data-en');
-      if (streamGame) streamGame.innerHTML = lang === 'pt' ? streamGame.getAttribute('data-pt') : streamGame.getAttribute('data-en');
-      if (btnText) btnText.innerHTML = lang === 'pt' ? btnText.getAttribute('data-pt') : btnText.getAttribute('data-en');
+    const getStoredLang = () => {
+      const saved = localStorage.getItem('beyond_obvious_lang');
+      if (saved === 'en' || saved === 'pt') return saved;
+      return navigator.language.startsWith('en') ? 'en' : 'pt';
     };
+
+    const renderLocalizedTexts = (lang) => {
+      const targetLang = lang || getStoredLang();
+      if (statusText) statusText.textContent = targetLang === 'en' ? statusText.getAttribute('data-en') : statusText.getAttribute('data-pt');
+      if (streamTitle) streamTitle.textContent = targetLang === 'en' ? streamTitle.getAttribute('data-en') : streamTitle.getAttribute('data-pt');
+      if (streamGame) streamGame.textContent = targetLang === 'en' ? streamGame.getAttribute('data-en') : streamGame.getAttribute('data-pt');
+      if (btnText) btnText.textContent = targetLang === 'en' ? btnText.getAttribute('data-en') : btnText.getAttribute('data-pt');
+    };
+
+    // Renderiza de imediato com base na chave correta do sistema
+    renderLocalizedTexts();
+
+    window.addEventListener('languageChanged', (e) => {
+      renderLocalizedTexts(e.detail?.lang);
+    });
 
     try {
       const response = await fetch(`https://decapi.me/twitch/uptime/${channel}`);
@@ -94,19 +108,14 @@ const { channelName = "w4kkomancer_" } = Astro.props;
         btnText?.setAttribute('data-en', 'Access Frequency');
       }
 
-      const initialLang = localStorage.getItem('siteLang') || 'pt';
-      renderLocalizedTexts(initialLang);
-
-      window.addEventListener('languageChanged', (e) => {
-        renderLocalizedTexts(e.detail.lang);
-      });
-
+      renderLocalizedTexts();
     } catch (e) {
       card.classList.add('is-offline');
+      renderLocalizedTexts();
     }
   };
 
-  checkTwitchStatus();
+  document.addEventListener('DOMContentLoaded', checkTwitchStatus);
 </script>
 
 <style>
