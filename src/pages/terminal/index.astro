@@ -220,26 +220,31 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.8rem;
     font-size: 0.8rem;
     margin-bottom: 0.6rem;
   }
 
   .meta-right {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
+    flex-shrink: 0; /* Impede que o bloco encolha e quebre */
   }
 
   .lang-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--accent-blue);
     background: rgba(76, 201, 240, 0.08);
     border: 1px solid rgba(76, 201, 240, 0.25);
-    padding: 1px 5px;
+    padding: 2px 6px;
     border-radius: 3px;
     letter-spacing: 0.5px;
+    white-space: nowrap; /* Evita o texto quebrar em PT- e BR */
+    line-height: 1;
+    display: inline-block;
   }
 
   .category-tag {
@@ -247,12 +252,16 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
     font-family: 'Rajdhani', sans-serif;
     letter-spacing: 0.5px;
     font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .star-rating {
     color: var(--accent-gold, #F4A261);
     letter-spacing: 2px;
     font-size: 0.85rem;
+    white-space: nowrap;
   }
 
   .card-title {
