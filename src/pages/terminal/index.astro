@@ -131,9 +131,12 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
                 >
                   {catInfo.icon} {trans.pt}
                 </span>
-                {post.stars && (
-                  <span class="star-rating">{post.stars}</span>
-                )}
+                <div class="meta-right">
+                  <span class="lang-tag">PT-BR</span>
+                  {post.stars && (
+                    <span class="star-rating">{post.stars}</span>
+                  )}
+                </div>
               </div>
 
               <h2 class="card-title">{post.data.title}</h2>
@@ -219,6 +222,24 @@ const activeCategoryKeys = (Object.keys(CATEGORIES) as CategoryId[]).filter((cat
     align-items: center;
     font-size: 0.8rem;
     margin-bottom: 0.6rem;
+  }
+
+  .meta-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .lang-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    background: rgba(76, 201, 240, 0.08);
+    border: 1px solid rgba(76, 201, 240, 0.25);
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
   }
 
   .category-tag {
