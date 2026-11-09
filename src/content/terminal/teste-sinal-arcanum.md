@@ -6,6 +6,7 @@ rating: "5"
 summary: "Primeiro registro transmitido através da malha arcana do Nexus. Validação de metadados, imagens de capa e rotas do Terminal."
 coverImage: "/og-image.png"
 externalLink: "https://www.beyond-obvious.net"
+hidden: true
 ---
 
 ## ◈ Estabelecendo Conexão
