@@ -15,7 +15,10 @@ interface ProcessedPost extends TerminalPost {
   categoryKey: CategoryId;
 }
 
-const posts = await getCollection('terminal');
+// Filtra descartando apenas os que tiverem hidden === true
+const posts = await getCollection('terminal', (entry: TerminalPost) => {
+  return entry.data.hidden !== true;
+});
 
 const sortedPosts: ProcessedPost[] = posts
   .sort((a: TerminalPost, b: TerminalPost) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())

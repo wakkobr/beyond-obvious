@@ -15,10 +15,13 @@ interface ProcessedPost extends TerminalPost {
   categoryKey: CategoryId;
 }
 
-const posts = await getCollection('terminal');
+const posts = await getCollection('terminal', (entry: TerminalPost) => {
+  return entry.data.hidden !== true;
+});
 
 const sortedPosts: ProcessedPost[] = posts
   .sort((a: TerminalPost, b: TerminalPost) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3) // 👈 Opcional: exibe apenas os 3 registros mais recentes na Home
   .map((post: TerminalPost): ProcessedPost => {
     const rawCat = String(post.data.category || '').toLowerCase().trim() as CategoryId;
     const categoryKey: CategoryId = CATEGORIES[rawCat] ? rawCat : 'tech';

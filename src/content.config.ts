@@ -11,6 +11,7 @@ const terminal = defineCollection({
     publishDate: z.coerce.date(),
     rating: z.string().optional().nullable(),
     externalLink: z.string().optional(),
+    hidden: z.boolean().optional().default(false), // 👈 Adicionado aqui
   }),
 });
 
