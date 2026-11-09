@@ -1,5 +1,5 @@
 ---
-title: Tell Me Why e o Peso das Memórias (TmW #01)
+title: Tell Me Why e o Peso das Memórias (TmW 01)
 summary: Relato pessoal da experiência de jogo da primeira parte de Tell Me Why.
 category: gaming
 publishDate: 2026-11-07
