@@ -1,4 +1,11 @@
-# Tell Me Why e a verdade que talvez ninguém queira lembrar
+---
+title: Tell Me Why e a verdade que talvez ninguém queira lembrar (TmW 02)
+summary: Relato pessoal da experiência de jogo da segunda parte de Tell Me Why.
+category: gaming
+publishDate: 2026-11-15
+rating: "5"
+hidden: false
+---
 
 *Atenção: tem spoilers do Capítulo 1 e início do Capítulo 2 de Tell Me Why.*
 
